@@ -35,14 +35,14 @@ const WORK_AREAS = [
     title: "SEO & Organic Growth",
     description:
       "Technical SEO, keyword strategy, content, search visibility and organic growth.",
-    href: "seo-lab.html",
+    href: "skills.html",
   },
   {
     tag: "SHOPIFY",
     title: "Shopify & E-commerce",
     description:
       "Store optimization, product pages, theme improvements, tracking and conversion.",
-    href: "projects.html?cat=Shopify",
+    href: "work.html",
   },
   {
     tag: "ANALYTICS",
@@ -59,28 +59,11 @@ const WORK_AREAS = [
     href: "skills.html",
   },
   {
-    tag: "AI",
-    title: "AI & Automation",
-    description: "AI-assisted research, coding, analysis, workflows and automation.",
-    href: "ai-automation.html",
-  },
-  {
     tag: "DEV",
     title: "Technical Problem Solving",
-    description: "APIs, scripts, integrations, debugging and practical digital solutions.",
-    href: "skills.html",
+    description: "APIs, scripts, integrations, debugging and practical digital solutions — with AI as a research and build accelerant, never a replacement for judgment.",
+    href: "about.html",
   },
-];
-
-const WORK_PATTERN = [
-  { step: "Understand", detail: "Clarify the business objective and what success looks like." },
-  { step: "Research", detail: "Gather context — market, competitors, prior data, constraints." },
-  { step: "Audit", detail: "Inspect the current state: site, account, data, or codebase." },
-  { step: "Analyse", detail: "Turn raw data into a diagnosis of what's actually happening." },
-  { step: "Plan", detail: "Prioritise fixes by impact and effort; define the approach." },
-  { step: "Implement", detail: "Build or configure the solution — using the right tools and AI to move faster." },
-  { step: "Measure", detail: "Track the result against the original objective, not vanity metrics." },
-  { step: "Improve", detail: "Iterate based on what the data shows after launch." },
 ];
 
 const SKILLS = [
@@ -133,39 +116,6 @@ const SKILLS = [
     tools: [
       { name: "ChatGPT / Claude AI", use: "Research synthesis, coding assistance, debugging, and workflow automation — always validated before use." },
     ],
-  },
-];
-
-const AI_WORKFLOWS = [
-  {
-    area: "Research",
-    flow: ["AI", "Organize information", "Validate with reliable data"],
-    note: "AI accelerates the first pass; the validation step is mine.",
-  },
-  {
-    area: "SEO",
-    flow: ["AI", "Generate research ideas", "Validate via GSC / SEMrush", "Build strategy"],
-    note: "Ideas get tested against real search and traffic data before they become a plan.",
-  },
-  {
-    area: "Development",
-    flow: ["Problem", "AI-assisted investigation", "Code", "Test", "Debug", "Deploy"],
-    note: "AI helps me move faster through unfamiliar territory — it doesn't skip testing.",
-  },
-  {
-    area: "Content",
-    flow: ["Research", "AI-assisted draft", "Factual validation", "SEO optimization", "Human review"],
-    note: "Every draft is checked against facts and edited before it ships.",
-  },
-  {
-    area: "Analytics",
-    flow: ["Data", "AI-assisted interpretation", "Manual validation", "Business decision"],
-    note: "AI helps me read patterns faster; the business call is still made by a person.",
-  },
-  {
-    area: "Automation",
-    flow: ["Trigger", "Logic", "API / Script", "Action", "Monitoring"],
-    note: "Automations are built to be watched, not left to run blind.",
   },
 ];
 
@@ -293,105 +243,44 @@ const CERTIFICATIONS = [
   // [ADD CERTIFICATIONS] — none listed on resume yet
 ];
 
-/* Projects — placeholders only. Replace with real case studies. */
+/* Projects — real work only, drawn from confirmed resume facts.
+   Add more entries here as full case studies are documented;
+   incomplete entries are intentionally left out rather than
+   shown with placeholder text. */
 const PROJECTS = [
   {
     slug: "neat-everyday-organic-growth",
-    name: "Neat Everyday — Organic Traffic Growth",
-    category: "SEO",
-    summary: "Technical SEO, content and link-building program behind a 60%+ organic traffic increase.",
-    challenge: "[ADD PROJECT DESCRIPTION — what was the starting state and business problem?]",
+    name: "Neat Everyday — Rebuilding Organic Visibility",
     role: "Deputy SEO Manager",
+    company: "Neat Everyday (Mangalam Groups)",
+    summary: "A technical SEO and content program for a D2C Ayurvedic wellness brand, built on accurate GA4 measurement.",
+    challenge: "Neat Everyday needed a clearer view of how organic traffic was actually converting, and a technical foundation solid enough to support a serious SEO push across the store.",
+    approach: "Started with measurement: implemented advanced GA4 e-commerce tracking across cross-domain environments and deployed server-side Google Tag Manager, so growth decisions were based on accurate first-party data rather than guesswork.",
+    implementation: "Ran technical SEO fixes across the store, rebuilt the content and internal linking strategy, pursued targeted link building, and began layering in schema markup and early AEO work to capture AI-driven search visibility as that channel grows.",
+    result: "60%+ increase in organic traffic within the first months of the engagement.",
+    learning: "Measurement has to come before optimization — you can't reliably improve what you can't attribute correctly.",
     tools: ["GA4", "Server-side GTM", "Google Search Console", "Schema markup"],
-    approach: "[ADD APPROACH]",
-    implementation: "[ADD IMPLEMENTATION DETAILS]",
-    result: "60%+ increase in organic traffic within the first months.",
-    learning: "[ADD KEY LEARNING]",
-    screenshot: "",
   },
   {
     slug: "equest-cro-funnel",
-    name: "Equest Solutions — Conversion Funnel Optimization",
-    category: "Analytics",
-    summary: "GA4 funnel rebuild and CRO testing program that lifted client conversion rates by 25%.",
-    challenge: "[ADD PROJECT DESCRIPTION]",
+    name: "Equest Solutions — Fixing the Conversion Funnel",
     role: "Sr. SEO Analyst",
-    tools: ["GA4", "Server-side GTM", "A/B Testing"],
-    approach: "[ADD APPROACH]",
-    implementation: "[ADD IMPLEMENTATION DETAILS]",
-    result: "25% improvement in conversion rate.",
-    learning: "[ADD KEY LEARNING]",
-    screenshot: "",
-  },
-  {
-    slug: "add-shopify-project",
-    name: "[ADD PROJECT NAME]",
-    category: "Shopify",
-    summary: "[ADD PROJECT DESCRIPTION]",
-    challenge: "[ADD PROJECT DESCRIPTION]",
-    role: "[ADD ROLE]",
-    tools: ["Shopify"],
-    approach: "[ADD APPROACH]",
-    implementation: "[ADD IMPLEMENTATION DETAILS]",
-    result: "[ADD ACTUAL RESULT]",
-    learning: "[ADD KEY LEARNING]",
-    screenshot: "",
-  },
-  {
-    slug: "add-ai-automation-project",
-    name: "[ADD PROJECT NAME]",
-    category: "AI",
-    summary: "[ADD PROJECT DESCRIPTION]",
-    challenge: "[ADD PROJECT DESCRIPTION]",
-    role: "[ADD ROLE]",
-    tools: ["AI-assisted workflow"],
-    approach: "[ADD APPROACH]",
-    implementation: "[ADD IMPLEMENTATION DETAILS]",
-    result: "[ADD ACTUAL RESULT]",
-    learning: "[ADD KEY LEARNING]",
-    screenshot: "",
+    company: "Equest Solutions",
+    summary: "GA4 funnel rebuild and a structured CRO testing program across multiple e-commerce and lead-gen client accounts.",
+    challenge: "Client conversion funnels were being measured inconsistently across accounts, which made it hard to know which parts of the journey were actually costing conversions.",
+    approach: "Rebuilt GA4 conversion funnels and server-side GTM tracking for e-commerce and lead generation clients, then used the cleaner data to prioritise landing page and flow changes worth testing.",
+    implementation: "Ran a structured program of landing page optimization and A/B tests, validating each change against the rebuilt funnel data rather than assumptions.",
+    result: "25% improvement in client conversion rates across the accounts covered by the program.",
+    learning: "Most CRO gains come from fixing measurement first — once the funnel data was trustworthy, the right tests became obvious.",
+    tools: ["GA4", "Server-side GTM", "A/B Testing", "CRO"],
   },
 ];
-
-const PROJECT_CATEGORIES = ["All", "SEO", "Shopify", "Analytics", "Marketing", "AI", "Automation", "Technical"];
-
-/* SEO Lab topics — placeholders for future articles */
-const SEO_LAB_TOPICS = [
-  "Technical SEO", "Keyword Research", "Search Intent", "Keyword Cannibalization",
-  "Internal Linking", "E-commerce SEO", "Schema", "Indexation",
-  "Google Search Console", "Backlinks", "Competitor Analysis", "SEO Reporting",
-];
-
-/* Knowledge/blog articles — placeholders */
-const ARTICLES = [
-  {
-    slug: "add-article-1",
-    title: "[ADD ARTICLE TITLE]",
-    category: "SEO",
-    date: "",
-    readingTime: "",
-    excerpt: "[ADD ARTICLE SUMMARY]",
-  },
-  {
-    slug: "add-article-2",
-    title: "[ADD ARTICLE TITLE]",
-    category: "AI",
-    date: "",
-    readingTime: "",
-    excerpt: "[ADD ARTICLE SUMMARY]",
-  },
-];
-
-const ARTICLE_CATEGORIES = ["All", "SEO", "Shopify", "Analytics", "Google Ads", "Meta Ads", "AI", "Automation", "E-commerce", "Technical"];
 
 const NAV_LINKS = [
   { label: "Home", href: "index.html" },
   { label: "About", href: "about.html" },
   { label: "Skills & Tools", href: "skills.html" },
-  { label: "AI & Automation", href: "ai-automation.html" },
-  { label: "Projects", href: "projects.html" },
-  { label: "SEO Lab", href: "seo-lab.html" },
-  { label: "Knowledge", href: "knowledge.html" },
+  { label: "Work", href: "work.html" },
   { label: "Experience", href: "experience.html" },
   { label: "Contact", href: "contact.html" },
 ];

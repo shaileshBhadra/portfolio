@@ -43,15 +43,10 @@ function renderFooter(){
           <div class="footer-col">
             <h4>Site</h4>
             <a href="about.html">About</a>
-            <a href="projects.html">Projects</a>
+            <a href="skills.html">Skills &amp; Tools</a>
+            <a href="work.html">Work</a>
             <a href="experience.html">Experience</a>
             <a href="resume.html">Resume</a>
-          </div>
-          <div class="footer-col">
-            <h4>Knowledge</h4>
-            <a href="seo-lab.html">SEO Lab</a>
-            <a href="knowledge.html">Articles</a>
-            <a href="ai-automation.html">AI &amp; Automation</a>
           </div>
           <div class="footer-col">
             <h4>Contact</h4>
@@ -92,17 +87,6 @@ function renderWorkAreas(targetId){
     </a>`).join("");
 }
 
-function renderWorkPattern(targetId){
-  const el = document.getElementById(targetId);
-  if(!el) return;
-  el.innerHTML = WORK_PATTERN.map((s,i) => `
-    <div class="pattern-step">
-      <div class="pattern-index">0${i+1}</div>
-      <h4>${s.step}</h4>
-      <p>${s.detail}</p>
-    </div>`).join("");
-}
-
 function renderTimeline(targetId, items){
   const el = document.getElementById(targetId);
   if(!el) return;
@@ -136,82 +120,18 @@ function renderSkills(targetId){
     </div>`).join("");
 }
 
-function renderAIWorkflows(targetId){
+function renderProjectCards(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
-  el.innerHTML = AI_WORKFLOWS.map(w => `
-    <div class="ai-block">
-      <div class="ai-block-head"><div class="eyebrow">${w.area}</div></div>
-      <div class="ai-flow">
-        ${w.flow.map((node,i) => `<span class="node">${node}</span>${i < w.flow.length-1 ? '<span class="arrow">→</span>' : ''}`).join("")}
-      </div>
-      <p class="note">${w.note}</p>
-    </div>`).join("");
-}
-
-function renderProjectCards(targetId, filterCategory){
-  const el = document.getElementById(targetId);
-  if(!el) return;
-  const list = (!filterCategory || filterCategory === "All")
-    ? PROJECTS
-    : PROJECTS.filter(p => p.category === filterCategory);
-  if(list.length === 0){
-    el.innerHTML = `<p style="color:var(--ink-faint);font-family:var(--font-mono);font-size:13px;">No projects in this category yet.</p>`;
-    return;
-  }
-  el.innerHTML = list.map(p => `
+  el.innerHTML = PROJECTS.map(p => `
     <a class="project-card" href="project-detail.html?slug=${p.slug}">
-      <div class="project-thumb">${p.screenshot ? "" : "[ADD SCREENSHOT]"}</div>
       <div class="project-body">
-        <div class="eyebrow">${p.category}</div>
+        <div class="eyebrow">${p.company}</div>
         <h3>${p.name}</h3>
         <p class="summary">${p.summary}</p>
-        <div class="project-result">→ ${p.result}</div>
+        <div class="project-result">${p.result}</div>
       </div>
     </a>`).join("");
-}
-
-function renderProjectFilters(targetId, gridId){
-  const el = document.getElementById(targetId);
-  if(!el) return;
-  const params = new URLSearchParams(window.location.search);
-  let active = params.get("cat") || "All";
-  if(!PROJECT_CATEGORIES.includes(active)) active = "All";
-  function draw(){
-    el.innerHTML = PROJECT_CATEGORIES.map(c =>
-      `<button class="filter-btn ${c===active ? 'active':''}" data-cat="${c}">${c}</button>`
-    ).join("");
-    el.querySelectorAll(".filter-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        active = btn.dataset.cat;
-        draw();
-        renderProjectCards(gridId, active);
-      });
-    });
-  }
-  draw();
-  renderProjectCards(gridId, active);
-}
-
-function renderArticleCards(targetId, filterCategory){
-  const el = document.getElementById(targetId);
-  if(!el) return;
-  const list = (!filterCategory || filterCategory === "All")
-    ? ARTICLES
-    : ARTICLES.filter(a => a.category === filterCategory);
-  el.innerHTML = list.map(a => `
-    <a class="article-card" href="article.html?slug=${a.slug}">
-      <div class="cat">${a.category}</div>
-      <h3>${a.title}</h3>
-      <p>${a.excerpt}</p>
-      <div class="article-meta">${a.date || "[ADD DATE]"} · ${a.readingTime || "[ADD READ TIME]"}</div>
-    </a>`).join("");
-}
-
-function renderSEOTopics(targetId){
-  const el = document.getElementById(targetId);
-  if(!el) return;
-  el.innerHTML = SEO_LAB_TOPICS.map(t => `<span class="topic-chip">${t}</span>`).join("");
 }
 
 function renderProjectDetail(targetId){
@@ -224,8 +144,8 @@ function renderProjectDetail(targetId){
   el.innerHTML = `
     <div class="container">
       <div class="detail-hero">
-        <a class="back-link" href="projects.html">← All projects</a>
-        <div class="eyebrow" style="margin-top:20px;">${p.category}</div>
+        <a class="back-link" href="work.html">← All work</a>
+        <div class="eyebrow" style="margin-top:20px;">${p.company}</div>
         <h1 style="font-size:clamp(28px,4vw,42px);margin-top:14px;">${p.name}</h1>
         <div class="detail-meta-row">
           <span>ROLE: ${p.role}</span>
