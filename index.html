@@ -35,20 +35,30 @@
 
 <main>
   <section class="hero">
-    <div class="container">
+    <div class="container hero-grid">
+      <div>
+        <div class="greeting"><span class="avatar-mono avatar-mono--sm" id="hero-avatar"></span>Hi, I'm Shailesh.</div>
       <div class="eyebrow">SEO · E-commerce · Analytics · Performance Marketing</div>
-      <h1 style="max-width:820px;">Senior SEO &amp; Analytics specialist for teams that want growth they can measure.</h1>
-      <p class="lede" style="max-width:600px;">9+ years driving organic growth, e-commerce optimization and paid performance for D2C, SaaS and service businesses — including remote engagements across the UK, USA and UAE.</p>
-      <div class="btn-row">
-        <a href="work.html" class="btn btn--primary">See the work</a>
-        <a href="resume.html" class="btn btn--ghost">View resume</a>
+        <h1>Senior SEO &amp; <em>Analytics</em> specialist for teams that want growth they can measure.</h1>
+        <p class="lede">9+ years driving organic growth, e-commerce optimization and paid performance for D2C, SaaS and service businesses — including remote engagements across the UK, USA and UAE.</p>
+        <div class="btn-row">
+          <a href="work.html" class="btn btn--primary">See the work</a>
+          <a href="resume.html" class="btn btn--ghost">View resume</a>
+        </div>
       </div>
+      <div class="glass readout-panel" id="hero-readout"></div>
     </div>
   </section>
 
   <section class="metric-strip">
     <div class="container">
       <div class="metric-grid" id="metric-strip"></div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="glass about-teaser" id="about-teaser"></div>
     </div>
   </section>
 
@@ -89,6 +99,12 @@
       </div>
     </div>
   </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="cta-banner" id="cta-banner"></div>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer" id="site-footer"></footer>
@@ -98,9 +114,13 @@
 <script>
   renderHeader("index.html");
   renderFooter();
+  renderReadoutPanel("hero-readout");
+  document.getElementById("hero-avatar").textContent = initials(PROFILE.name);
   renderMetricStrip("metric-strip");
+  renderAboutTeaser("about-teaser");
   renderWorkAreas("work-areas");
   renderProjectCards("featured-projects");
+  renderCtaBanner("cta-banner");
 </script>
 </body>
 </html>

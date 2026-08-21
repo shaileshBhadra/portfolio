@@ -27,6 +27,12 @@
       <div class="project-grid" id="project-grid"></div>
     </div>
   </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="cta-banner" id="cta-banner"></div>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer" id="site-footer"></footer>
@@ -37,6 +43,7 @@
   renderHeader("work.html");
   renderFooter();
   renderProjectCards("project-grid");
+  renderCtaBanner("cta-banner", { heading: "Have a similar problem?", body: "Happy to look at what's actually happening before proposing anything.", ctaLabel: "Tell me about it", ctaHref: "contact.html" });
 </script>
 </body>
 </html>

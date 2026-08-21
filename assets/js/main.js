@@ -65,6 +65,61 @@ function renderFooter(){
 
 /* ---------- Reusable card renderers ---------- */
 
+/* ---------- Shared identity + CTA components (real data only) ---------- */
+function initials(name){
+  return name.split(" ").map(w => w[0]).join("").slice(0,2).toUpperCase();
+}
+
+function renderAboutTeaser(targetId){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  el.innerHTML = `
+    <div class="avatar-mono avatar-mono--lg">${initials(PROFILE.name)}</div>
+    <div>
+      <blockquote>Find out why a business isn't converting or ranking the way it should, then fix the actual cause.</blockquote>
+      <div class="teaser-name">— how ${PROFILE.name.split(" ")[0]} approaches every engagement</div>
+    </div>
+    <a href="about.html" class="btn btn--ghost btn--sm">Get to know me →</a>
+  `;
+}
+
+function renderCtaBanner(targetId, opts){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  const o = Object.assign({
+    heading: "Let's talk about what's actually going on.",
+    body: PROFILE.location + " · " + PROFILE.email,
+    ctaLabel: "Start a conversation",
+    ctaHref: "contact.html",
+  }, opts || {});
+  el.innerHTML = `
+    <div>
+      <h2>${o.heading}</h2>
+      <p>${o.body}</p>
+    </div>
+    <a href="${o.ctaHref}" class="btn btn--primary">${o.ctaLabel}</a>
+  `;
+}
+
+function renderReadoutPanel(targetId){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  const rows = [
+    { k: "Status", v: "Open to remote work" },
+    { k: "Based in", v: PROFILE.location.split("—")[0].trim() },
+    { k: "Experience", v: `${PROFILE.yearsExperience} years` },
+    { k: "Core focus", v: "SEO · Analytics · E-commerce" },
+  ];
+  el.innerHTML = `
+    <div class="readout-head"><span class="readout-dot"></span>Now</div>
+    ${rows.map(r => `
+      <div class="readout-row">
+        <span class="k">${r.k}</span>
+        <span class="v">${r.v}</span>
+      </div>`).join("")}
+  `;
+}
+
 function renderMetricStrip(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
@@ -106,7 +161,7 @@ function renderSkills(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
   el.innerHTML = SKILLS.map(block => `
-    <div class="skill-block">
+    <div class="skill-block" id="skill-${block.category.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
       <div class="skill-block-head">
         <h3>${block.category}</h3>
       </div>
@@ -129,9 +184,18 @@ function renderProjectCards(targetId){
         <div class="eyebrow">${p.company}</div>
         <h3>${p.name}</h3>
         <p class="summary">${p.summary}</p>
+        <div class="project-tags">${p.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
         <div class="project-result">${p.result}</div>
       </div>
     </a>`).join("");
+}
+
+function renderSkillsJumpNav(targetId){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  el.innerHTML = SKILLS.map(block =>
+    `<a href="#skill-${block.category.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">${block.category}</a>`
+  ).join("");
 }
 
 function renderProjectDetail(targetId){

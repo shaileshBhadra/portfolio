@@ -22,11 +22,16 @@
   </section>
 
   <section class="section" style="padding-top:0;">
-    <div class="container">
+    <div class="container about-grid">
       <div class="prose" style="font-size:17px;">
         <p>I'm a Senior SEO, Performance Marketing and Analytics Specialist based in Ahmedabad, currently working with the Neat Everyday brand under Mangalam Groups. Over the past 9 years I've worked across e-commerce, SaaS and service businesses — including remote engagements for clients in the UK, USA and UAE — with the same underlying job every time: find out why a business isn't converting or ranking the way it should, and fix the actual cause.</p>
 
         <p>That usually means starting with measurement before strategy. A lot of "SEO problems" and "conversion problems" turn out to be tracking problems — GA4 events that were never firing correctly, attribution that doesn't reflect the real customer journey, a Shopify store reporting numbers nobody trusts. I've spent a meaningful chunk of my career fixing that layer first — implementing GA4 e-commerce tracking and server-side Google Tag Manager — because every optimization decision downstream depends on it being right.</p>
+
+        <div class="pull-stat">
+          <div class="value">60%+</div>
+          <div class="label">Organic traffic lift delivered at Neat Everyday once measurement was fixed first.</div>
+        </div>
 
         <p>From there, the work is what you'd expect: technical SEO audits, keyword and content strategy, Shopify store and product page optimization, Google Ads and Meta Ads management, and CRO testing — all judged against the same question, did the number that mattered actually move.</p>
 
@@ -34,13 +39,8 @@
 
         <p>Outside of client work, I keep a small set of internal tools I've built myself — dashboards, tracking scripts, Shopify automations — because being able to build the tool you need, rather than waiting on someone else to, is often the fastest way to get an answer.</p>
       </div>
-    </div>
-  </section>
 
-  <section class="section section--alt">
-    <div class="container">
-      <div class="eyebrow">Languages</div>
-      <ul class="checklist" style="margin-top:14px;" id="languages-list"></ul>
+      <aside class="glass quick-facts" id="quick-facts"></aside>
     </div>
   </section>
 </main>
@@ -52,7 +52,23 @@
 <script>
   renderHeader("about.html");
   renderFooter();
-  document.getElementById("languages-list").innerHTML = PROFILE.languages.map(l => `<li>${l}</li>`).join("");
+  document.getElementById("quick-facts").innerHTML = `
+    <div class="quick-facts-id">
+      <div class="avatar-mono avatar-mono--sm" style="width:48px;height:48px;font-size:16px;">${initials(PROFILE.name)}</div>
+      <div>
+        <div class="name">${PROFILE.name}</div>
+        <div class="title">${PROFILE.title}</div>
+      </div>
+    </div>
+    <div class="quick-facts-row"><div class="k">Based in</div><div class="v">${PROFILE.location}</div></div>
+    <div class="quick-facts-row"><div class="k">Experience</div><div class="v">${PROFILE.yearsExperience} years in SEO &amp; growth</div></div>
+    <div class="quick-facts-row"><div class="k">Focus</div><div class="v">${PROFILE.tagline}</div></div>
+    <div class="quick-facts-row">
+      <div class="k">Languages</div>
+      <ul class="checklist" style="margin-top:10px;">${PROFILE.languages.map(l => `<li>${l}</li>`).join("")}</ul>
+    </div>
+    <a href="contact.html" class="btn btn--primary btn--sm" style="justify-content:center;">Get in touch</a>
+  `;
 </script>
 </body>
 </html>
