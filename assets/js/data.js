@@ -6,9 +6,9 @@
 const PROFILE = {
   name: "Shailesh Bhadra",
   title: "Senior SEO, Performance Marketing & Analytics Specialist",
-  tagline: "SEO, E-commerce & AI-Driven Digital Problem Solving",
+  tagline: "Technical SEO, Analytics & Performance Marketing",
   subheading:
-    "I work across SEO, Shopify, analytics, digital marketing, AI-assisted workflows and automation — to identify problems, build practical solutions, and improve measurable business outcomes.",
+    "I work across technical SEO, GA4 and server-side GTM, Google Ads and Meta Ads, Core Web Vitals, schema markup and AEO/GEO, AI-assisted workflows and automation — to identify problems, build practical solutions, and improve measurable business outcomes.",
   email: "shaileshbhadra@gmail.com",
   phone: "+91-9913392756",
   linkedin: "https://www.linkedin.com/in/bhadra-shailesh/",
@@ -18,7 +18,7 @@ const PROFILE = {
   resumeFile: "assets/Shailesh_Bhadra_Resume.pdf",
   photo: "", // [ADD PROFILE PHOTO]
   summary:
-    "Results-driven SEO & Digital Analytics Specialist with 9+ years of experience driving organic growth, improving search visibility, and maximizing ROI across eCommerce, SaaS, and service-based businesses. Hands-on across Technical SEO, GA4, server-side Google Tag Manager, paid media, Core Web Vitals, and emerging AI/Answer Engine Optimization. Delivered 25–60% improvements in conversions and organic traffic for clients across the UK, USA and UAE.",
+    "Results-driven Senior SEO & Digital Analytics Specialist with 9+ years of experience across technical SEO, GA4, server-side Google Tag Manager, Google Ads, Meta Ads, Core Web Vitals, schema markup, and emerging AI/Answer Engine Optimization (AEO/GEO) — applied across SaaS, service-based and e-commerce businesses alike. Delivered 25–60% improvements in conversions and organic traffic for clients across the UK, USA and UAE.",
   languages: ["English — Professional Proficiency", "Hindi — Native", "Gujarati — Native"],
 };
 

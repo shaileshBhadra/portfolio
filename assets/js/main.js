@@ -4,6 +4,22 @@
    it needs after including data.js + main.js.
    ============================================================ */
 
+function injectPersonSchema(){
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": PROFILE.name,
+    "jobTitle": PROFILE.title,
+    "email": `mailto:${PROFILE.email}`,
+    "url": "https://shaileshbhadra.com/",
+    "sameAs": [PROFILE.linkedin],
+  };
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
 function renderHeader(activeHref){
   const el = document.getElementById("site-header");
   if(!el) return;
@@ -224,17 +240,107 @@ function renderProjectDetail(targetId){
     </div>`;
 }
 
-/* ---------- Contact form (no backend — mailto fallback) ---------- */
+/* ---------- Contact form ----------
+   Submits directly via Web3Forms (https://web3forms.com) — no mail client
+   is opened, no backend to host. Set the access_key hidden input in
+   contact.html to your own free key before going live. */
 function initContactForm(){
   const form = document.getElementById("contact-form");
   if(!form) return;
-  form.addEventListener("submit", (e) => {
+
+  const nameEl = form.querySelector("#f-name");
+  const emailEl = form.querySelector("#f-email");
+  const messageEl = form.querySelector("#f-message");
+  const submitBtn = form.querySelector("#contact-submit");
+  const submitLabel = submitBtn.querySelector(".btn-label");
+  const statusEl = form.querySelector("#form-status");
+  const charCount = form.querySelector("#char-count");
+
+  const errors = {
+    name: form.querySelector("#err-name"),
+    email: form.querySelector("#err-email"),
+    message: form.querySelector("#err-message"),
+  };
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Live character counter for the message field
+  if(messageEl && charCount){
+    messageEl.addEventListener("input", () => {
+      charCount.textContent = `${messageEl.value.length} / 1000`;
+    });
+  }
+
+  function setFieldError(field, msg){
+    errors[field].textContent = msg || "";
+    const input = field === "name" ? nameEl : field === "email" ? emailEl : messageEl;
+    input.classList.toggle("field-invalid", !!msg);
+  }
+
+  function validate(){
+    let ok = true;
+    if(!nameEl.value.trim()){ setFieldError("name", "Please enter your name."); ok = false; }
+    else setFieldError("name", "");
+
+    if(!emailEl.value.trim()){ setFieldError("email", "Please enter your email."); ok = false; }
+    else if(!emailPattern.test(emailEl.value.trim())){ setFieldError("email", "That email address doesn't look right."); ok = false; }
+    else setFieldError("email", "");
+
+    if(!messageEl.value.trim()){ setFieldError("message", "Please add a short message."); ok = false; }
+    else setFieldError("message", "");
+
+    return ok;
+  }
+
+  function setStatus(type, msg){
+    statusEl.textContent = msg;
+    statusEl.className = "form-status" + (type ? ` form-status--${type}` : "");
+  }
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = form.querySelector("#f-name").value;
-    const email = form.querySelector("#f-email").value;
-    const message = form.querySelector("#f-message").value;
-    const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-    const body = encodeURIComponent(`${message}\n\n— ${name} (${email})`);
-    window.location.href = `mailto:${PROFILE.email}?subject=${subject}&body=${body}`;
+    setStatus("", "");
+
+    // Honeypot: if this hidden checkbox got checked, silently drop the submission
+    if(form.querySelector("#botcheck").checked) return;
+
+    if(!validate()){
+      setStatus("error", "Please fix the highlighted fields and try again.");
+      return;
+    }
+
+    const accessKey = form.querySelector('input[name="access_key"]').value;
+    if(!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY"){
+      setStatus("error", "Form isn't wired up yet — add a Web3Forms access key to send this directly.");
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitLabel.textContent = "Sending…";
+    setStatus("pending", "Sending your message…");
+
+    try{
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData);
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+
+      if(res.ok && result.success){
+        form.reset();
+        if(charCount) charCount.textContent = "0 / 1000";
+        setStatus("success", "Thanks — your message is on its way. I'll reply within 1–2 business days.");
+      } else {
+        setStatus("error", "Something went wrong sending that. Try again, or email me directly below.");
+      }
+    } catch(err){
+      setStatus("error", "Network error — please try again, or email me directly below.");
+    } finally {
+      submitBtn.disabled = false;
+      submitLabel.textContent = "Send message";
+    }
   });
 }

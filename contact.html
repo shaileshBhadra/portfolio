@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Shailesh Bhadra</title>
-<meta name="description" content="Get in touch with Shailesh Bhadra — SEO, e-commerce, analytics and AI-driven digital problem solving.">
+<meta name="description" content="Get in touch with Shailesh Bhadra — technical SEO, analytics, performance marketing and AI-driven digital problem solving.">
 <link rel="canonical" href="https://shaileshbhadra.com/contact.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,20 +23,38 @@
         <div class="contact-list" id="contact-details"></div>
       </div>
       <div>
-        <form id="contact-form">
+        <form id="contact-form" novalidate>
+          <!-- Web3Forms: get a free access key at web3forms.com and paste it below.
+               No account/login needed — enter your email, they email you a key instantly. -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+          <input type="hidden" name="subject" value="New message from shaileshbhadra.com">
+          <!-- Honeypot spam trap: hidden from real visitors, bots tend to fill every field -->
+          <input type="checkbox" name="botcheck" id="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+
           <div class="field">
             <label for="f-name">Name</label>
-            <input type="text" id="f-name" name="name" required>
+            <input type="text" id="f-name" name="name" required autocomplete="name">
+            <span class="field-error" id="err-name"></span>
           </div>
           <div class="field">
             <label for="f-email">Email</label>
-            <input type="email" id="f-email" name="email" required>
+            <input type="email" id="f-email" name="email" required autocomplete="email">
+            <span class="field-error" id="err-email"></span>
           </div>
           <div class="field">
-            <label for="f-message">Message</label>
-            <textarea id="f-message" name="message" required></textarea>
+            <div class="field-label-row">
+              <label for="f-message">Message</label>
+              <span class="char-count" id="char-count">0 / 1000</span>
+            </div>
+            <textarea id="f-message" name="message" required maxlength="1000"></textarea>
+            <span class="field-error" id="err-message"></span>
           </div>
-          <button type="submit" class="btn btn--primary">Send message</button>
+
+          <button type="submit" class="btn btn--primary" id="contact-submit">
+            <span class="btn-label">Send message</span>
+          </button>
+
+          <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
         </form>
       </div>
     </div>

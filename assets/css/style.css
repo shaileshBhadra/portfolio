@@ -282,6 +282,19 @@ button{ font-family:inherit; }
 .field input:focus, .field textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(255,122,51,0.15); }
 .field textarea{ resize:vertical; min-height:130px; }
 
+.field-label-row{ display:flex; justify-content:space-between; align-items:baseline; }
+.char-count{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); }
+.field-error{ display:block; min-height:16px; font-size:12.5px; color:#FF8A7A; margin-top:6px; }
+.field input.field-invalid, .field textarea.field-invalid{ border-color:#FF8A7A; box-shadow:0 0 0 3px rgba(255,138,122,0.14); }
+
+.form-status{ min-height:20px; margin-top:14px; font-size:13.5px; }
+.form-status--pending{ color:var(--ink-soft); }
+.form-status--success{ color:#7CD992; }
+.form-status--error{ color:#FF8A7A; }
+
+#contact-submit{ cursor:pointer; }
+#contact-submit:disabled{ opacity:.6; cursor:not-allowed; }
+
 /* ---------- Resume ---------- */
 .resume-section{ padding:36px 0; border-top:1px solid var(--line-soft); }
 .resume-section:first-of-type{ border-top:none; }
