@@ -4,8 +4,15 @@
    it needs after including data.js + main.js.
    ============================================================ */
 
+function injectSchema(schema){
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
 function injectPersonSchema(){
-  const schema = {
+  injectSchema({
     "@context": "https://schema.org",
     "@type": "Person",
     "name": PROFILE.name,
@@ -13,11 +20,43 @@ function injectPersonSchema(){
     "email": `mailto:${PROFILE.email}`,
     "url": "https://shaileshbhadra.com/",
     "sameAs": [PROFILE.linkedin],
-  };
-  const script = document.createElement("script");
-  script.type = "application/ld+json";
-  script.textContent = JSON.stringify(schema);
-  document.head.appendChild(script);
+  });
+}
+
+function injectProfessionalServiceSchema(){
+  if(typeof SERVICES === "undefined") return;
+  injectSchema({
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": `${PROFILE.name} — SEO, Analytics & Digital Growth Consulting`,
+    "founder": { "@type": "Person", "name": PROFILE.name },
+    "areaServed": "Remote / Worldwide",
+    "url": "https://shaileshbhadra.com/",
+    "sameAs": [PROFILE.linkedin],
+    "makesOffer": SERVICES.map(s => ({
+      "@type": "Offer",
+      "itemOffered": { "@type": "Service", "name": s.name, "description": s.short },
+    })),
+  });
+}
+
+function injectServiceListSchema(){
+  if(typeof SERVICES === "undefined") return;
+  injectSchema({
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": SERVICES.map((s, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "item": {
+        "@type": "Service",
+        "name": s.name,
+        "description": s.short,
+        "provider": { "@type": "Person", "name": PROFILE.name },
+        "url": `https://shaileshbhadra.com/services.html#${s.slug}`,
+      },
+    })),
+  });
 }
 
 function renderHeader(activeHref){
@@ -31,7 +70,7 @@ function renderHeader(activeHref){
       <a href="index.html" class="brand">Shailesh<span>.</span>Bhadra</a>
       <nav class="nav-links" id="nav-links">
         ${links}
-        <a href="resume.html" class="nav-cta">View Resume</a>
+        <a href="contact.html" class="nav-cta">Let's Talk</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -53,15 +92,16 @@ function renderFooter(){
       <div class="footer-grid">
         <div class="footer-brand">
           <span class="brand">Shailesh<span style="color:var(--accent)">.</span>Bhadra</span>
-          <p>${PROFILE.tagline}</p>
+          <p>SEO · Analytics · Digital Growth</p>
         </div>
         <div class="footer-cols">
           <div class="footer-col">
             <h4>Site</h4>
-            <a href="about.html">About</a>
-            <a href="skills.html">Skills &amp; Tools</a>
+            <a href="services.html">Services</a>
             <a href="work.html">Work</a>
-            <a href="experience.html">Experience</a>
+            <a href="approach.html">Approach</a>
+            <a href="about.html">About</a>
+            <a href="insights.html">Insights</a>
             <a href="resume.html">Resume</a>
           </div>
           <div class="footer-col">
@@ -107,13 +147,20 @@ function renderCtaBanner(targetId, opts){
     body: PROFILE.location + " · " + PROFILE.email,
     ctaLabel: "Start a conversation",
     ctaHref: "contact.html",
+    extraButtons: [], // [{ label, href, variant: "ghost"|"primary" }]
   }, opts || {});
+  const extra = o.extraButtons.map(b =>
+    `<a href="${b.href}" class="btn btn--${b.variant || 'ghost'}"${b.download ? ' download' : ''}>${b.label}</a>`
+  ).join("");
   el.innerHTML = `
     <div>
       <h2>${o.heading}</h2>
       <p>${o.body}</p>
     </div>
-    <a href="${o.ctaHref}" class="btn btn--primary">${o.ctaLabel}</a>
+    <div class="btn-row">
+      <a href="${o.ctaHref}" class="btn btn--primary">${o.ctaLabel}</a>
+      ${extra}
+    </div>
   `;
 }
 
@@ -121,12 +168,15 @@ function renderReadoutPanel(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
   const rows = [
-    { k: "Status", v: "Open to remote work" },
+    { k: "Status", v: "Open to new projects" },
     { k: "Based in", v: PROFILE.location.split("—")[0].trim() },
     { k: "Experience", v: `${PROFILE.yearsExperience} years` },
-    { k: "Core focus", v: "SEO · Analytics · E-commerce" },
+    { k: "Core focus", v: "SEO · Analytics · Growth" },
   ];
   el.innerHTML = `
+    <div class="photo-frame">
+      <div class="photo-frame-inner">[ADD PROFESSIONAL PHOTO]</div>
+    </div>
     <div class="readout-head"><span class="readout-dot"></span>Now</div>
     ${rows.map(r => `
       <div class="readout-row">
@@ -308,6 +358,311 @@ function renderPlaybookJumpNav(targetId){
   ).join("");
 }
 
+/* ============================================================
+   APPROACH PAGE renderers
+   ============================================================ */
+
+function renderCapabilitySnapshot(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof CAPABILITY_SNAPSHOT === "undefined") return;
+  el.innerHTML = CAPABILITY_SNAPSHOT.map(m => `
+    <div class="metric-cell reveal">
+      <div class="metric-value">${m.value}</div>
+      <div class="metric-label">${m.label}</div>
+    </div>`).join("");
+}
+
+function renderProcessSteps(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PROCESS_STEPS === "undefined") return;
+  el.innerHTML = PROCESS_STEPS.map(s => `
+    <div class="process-step reveal">
+      <div class="process-step-n">${s.n}</div>
+      <div class="process-step-body">
+        <div class="eyebrow">${s.subtitle}</div>
+        <h3>${s.title}</h3>
+        <p>${s.copy}</p>
+      </div>
+    </div>`).join("");
+}
+
+function renderProblemsSolved(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PROBLEMS_SOLVED === "undefined") return;
+  el.innerHTML = PROBLEMS_SOLVED.map(p => `
+    <div class="problem-card reveal">
+      <h3>${p.title}</h3>
+      <div class="playbook-label">Investigate</div>
+      <ul class="chip-list">${p.investigate.map(i => `<li>${i}</li>`).join("")}</ul>
+      <div class="playbook-label playbook-label--fix">Approach</div>
+      <p>${p.approach}</p>
+    </div>`).join("");
+}
+
+function renderGrowthFunnel(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof GROWTH_FUNNEL === "undefined") return;
+  el.innerHTML = GROWTH_FUNNEL.map((step, i) =>
+    `<div class="funnel-step reveal">${step}</div>${i < GROWTH_FUNNEL.length - 1 ? `<div class="funnel-arrow" aria-hidden="true">↓</div>` : ""}`
+  ).join("");
+}
+
+function renderPriorityTiers(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PRIORITY_TIERS === "undefined") return;
+  el.innerHTML = PRIORITY_TIERS.map(t => `
+    <div class="priority-card priority-card--${t.status.toLowerCase().replace(/\s+/g,'-')} reveal">
+      <div class="eyebrow">${t.tier}</div>
+      <p>${t.example}</p>
+      <div class="priority-status">${t.status}</div>
+    </div>`).join("");
+}
+
+function renderLookAtColumns(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof LOOK_AT_COLUMNS === "undefined") return;
+  el.innerHTML = LOOK_AT_COLUMNS.map(col => `
+    <div class="lookat-card reveal">
+      <h3>${col.title}</h3>
+      <ul class="lookat-list">${col.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderDiagnosticExample(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DIAGNOSTIC_EXAMPLE === "undefined") return;
+  const d = DIAGNOSTIC_EXAMPLE;
+  el.innerHTML = `
+    <div class="diagnostic-label">${d.label}</div>
+    <div class="diagnostic-flow">
+      <div class="diagnostic-step reveal"><div class="eyebrow">Problem</div><p>${d.problem}</p></div>
+      <div class="funnel-arrow funnel-arrow--h" aria-hidden="true">→</div>
+      <div class="diagnostic-step reveal"><div class="eyebrow">Diagnosis</div><p>${d.diagnosis}</p></div>
+      <div class="funnel-arrow funnel-arrow--h" aria-hidden="true">→</div>
+      <div class="diagnostic-step reveal"><div class="eyebrow">Action</div><p>${d.action}</p></div>
+      <div class="funnel-arrow funnel-arrow--h" aria-hidden="true">→</div>
+      <div class="diagnostic-step reveal"><div class="eyebrow">Measurement</div><p>${d.measurement}</p></div>
+    </div>`;
+}
+
+function renderAISearchComparison(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof AI_SEARCH_COMPARISON === "undefined") return;
+  const c = AI_SEARCH_COMPARISON;
+  el.innerHTML = `
+    <div class="compare-row reveal">
+      <div class="compare-label">Traditional Search</div>
+      <div class="compare-flow">${c.traditional.map((s,i) => `<span class="compare-chip">${s}</span>${i<c.traditional.length-1?'<span class="compare-arrow" aria-hidden="true">→</span>':''}`).join("")}</div>
+    </div>
+    <div class="compare-row reveal">
+      <div class="compare-label">AI Search</div>
+      <div class="compare-flow">${c.ai.map((s,i) => `<span class="compare-chip compare-chip--ai">${s}</span>${i<c.ai.length-1?'<span class="compare-arrow" aria-hidden="true">→</span>':''}`).join("")}</div>
+    </div>`;
+}
+
+function renderToolsGrouped(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof TOOLS_GROUPED === "undefined") return;
+  el.innerHTML = TOOLS_GROUPED.map(g => `
+    <div class="lookat-card reveal">
+      <h3>${g.group}</h3>
+      <ul class="lookat-list">${g.tools.map(t => `<li>${t}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderDeliverables(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DELIVERABLES === "undefined") return;
+  el.innerHTML = DELIVERABLES.map(d => `
+    <div class="lookat-card reveal">
+      <h3>${d.title}</h3>
+      <ul class="lookat-list">${d.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderPrinciples(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PRINCIPLES === "undefined") return;
+  el.innerHTML = PRINCIPLES.map(p => `
+    <div class="principle-row ${p.prominent ? 'principle-row--prominent' : ''} reveal">
+      <h3>${p.title}</h3>
+      <p>${p.copy}</p>
+    </div>`).join("");
+}
+
+function renderProofLinks(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PROOF_LINKS === "undefined") return;
+  el.innerHTML = PROOF_LINKS.map(p => `
+    <a class="work-card proof-card reveal" href="project-detail.html?slug=${p.slug}">
+      <div class="eyebrow">Proof</div>
+      <h3>${p.title}</h3>
+      <p>${p.copy}</p>
+      <div class="more">View the case study →</div>
+    </a>`).join("");
+}
+
+/* Fade/slide-in on scroll for elements with .reveal — respects reduced motion */
+function initScrollReveal(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    document.querySelectorAll(".reveal").forEach(el => el.classList.add("reveal-visible"));
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add("reveal-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+}
+
+/* ============================================================
+   CONSULTING SITE renderers (homepage / services / insights)
+   ============================================================ */
+
+function renderTrustStrip(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof TRUST_STRIP === "undefined") return;
+  el.innerHTML = TRUST_STRIP.map(m => `
+    <div class="metric-cell reveal">
+      <div class="metric-value">${m.value}</div>
+      <div class="metric-label">${m.label}</div>
+    </div>`).join("");
+}
+
+function renderProblemCards(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PROBLEM_CARDS === "undefined") return;
+  el.innerHTML = PROBLEM_CARDS.map(p => `
+    <div class="work-card problem-tile reveal">
+      <h3>${p.title}</h3>
+      <p>${p.copy}</p>
+      <a href="${p.ctaHref}" class="more">${p.ctaLabel}</a>
+    </div>`).join("");
+}
+
+function renderServiceCards(targetId, slugs){
+  const el = document.getElementById(targetId);
+  if(!el || typeof SERVICES === "undefined") return;
+  const list = slugs ? SERVICES.filter(s => slugs.includes(s.slug)) : SERVICES;
+  el.innerHTML = list.map(s => `
+    <div class="work-card service-tile reveal">
+      <div class="eyebrow">${s.name}</div>
+      <p style="margin-top:14px;">${s.short}</p>
+      <a href="services.html#${s.slug}" class="more">${s.name} →</a>
+    </div>`).join("");
+}
+
+function renderServiceDetail(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof SERVICES === "undefined") return;
+  el.innerHTML = SERVICES.map(s => `
+    <div class="service-block reveal" id="${s.slug}">
+      <div class="service-block-head">
+        <div class="eyebrow">${s.name}</div>
+        <h2>${s.headline}</h2>
+        <p class="prose" style="max-width:640px;margin-top:12px;">${s.copy}</p>
+      </div>
+      <div class="service-block-body">
+        <div>
+          <div class="playbook-label">What's included</div>
+          <ul class="chip-list">${s.includes.map(i => `<li>${i}</li>`).join("")}</ul>
+        </div>
+        <div class="service-block-meta">
+          <div><div class="playbook-label">Deliverable</div><p>${s.deliverable}</p></div>
+          <div><div class="playbook-label">Who it's for</div><p>${s.whoFor}</p></div>
+          <div class="service-block-links">
+            <a href="project-detail.html?slug=${s.caseStudySlug}" class="btn btn--sm btn--ghost">Relevant case study →</a>
+            <a href="contact.html?service=${encodeURIComponent(s.name)}" class="btn btn--sm btn--primary">${s.ctaLabel}</a>
+          </div>
+        </div>
+      </div>
+    </div>`).join("");
+}
+
+function renderEngagementModels(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ENGAGEMENT_MODELS === "undefined") return;
+  el.innerHTML = ENGAGEMENT_MODELS.map(m => `
+    <div class="work-card engagement-tile reveal">
+      <div class="eyebrow">${m.title}</div>
+      <p style="margin-top:14px;">${m.copy}</p>
+      <div class="playbook-label" style="margin-top:16px;">Best for</div>
+      <p style="font-size:13.5px;">${m.bestFor}</p>
+      <a href="contact.html" class="more">${m.ctaLabel}</a>
+    </div>`).join("");
+}
+
+function renderWhoIHelp(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof WHO_I_HELP === "undefined") return;
+  el.innerHTML = WHO_I_HELP.map(w => `
+    <div class="lookat-card reveal">
+      <h3>${w.title}</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">${w.copy}</p>
+    </div>`).join("");
+}
+
+function renderWhyWorkWithMe(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof WHY_WORK_WITH_ME === "undefined") return;
+  el.innerHTML = WHY_WORK_WITH_ME.map(w => `
+    <div class="process-step reveal">
+      <div class="process-step-n">${w.n}</div>
+      <div class="process-step-body">
+        <h3>${w.title}</h3>
+        <p>${w.copy}</p>
+      </div>
+    </div>`).join("");
+}
+
+function renderInsightsGrid(targetId, limit){
+  const el = document.getElementById(targetId);
+  if(!el || typeof INSIGHTS_ARTICLES === "undefined") return;
+  const list = limit ? INSIGHTS_ARTICLES.slice(0, limit) : INSIGHTS_ARTICLES;
+  el.innerHTML = list.map(a => `
+    <div class="article-card reveal">
+      <div class="eyebrow">${a.category}</div>
+      <h3>${a.title}</h3>
+      <p>${a.teaser}</p>
+      <div class="insight-status">In progress — full article coming soon</div>
+    </div>`).join("");
+}
+
+/* Three visually distinct homepage case-study layouts, per spec
+   ("do not make three identical cards"). Uses real projects/case
+   studies already in PROJECTS / CASE_STUDIES. */
+function renderCaseStudyShowcase(targetId){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  const items = allWorkItems().filter(i => ["neat-everyday-organic-growth", "cs-tracking-audit-saas", "equest-cro-funnel"].includes(i.slug));
+  if(items.length < 3) return;
+  const [a, b, c] = items;
+  el.innerHTML = `
+    <a class="showcase-feature reveal" href="project-detail.html?slug=${a.slug}">
+      <div class="project-card-top"><div class="eyebrow">${a.company || a.industry}</div><span class="kind-badge kind-badge--${(a._kind||'').toLowerCase().replace(/\s+/g,'-')}">${a._kind}</span></div>
+      <h3>${a.name}</h3>
+      <p>${a.summary}</p>
+      <div class="project-tags">${a.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
+      <div class="more">Read Case Study →</div>
+    </a>
+    <div class="showcase-side">
+      <a class="showcase-compact reveal" href="project-detail.html?slug=${b.slug}">
+        <div class="eyebrow">${b.region ? `${b.region} · ${b.industry}` : b.company}</div>
+        <h3>${b.name}</h3>
+        <div class="more">Read Case Study →</div>
+      </a>
+      <a class="showcase-compact reveal" href="project-detail.html?slug=${c.slug}">
+        <div class="eyebrow">${c.company || c.industry}</div>
+        <h3>${c.name}</h3>
+        <div class="more">Read Case Study →</div>
+      </a>
+    </div>`;
+}
+
 function renderSkillsJumpNav(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
@@ -360,6 +715,7 @@ function initContactForm(){
   const messageEl = form.querySelector("#f-message");
   const submitBtn = form.querySelector("#contact-submit");
   const submitLabel = submitBtn.querySelector(".btn-label");
+  const submitLabelDefault = submitLabel.textContent;
   const statusEl = form.querySelector("#form-status");
   const charCount = form.querySelector("#char-count");
 
@@ -441,7 +797,7 @@ function initContactForm(){
       setStatus("error", "Network error — please try again, or email me directly below.");
     } finally {
       submitBtn.disabled = false;
-      submitLabel.textContent = "Send message";
+      submitLabel.textContent = submitLabelDefault;
     }
   });
 }

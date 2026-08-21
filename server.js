@@ -50,7 +50,7 @@ app.post("/api/contact", async (req, res) => {
       return res.status(429).json({ success: false, message: "Too many submissions — please try again later." });
     }
 
-    const { name, email, message, botcheck } = req.body || {};
+    const { name, email, message, botcheck, company, website, inquiry_type, budget } = req.body || {};
 
     // Honeypot: real visitors never fill/check this hidden field
     if (botcheck) {
@@ -69,9 +69,13 @@ app.post("/api/contact", async (req, res) => {
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
-        subject: "New message from shaileshbhadra.com",
+        subject: inquiry_type ? `New consulting inquiry: ${inquiry_type}` : "New message from shaileshbhadra.com",
         name,
         email,
+        company: company || "(not provided)",
+        website: website || "(not provided)",
+        inquiry_type: inquiry_type || "(not specified)",
+        budget: budget || "(not provided)",
         message,
       }),
     });

@@ -4,8 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Shailesh Bhadra</title>
-<meta name="description" content="Get in touch with Shailesh Bhadra — technical SEO, analytics, performance marketing and AI-driven digital problem solving.">
+<meta name="description" content="Start a conversation with Shailesh Bhadra about an SEO audit, technical SEO, analytics or growth consulting project.">
 <link rel="canonical" href="https://shaileshbhadra.com/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Contact | Shailesh Bhadra">
+<meta property="og:description" content="Tell me what you're trying to solve — SEO, analytics, tracking or growth.">
+<meta property="og:url" content="https://shaileshbhadra.com/contact.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -18,8 +22,8 @@
     <div class="container contact-grid">
       <div>
         <div class="eyebrow">Contact</div>
-        <h1 style="font-size:clamp(30px,4vw,42px);margin-top:16px;">Let's talk about the problem, not the pitch.</h1>
-        <p class="prose" style="margin-top:16px;">Open to remote SEO, analytics and growth roles, and select project work. Reach out directly or use the form.</p>
+        <h1 style="font-size:clamp(30px,4vw,42px);margin-top:16px;">Tell me what you're trying to solve.</h1>
+        <p class="prose" style="margin-top:16px;">Whether you need an SEO audit, technical SEO support, analytics help, a growth strategy or ongoing consulting, tell me what you're working on.</p>
         <div class="contact-list" id="contact-details"></div>
       </div>
       <div>
@@ -40,20 +44,37 @@
             <span class="field-error" id="err-email"></span>
           </div>
           <div class="field">
+            <label for="f-company">Company <span class="field-optional">(optional)</span></label>
+            <input type="text" id="f-company" name="company" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="f-website">Website <span class="field-optional">(optional)</span></label>
+            <input type="text" id="f-website" name="website" autocomplete="url" placeholder="yoursite.com">
+          </div>
+          <div class="field">
+            <label for="f-inquiry">What do you need help with?</label>
+            <select id="f-inquiry" name="inquiry_type"></select>
+          </div>
+          <div class="field">
+            <label for="f-budget">Budget / engagement preference <span class="field-optional">(optional)</span></label>
+            <input type="text" id="f-budget" name="budget" placeholder="e.g. one-time audit, ongoing monthly, not sure yet">
+          </div>
+          <div class="field">
             <div class="field-label-row">
               <label for="f-message">Message</label>
               <span class="char-count" id="char-count">0 / 1000</span>
             </div>
-            <textarea id="f-message" name="message" required maxlength="1000"></textarea>
+            <textarea id="f-message" name="message" required maxlength="1000" placeholder="Tell me what you're trying to achieve, what isn't working and what you've already tried."></textarea>
             <span class="field-error" id="err-message"></span>
           </div>
 
           <button type="submit" class="btn btn--primary" id="contact-submit">
-            <span class="btn-label">Send message</span>
+            <span class="btn-label">Start the Conversation</span>
           </button>
 
           <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
         </form>
+        <p class="prose" style="margin-top:20px;font-size:13.5px;color:var(--ink-faint);">Prefer email? Reach me directly at <a href="#" id="prefer-email-link">—</a></p>
       </div>
     </div>
   </section>
@@ -67,6 +88,22 @@
   renderHeader("contact.html");
   renderFooter();
   initContactForm();
+
+  // Populate the inquiry-type dropdown from INQUIRY_TYPES (single source of truth)
+  const inquirySelect = document.getElementById("f-inquiry");
+  inquirySelect.innerHTML = `<option value="">Select one…</option>` +
+    INQUIRY_TYPES.map(t => `<option value="${t}">${t}</option>`).join("");
+
+  // Pre-select if arriving from a service page (contact.html?service=Technical%20SEO)
+  const params = new URLSearchParams(window.location.search);
+  const preselect = params.get("service");
+  if(preselect){
+    const match = Array.from(inquirySelect.options).find(o => o.value.toLowerCase().includes(preselect.toLowerCase()) || preselect.toLowerCase().includes(o.value.toLowerCase()));
+    if(match) inquirySelect.value = match.value;
+  }
+
+  document.getElementById("prefer-email-link").textContent = PROFILE.email;
+  document.getElementById("prefer-email-link").href = `mailto:${PROFILE.email}`;
 
   document.getElementById("contact-details").innerHTML = `
     <div class="contact-row"><span class="k">Email</span><span class="v"><a href="mailto:${PROFILE.email}">${PROFILE.email}</a></span></div>

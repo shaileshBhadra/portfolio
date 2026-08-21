@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insights | Shailesh Bhadra</title>
+<meta name="description" content="Writing on SEO, technical SEO, analytics, eCommerce and AI search — from 9+ years of hands-on practice, not generic SEO filler.">
+<link rel="canonical" href="https://shaileshbhadra.com/insights.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Insights | Shailesh Bhadra">
+<meta property="og:description" content="Original analysis on SEO, technical SEO, analytics, eCommerce and AI search from 9+ years of hands-on practice.">
+<meta property="og:url" content="https://shaileshbhadra.com/insights.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Insights | Shailesh Bhadra">
+<meta name="twitter:description" content="Original analysis on SEO, technical SEO, analytics, eCommerce and AI search from 9+ years of hands-on practice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <section class="section--tight">
+    <div class="container">
+      <div class="eyebrow">Insights</div>
+      <h1 style="font-size:clamp(30px,4.2vw,46px);margin-top:16px;max-width:760px;">Thinking beyond rankings.</h1>
+      <p class="prose" style="margin-top:16px;max-width:660px;">Original analysis from hands-on SEO, analytics and growth work — not generic AI-written filler. Full articles are being written; each topic below is a real angle from real practice, not a placeholder headline.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="article-grid" id="insights-full"></div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="cta-banner" id="cta-banner"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderHeader("insights.html");
+  renderFooter();
+  renderInsightsGrid("insights-full");
+  renderCtaBanner("cta-banner", {
+    heading: "Have a question these don't cover?",
+    body: "Happy to talk through the specific problem you're dealing with.",
+    ctaLabel: "Start a Conversation",
+    ctaHref: "contact.html",
+  });
+  initScrollReveal();
+</script>
+</body>
+</html>

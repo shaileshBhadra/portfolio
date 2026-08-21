@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO & Digital Growth Services | Shailesh Bhadra</title>
+<meta name="description" content="Senior SEO, analytics and digital growth support for businesses that need clarity, execution and measurable outcomes.">
+<link rel="canonical" href="https://shaileshbhadra.com/services.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SEO & Digital Growth Services | Shailesh Bhadra">
+<meta property="og:description" content="Senior SEO, analytics and digital growth support for businesses that need clarity, execution and measurable outcomes.">
+<meta property="og:url" content="https://shaileshbhadra.com/services.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SEO & Digital Growth Services | Shailesh Bhadra">
+<meta name="twitter:description" content="Senior SEO, analytics and digital growth support for businesses that need clarity, execution and measurable outcomes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <section class="section--tight">
+    <div class="container">
+      <div class="eyebrow">Services</div>
+      <h1 style="font-size:clamp(30px,4.2vw,46px);margin-top:16px;max-width:760px;">SEO &amp; Digital Growth Services</h1>
+      <p class="prose" style="margin-top:16px;max-width:660px;font-size:16.5px;">Senior SEO, analytics and digital growth support for businesses that need clarity, execution and measurable outcomes.</p>
+      <div class="jump-nav" id="services-jump-nav" style="margin-top:32px;"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div id="services-detail"></div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="cta-banner" id="cta-banner"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderHeader("services.html");
+  renderFooter();
+
+  document.getElementById("services-jump-nav").innerHTML = SERVICES.map(s =>
+    `<a href="#${s.slug}">${s.name}</a>`
+  ).join("");
+
+  renderServiceDetail("services-detail");
+  injectServiceListSchema();
+  renderCtaBanner("cta-banner", {
+    heading: "Not sure which service fits?",
+    body: "Tell me what you're trying to achieve and what's not working — I'll help you figure out where to start.",
+    ctaLabel: "Start the Conversation",
+    ctaHref: "contact.html",
+  });
+
+  initScrollReveal();
+</script>
+</body>
+</html>

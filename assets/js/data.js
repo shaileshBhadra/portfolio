@@ -6,9 +6,9 @@
 const PROFILE = {
   name: "Shailesh Bhadra",
   title: "Senior SEO, Performance Marketing & Analytics Specialist",
-  tagline: "Technical SEO, Analytics & Performance Marketing",
+  tagline: "SEO, Analytics & Digital Growth Consultant",
   subheading:
-    "I work across technical SEO, GA4 and server-side GTM, Google Ads and Meta Ads, Core Web Vitals, schema markup and AEO/GEO, AI-assisted workflows and automation — to identify problems, build practical solutions, and improve measurable business outcomes.",
+    "I help businesses solve SEO, analytics and digital growth problems — from technical issues and search visibility to tracking, conversion and acquisition. 9+ years across technical SEO, GA4 and server-side GTM, Google Ads and Meta Ads, Core Web Vitals, schema markup and AEO/GEO.",
   email: "shaileshbhadra@gmail.com",
   phone: "+91-9913392756",
   linkedin: "https://www.linkedin.com/in/bhadra-shailesh/",
@@ -509,12 +509,297 @@ const PLAYBOOK = [
   },
 ];
 
+/* ============================================================
+   APPROACH PAGE — structured content for approach.html.
+   Kept separate from PLAYBOOK/SKILLS above; this page tells the
+   same story in a tighter, more senior-portfolio format.
+   No invented metrics: anywhere a real number isn't available,
+   the copy uses a category label instead of a placeholder stat.
+   ============================================================ */
+
+const CAPABILITY_SNAPSHOT = [
+  { value: "9+", label: "Years Experience" },
+  { value: "SEO", label: "Technical + Content" },
+  { value: "Analytics", label: "GA4 + GTM + GSC" },
+  { value: "Paid", label: "Google Ads + Meta Ads" },
+];
+
+const PROCESS_STEPS = [
+  { n: "01", title: "Understand", subtitle: "Business & Growth Context", copy: "Understand the business model, target audience, commercial priorities and what success actually means." },
+  { n: "02", title: "Diagnose", subtitle: "Audit the Current System", copy: "Analyse technical SEO, search performance, analytics, tracking, content, paid media and conversion behaviour." },
+  { n: "03", title: "Prioritise", subtitle: "Find What Matters Most", copy: "Separate high-impact opportunities from low-value tasks using business impact, opportunity, confidence and implementation effort." },
+  { n: "04", title: "Plan", subtitle: "Build the Roadmap", copy: "Turn findings into a practical roadmap with clear priorities, dependencies, owners and measurable outcomes." },
+  { n: "05", title: "Implement", subtitle: "Execute & Validate", copy: "Work with development, content, design and marketing teams to implement changes and validate that they work as expected." },
+  { n: "06", title: "Measure", subtitle: "Prove the Outcome", copy: "Track visibility, traffic, engagement, leads, transactions and revenue to understand whether the work created meaningful business value." },
+];
+
+const PROBLEMS_SOLVED = [
+  {
+    title: "Organic Traffic Is Declining",
+    investigate: ["Search Console trends", "Ranking changes", "Technical changes", "Content decay", "Search demand", "Algorithm/environment changes"],
+    approach: "Separate demand changes from technical, content and visibility problems before deciding what to fix.",
+  },
+  {
+    title: "Google Isn't Indexing the Right Pages",
+    investigate: ["Crawlability", "Indexation", "Canonicals", "Robots.txt", "XML sitemaps", "Duplicate URLs", "Internal linking"],
+    approach: "Identify where the site's information architecture is preventing search engines from discovering or understanding the right content.",
+  },
+  {
+    title: "Traffic Is High, But Leads Aren't",
+    investigate: ["Search intent", "Landing pages", "Conversion tracking", "CTAs", "User behaviour", "Lead quality"],
+    approach: "Connect search performance with conversion behaviour instead of treating traffic as the final KPI.",
+  },
+  {
+    title: "Rankings Are Improving, But Revenue Isn't",
+    investigate: ["Keyword intent", "Commercial pages", "Conversion rate", "Attribution", "Traffic quality"],
+    approach: "Move the focus from ranking improvement to qualified traffic and business outcomes.",
+  },
+  {
+    title: "Analytics Data Can't Be Trusted",
+    investigate: ["GA4", "GTM", "Events", "Parameters", "Attribution", "Consent", "Cross-domain tracking"],
+    approach: "Audit the measurement architecture, identify discrepancies and create a reliable foundation for decision-making.",
+  },
+];
+
+const GROWTH_FUNNEL = ["SEO", "Visibility", "Qualified Traffic", "Engagement", "Leads / Transactions", "Revenue"];
+
+const PRIORITY_TIERS = [
+  { tier: "High Priority", status: "Optimise immediately", example: "Existing page ranking near page one + strong commercial intent + meaningful search demand + relatively low implementation effort." },
+  { tier: "Strategic", status: "Build roadmap", example: "Large content opportunity + strong commercial relevance + requires new content architecture." },
+  { tier: "Low Priority", status: "Defer", example: "Minor technical or metadata issue with limited traffic or business impact." },
+];
+
+const LOOK_AT_COLUMNS = [
+  { title: "Technical SEO", items: ["Crawlability", "Indexation", "Canonicals", "Redirects", "XML sitemaps", "Robots.txt", "JavaScript SEO", "Internal linking", "Structured data", "Core Web Vitals", "Site architecture", "Migration issues"] },
+  { title: "Search & Content", items: ["Search intent", "Keyword research", "SERP analysis", "Topic clusters", "Content gaps", "Content decay", "Cannibalisation", "On-page optimisation", "Internal linking", "Content architecture"] },
+  { title: "Analytics & Measurement", items: ["GA4", "Google Tag Manager", "Search Console", "Conversion tracking", "Event architecture", "Attribution", "Funnel analysis", "Data validation", "Marketing dashboards"] },
+  { title: "Paid Performance", items: ["Google Ads", "Meta Ads", "Campaign structure", "Conversion tracking", "Landing page analysis", "Search query analysis", "Budget allocation", "CPL / CPA / ROAS"] },
+];
+
+const DIAGNOSTIC_EXAMPLE = {
+  label: "Example diagnostic workflow — illustrates methodology, not a specific client result.",
+  problem: "Organic traffic is declining.",
+  diagnosis: "Search Console + GA4 + technical crawl + ranking data",
+  action: "Technical correction + content restructuring + internal linking",
+  measurement: "Clicks → Impressions → Rankings → Sessions → Conversions",
+};
+
+const AI_SEARCH_COMPARISON = {
+  traditional: ["Query", "SERP", "Website", "Conversion"],
+  ai: ["Query", "AI Answer", "Brand / Source Visibility", "Website / Action"],
+};
+
+const TOOLS_GROUPED = [
+  { group: "Search Intelligence", tools: ["Google Search Console", "Ahrefs", "SEMrush", "Screaming Frog", "Keyword Hero"] },
+  { group: "Measurement", tools: ["GA4", "Google Tag Manager", "Looker Studio", "Google Ads Conversion Tracking"] },
+  { group: "Paid Media", tools: ["Google Ads", "Meta Ads", "Meta Conversions API"] },
+  { group: "Technical", tools: ["Chrome DevTools", "PageSpeed Insights", "Rich Results Test", "Schema markup tools"] },
+  { group: "AI / Productivity", tools: ["ChatGPT", "Claude", "Perplexity", "Gemini", "AI-assisted research & automation workflows"] },
+];
+
+const DELIVERABLES = [
+  { title: "Technical SEO", items: ["Technical audit", "Prioritised implementation roadmap", "Indexation analysis", "Migration checklist"] },
+  { title: "SEO Strategy", items: ["SEO roadmap", "Keyword strategy", "Competitor analysis", "Content strategy", "Opportunity analysis"] },
+  { title: "Analytics", items: ["GA4 audit", "GTM implementation", "Conversion tracking", "Measurement framework"] },
+  { title: "Performance Marketing", items: ["Campaign audit", "Tracking setup", "Landing-page analysis", "Performance optimisation"] },
+];
+
+const PRINCIPLES = [
+  { title: "I Don't Chase Vanity Metrics.", copy: "Traffic is useful only when it supports the business." },
+  { title: "I Don't Blindly Follow SEO Checklists.", copy: "Every recommendation should have a reason." },
+  { title: "I Don't Separate SEO From Measurement.", copy: "If we can't measure the outcome, we can't properly evaluate the strategy." },
+  { title: "I Don't Recommend Everything at Once.", copy: "Prioritisation is part of the job." },
+  { title: "I Don't Hide Behind Tools.", copy: "Tools provide evidence. Experience provides judgement.", prominent: true },
+];
+
+const PROOF_LINKS = [
+  { title: "Technical SEO Case Study", copy: "See how technical problems can be diagnosed, prioritised and resolved.", slug: "neat-everyday-organic-growth" },
+  { title: "Analytics Case Study", copy: "See how tracking and measurement problems can be investigated and validated.", slug: "cs-tracking-audit-saas" },
+  { title: "Growth & Conversion Case Study", copy: "See how SEO, analytics and conversion performance can work together.", slug: "equest-cro-funnel" },
+];
+
+/* ============================================================
+   CONSULTING SITE — homepage, services.html, insights.html,
+   contact.html content. Repositions the site from portfolio to
+   SEO/Analytics/Growth consulting. No invented results anywhere:
+   category labels and real project links stand in for metrics
+   that aren't publicly available.
+   ============================================================ */
+
+const TRUST_STRIP = [
+  { value: "9+", label: "Years Experience" },
+  { value: "SEO", label: "Strategy & Technical" },
+  { value: "GA4", label: "Analytics" },
+  { value: "GTM", label: "Tracking" },
+  { value: "Paid Media", label: "Google · Meta" },
+  { value: "eCommerce", label: "SEO & Tracking" },
+];
+
+const PROBLEM_CARDS = [
+  { title: "Organic traffic isn't growing.", copy: "Technical issues, content gaps, search intent, competition or changing search demand may be hiding the real problem.", ctaLabel: "Explore SEO →", ctaHref: "services.html#technical-seo" },
+  { title: "Your data can't be trusted.", copy: "GA4, GTM, advertising platforms and business data don't tell the same story.", ctaLabel: "Explore Analytics →", ctaHref: "services.html#ga4-gtm" },
+  { title: "Traffic isn't becoming leads.", copy: "You have visibility, but the visitors aren't taking the actions that matter.", ctaLabel: "Explore Conversion →", ctaHref: "services.html#conversion-tracking" },
+  { title: "You don't know what to fix first.", copy: "Your audit has dozens of recommendations but no clear business priority.", ctaLabel: "Explore Strategy →", ctaHref: "services.html#seo-strategy" },
+];
+
+/* Full service catalogue — services.html renders all 9.
+   Homepage renders a curated subset (see HOME_SERVICE_SLUGS). */
+const SERVICES = [
+  {
+    slug: "technical-seo",
+    name: "Technical SEO",
+    short: "Find and fix the technical barriers affecting crawling, indexing, architecture and search visibility.",
+    headline: "Find what's preventing your website from being understood by search engines.",
+    copy: "Technical SEO is the infrastructure behind search visibility. I identify and prioritise issues affecting crawling, indexation, architecture, internal linking and search accessibility.",
+    includes: ["Crawlability", "Indexation", "Canonicalisation", "Redirects", "Sitemaps", "Robots.txt", "JavaScript SEO", "Internal linking", "Structured data", "Core Web Vitals", "Migration support"],
+    deliverable: "Prioritised technical roadmap with implementation guidance.",
+    whoFor: "Sites with crawl, indexation or architecture problems capping otherwise-solid content.",
+    ctaLabel: "Discuss a Technical SEO Project",
+    caseStudySlug: "neat-everyday-organic-growth",
+  },
+  {
+    slug: "seo-audit",
+    name: "SEO Audit",
+    short: "A prioritised audit that tells you what matters, why it matters, and what to do next — not a 100-item checklist.",
+    headline: "Stop guessing what is wrong with your SEO.",
+    copy: "A useful SEO audit should not be a list of 100 problems. It should explain what matters, why it matters and what should happen next.",
+    includes: ["Technical SEO", "Search Console", "Content", "On-page", "Architecture", "Internal linking", "Competitors", "Search intent", "Conversion opportunities"],
+    deliverable: "Prioritised audit + action roadmap.",
+    whoFor: "Businesses that need clarity before investing in ongoing SEO.",
+    ctaLabel: "Request an SEO Audit",
+    caseStudySlug: "cs-ads-gsc-error-resolution",
+  },
+  {
+    slug: "seo-strategy",
+    name: "SEO Strategy",
+    short: "Turn search demand, competition and business priorities into a practical SEO roadmap.",
+    headline: "Turn search opportunity into a practical growth roadmap.",
+    copy: "Strategy that starts with the business, not a keyword list — so the roadmap reflects what will actually move revenue, not just rankings.",
+    includes: ["Business analysis", "Keyword research", "Search intent", "Competitor analysis", "Content opportunities", "Information architecture", "Internal linking", "Technical priorities", "Conversion opportunities", "Measurement"],
+    deliverable: "Prioritised SEO roadmap.",
+    whoFor: "Teams that have data but no clear plan for what to do with it.",
+    ctaLabel: "Build My SEO Strategy",
+    caseStudySlug: "cs-uk-home-services",
+  },
+  {
+    slug: "content-strategy",
+    name: "Content Strategy",
+    short: "Create content because your audience needs it — not simply because a keyword tool suggested it.",
+    headline: "Create content your audience actually needs.",
+    copy: "Content should solve a real problem, demonstrate expertise and support the customer journey — not simply exist because a keyword has search volume.",
+    includes: ["Search intent", "Topic research", "Content gaps", "Content briefs", "Content optimisation", "Topic clusters", "Commercial content", "Expert-led content"],
+    deliverable: "Prioritised content roadmap with briefs.",
+    whoFor: "Sites publishing content that isn't ranking or converting.",
+    ctaLabel: "Discuss Content Strategy",
+    caseStudySlug: "cs-usa-wellness-dtc",
+  },
+  {
+    slug: "ga4-gtm",
+    name: "GA4 & GTM",
+    short: "Build a measurement system you can actually trust.",
+    headline: "Build a measurement system you can trust.",
+    copy: "Most 'attribution problems' are broken or duplicated tags, not modeling issues. I audit the measurement layer end to end before touching strategy.",
+    includes: ["GA4 audit", "GTM audit", "Events", "Parameters", "Conversions", "Data layer", "Cross-domain tracking", "Ecommerce tracking", "Tracking QA", "Documentation"],
+    deliverable: "Documented, auditable tracking setup.",
+    whoFor: "Teams whose GA4, Ads and CRM numbers don't agree.",
+    ctaLabel: "Fix My Analytics",
+    caseStudySlug: "cs-tracking-audit-saas",
+  },
+  {
+    slug: "conversion-tracking",
+    name: "Conversion Tracking",
+    short: "Know what happens after someone finds your website.",
+    headline: "Know what happens after someone finds your website.",
+    copy: "Forms, calls, WhatsApp clicks, bookings and purchases all need to be captured as real events — not assumed from session counts.",
+    includes: ["Forms", "Calls", "WhatsApp", "Email clicks", "Bookings", "Purchases", "Sign-ups", "Downloads", "Key interactions"],
+    deliverable: "Verified, event-level conversion tracking.",
+    whoFor: "Businesses that can't currently say which channel drove a lead.",
+    ctaLabel: "Set Up Conversion Tracking",
+    caseStudySlug: "cs-uae-real-estate",
+  },
+  {
+    slug: "ecommerce-seo",
+    name: "eCommerce SEO",
+    short: "Improve visibility across category, product and commercial search while removing technical barriers to discovery.",
+    headline: "Turn product discovery into organic growth.",
+    copy: "Faceted navigation, duplicate variants and thin category templates are the most common ceilings on e-commerce organic growth — usually one root cause, not hundreds of individual page problems.",
+    includes: ["Category architecture", "Product pages", "Faceted navigation", "Indexation", "Internal linking", "Structured data", "Search Console analysis", "Commercial intent", "Conversion analysis"],
+    deliverable: "Prioritised e-commerce SEO roadmap.",
+    whoFor: "Online stores with index bloat, thin PDPs, or stalled category rankings.",
+    ctaLabel: "Discuss eCommerce SEO",
+    caseStudySlug: "cs-india-local-dtc",
+  },
+  {
+    slug: "google-ads",
+    name: "Google Ads",
+    short: "Connect paid search to measurable outcomes, not platform-reported vanity metrics.",
+    headline: "Connect paid search to measurable outcomes.",
+    copy: "Performance Max and automated bidding still need real signal quality behind them. I audit account structure and tracking before touching budget.",
+    includes: ["Account audit", "Campaign structure", "Search terms", "Conversion tracking", "Landing pages", "Performance analysis", "Budget allocation"],
+    deliverable: "Account audit + prioritised fix list.",
+    whoFor: "Accounts where reported ROAS and real business results have drifted apart.",
+    ctaLabel: "Discuss Paid Search",
+    caseStudySlug: "cs-uk-home-services",
+  },
+  {
+    slug: "seo-analytics-consulting",
+    name: "SEO & Analytics Consulting",
+    short: "Senior SEO, analytics or technical expertise when your internal team needs support — without a full-time hire.",
+    headline: "Senior expertise, without the overhead of a full-time hire.",
+    copy: "For teams that already have marketing capacity but need a senior technical SEO/analytics perspective on a recurring basis — reviewing work, unblocking technical problems, and keeping strategy honest against the data.",
+    includes: ["Ongoing technical review", "Analytics oversight", "Roadmap sanity-checks", "Cross-functional support", "Ad-hoc troubleshooting"],
+    deliverable: "Ongoing advisory support, scoped to your team's cadence.",
+    whoFor: "Marketing teams and agencies that need a specialist, not a replacement team.",
+    ctaLabel: "Book a Consultation",
+    caseStudySlug: "cs-tracking-audit-saas",
+  },
+];
+
+const HOME_SERVICE_SLUGS = ["technical-seo", "seo-strategy", "content-strategy", "ga4-gtm", "ecommerce-seo", "google-ads"];
+
+const ENGAGEMENT_MODELS = [
+  { title: "Audit", copy: "One-time diagnosis and prioritised recommendations.", bestFor: "Businesses that need clarity before investing in ongoing SEO.", ctaLabel: "Request an Audit →" },
+  { title: "Project", copy: "Strategy and implementation around a specific growth problem.", bestFor: "Businesses with a defined SEO, analytics or acquisition challenge.", ctaLabel: "Discuss a Project →" },
+  { title: "Consulting", copy: "Senior SEO, analytics or technical expertise when your internal team needs support.", bestFor: "Marketing teams that need specialist guidance without a full-time hire.", ctaLabel: "Book a Consultation →" },
+  { title: "Ongoing", copy: "Continuous strategic and technical support across SEO, analytics and digital acquisition.", bestFor: "Businesses looking for an experienced long-term partner.", ctaLabel: "Let's Talk →" },
+];
+
+const WHO_I_HELP = [
+  { title: "Growing Businesses", copy: "Businesses that need experienced SEO and analytics support without building a large internal team." },
+  { title: "eCommerce", copy: "Brands looking to improve organic product/category visibility and connect search performance to transactions." },
+  { title: "Marketing Teams", copy: "Internal teams that need senior SEO, analytics, tracking or technical support." },
+  { title: "Agencies", copy: "Agencies looking for an experienced SEO and analytics partner for client projects." },
+];
+
+const WHY_WORK_WITH_ME = [
+  { n: "01", title: "Technical + Commercial Thinking", copy: "I can investigate technical SEO problems while understanding their impact on marketing and business performance." },
+  { n: "02", title: "Data-Led Decisions", copy: "I use Search Console, GA4, GTM, advertising data and website behaviour to understand the complete picture." },
+  { n: "03", title: "Practical Recommendations", copy: "The goal isn't the longest audit. It's knowing what should happen next." },
+  { n: "04", title: "Cross-Functional Experience", copy: "I can translate SEO requirements into practical actions for developers, content teams, marketers and business stakeholders." },
+  { n: "05", title: "Senior-Level Perspective", copy: "9+ years of hands-on experience across SEO, analytics, paid media, eCommerce and lead generation." },
+];
+
+/* Insights — teaser topics with a real, specific angle each.
+   Full-length articles aren't written yet; each teaser is honest
+   about that rather than faking a publish date or word count. */
+const INSIGHTS_ARTICLES = [
+  { title: "Why Organic Traffic Can Decline Even When Your Website Hasn't Changed", category: "SEO", teaser: "Search demand shifts, competitors move, and algorithm environments change independently of anything on your own site — the first diagnostic step is ruling those out before touching the site itself." },
+  { title: "Technical SEO Audit: What Actually Deserves Your Attention?", category: "Technical SEO", teaser: "Most audits generate 100+ line items. Most of the actual impact comes from 5–10 of them — usually the ones tied to a shared template, not a one-off page." },
+  { title: "Why GA4 Data Doesn't Always Match Your Business Data", category: "Analytics", teaser: "Different attribution windows and event definitions across GA4, Ads and a CRM will rarely agree exactly — the goal is knowing which gaps are normal and which ones mean a tag is broken." },
+  { title: "SEO Traffic vs Qualified Traffic: Why the Difference Matters", category: "SEO Strategy", teaser: "A traffic increase that doesn't shift leads or revenue is usually a sign the ranking gains landed on the wrong intent, not that SEO 'stopped working.'" },
+  { title: "How to Prioritise 100 SEO Recommendations", category: "SEO Strategy", teaser: "Business impact, search opportunity, confidence and implementation effort — in that order — turn an overwhelming audit into a roadmap a team can actually execute." },
+  { title: "What AI Search Actually Changes for SEO — And What It Doesn't", category: "AI Search", teaser: "AI Overviews and answer engines change where clicks come from, not the underlying requirement to be discoverable, well-structured and genuinely authoritative." },
+  { title: "Why Ranking #1 Doesn't Always Mean More Business", category: "SEO Strategy", teaser: "A top ranking on a query with the wrong intent, low commercial value, or a broken conversion path underneath it won't move revenue — rank tracking alone can't tell you which is which." },
+  { title: "GA4 + GTM: The Measurement Foundation Most Marketing Teams Underestimate", category: "Analytics", teaser: "Every channel decision downstream — SEO, paid, CRO — inherits whatever errors exist in the tracking layer. It's usually the least glamorous fix with the highest leverage." },
+];
+
+const INQUIRY_TYPES = ["SEO Audit", "Technical SEO", "SEO Strategy", "Content Strategy", "Analytics / GA4 / GTM", "Conversion Tracking", "eCommerce SEO", "Google Ads", "Ongoing Consulting", "Not sure yet"];
+
 const NAV_LINKS = [
   { label: "Home", href: "index.html" },
-  { label: "About", href: "about.html" },
-  { label: "Skills & Tools", href: "skills.html" },
-  { label: "Approach", href: "approach.html" },
+  { label: "Services", href: "services.html" },
   { label: "Work", href: "work.html" },
-  { label: "Experience", href: "experience.html" },
-  { label: "Contact", href: "contact.html" },
+  { label: "Approach", href: "approach.html" },
+  { label: "About", href: "about.html" },
+  { label: "Insights", href: "insights.html" },
 ];
