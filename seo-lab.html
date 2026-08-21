@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEO Lab — Shailesh Bhadra</title>
+<meta name="description" content="Technical SEO, keyword research, search intent, e-commerce SEO and more — Shailesh Bhadra's SEO knowledge hub.">
+<link rel="canonical" href="https://shaileshbhadra.com/seo-lab.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <section class="section--tight">
+    <div class="container">
+      <div class="eyebrow">SEO Lab</div>
+      <h1 style="font-size:clamp(30px,4vw,44px);margin-top:16px;max-width:760px;">SEO, worked through in the open.</h1>
+      <p class="prose" style="margin-top:16px;max-width:680px;">Topics I write and teach on. Articles are being added under each — this page will grow into a full technical SEO reference.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="topic-chip-grid" id="seo-topics"></div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Latest</div>
+        <h2>SEO articles.</h2>
+      </div>
+      <div class="article-grid" id="seo-articles"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderHeader("seo-lab.html");
+  renderFooter();
+  renderSEOTopics("seo-topics");
+  renderArticleCards("seo-articles", "SEO");
+</script>
+</body>
+</html>

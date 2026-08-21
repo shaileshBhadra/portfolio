@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowledge — Shailesh Bhadra</title>
+<meta name="description" content="Articles on SEO, Shopify, analytics, Google Ads, Meta Ads, AI, automation and e-commerce by Shailesh Bhadra.">
+<link rel="canonical" href="https://shaileshbhadra.com/knowledge.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <section class="section--tight">
+    <div class="container">
+      <div class="eyebrow">Knowledge</div>
+      <h1 style="font-size:clamp(30px,4vw,44px);margin-top:16px;max-width:760px;">Notes from the work.</h1>
+      <p class="prose" style="margin-top:16px;">Writing on SEO, Shopify, analytics, paid media, AI and automation — added as case studies and lessons are documented.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="filter-bar" id="article-filters"></div>
+      <div class="article-grid" id="article-grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderHeader("knowledge.html");
+  renderFooter();
+
+  function renderArticleFilters(){
+    const el = document.getElementById("article-filters");
+    let active = "All";
+    function draw(){
+      el.innerHTML = ARTICLE_CATEGORIES.map(c =>
+        `<button class="filter-btn ${c===active?'active':''}" data-cat="${c}">${c}</button>`
+      ).join("");
+      el.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          active = btn.dataset.cat;
+          draw();
+          renderArticleCards("article-grid", active);
+        });
+      });
+    }
+    draw();
+    renderArticleCards("article-grid", active);
+  }
+  renderArticleFilters();
+</script>
+</body>
+</html>

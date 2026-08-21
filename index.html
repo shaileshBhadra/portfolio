@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shailesh Bhadra — SEO, E-commerce &amp; AI-Driven Digital Problem Solving</title>
+<meta name="description" content="Shailesh Bhadra is a Senior SEO, Performance Marketing &amp; Analytics Specialist with 9+ years driving organic growth, e-commerce optimization and AI-assisted digital problem solving.">
+<link rel="canonical" href="https://shaileshbhadra.com/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shailesh Bhadra — SEO, E-commerce & AI-Driven Digital Problem Solving">
+<meta property="og:description" content="9+ years driving organic growth, e-commerce optimization and AI-assisted digital problem solving across SEO, Shopify, analytics and paid media.">
+<meta property="og:url" content="https://shaileshbhadra.com/index.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shailesh Bhadra — SEO, E-commerce & AI-Driven Digital Problem Solving">
+<meta name="twitter:description" content="9+ years driving organic growth, e-commerce optimization and AI-assisted digital problem solving.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Shailesh Bhadra",
+  "jobTitle": "Senior SEO, Performance Marketing & Analytics Specialist",
+  "email": "mailto:shaileshbhadra@gmail.com",
+  "url": "https://shaileshbhadra.com/",
+  "sameAs": ["https://www.linkedin.com/in/bhadra-shailesh/"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Shailesh Bhadra — Portfolio",
+  "url": "https://shaileshbhadra.com/"
+}
+</script>
+</head>
+<body>
+
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">SEO · E-COMMERCE · ANALYTICS · AI · AUTOMATION</div>
+        <h1>SEO, E-commerce &amp; <em>AI-Driven</em><br>Digital Problem Solving.</h1>
+        <p class="lede">I work across SEO, Shopify, analytics, digital marketing, AI-assisted workflows and automation — to identify problems, build practical solutions, and improve measurable business outcomes.</p>
+        <div class="btn-row">
+          <a href="projects.html" class="btn btn--primary">View My Work</a>
+          <a href="resume.html" class="btn btn--ghost">View Resume</a>
+        </div>
+      </div>
+      <div class="hero-diagram">
+        <div class="hero-diagram-title">// how I approach a problem</div>
+        <div class="hero-flow" id="hero-flow"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="metric-strip">
+    <div class="container">
+      <div class="metric-grid" id="metric-strip"></div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">What I work on</div>
+        <h2>Six areas, one working method.</h2>
+        <p>Each area feeds the others — SEO informs paid strategy, analytics validates both, and AI accelerates all of it.</p>
+      </div>
+      <div class="grid-6" id="work-areas"></div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">My work pattern</div>
+        <h2>I don't start with a tool. I start with the problem.</h2>
+        <p>I understand the business objective, collect the relevant data, investigate the issue, use appropriate tools and AI to accelerate research and implementation, validate the result and continuously improve the solution.</p>
+      </div>
+      <div class="pattern-rail" id="work-pattern"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Featured projects</div>
+        <h2>Case studies, not a skills list.</h2>
+        <p>A working sample of the projects behind the numbers above. More are being added as case studies are documented.</p>
+      </div>
+      <div class="project-grid" id="featured-projects"></div>
+      <div style="margin-top:36px;">
+        <a href="projects.html" class="btn btn--ghost">View all projects</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderHeader("index.html");
+  renderFooter();
+  renderMetricStrip("metric-strip");
+  renderWorkAreas("work-areas");
+  renderWorkPattern("work-pattern");
+  renderProjectCards("featured-projects");
+
+  document.getElementById("hero-flow").innerHTML = WORK_PATTERN.map((s,i) => `
+    <div class="hero-flow-item">
+      <span class="dot"></span> ${s.step}
+    </div>`).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume — Shailesh Bhadra</title>
+<meta name="description" content="Shailesh Bhadra's resume — profile, skills, experience, education and contact.">
+<link rel="canonical" href="https://shaileshbhadra.com/resume.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <section class="section--tight">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;">
+        <div>
+          <div class="eyebrow">Resume</div>
+          <h1 style="font-size:clamp(30px,4vw,44px);margin-top:16px;" id="resume-name"></h1>
+          <p class="prose" style="margin-top:10px;" id="resume-title"></p>
+        </div>
+        <a href="assets/Shailesh_Bhadra_Resume.pdf" download class="btn btn--primary">Download Resume (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+
+      <div class="resume-section">
+        <h3>Profile</h3>
+        <p class="prose" id="resume-summary"></p>
+      </div>
+
+      <div class="resume-section">
+        <h3>Skills &amp; Tools</h3>
+        <div id="resume-skills"></div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Experience</h3>
+        <div class="timeline" id="resume-experience"></div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Education</h3>
+        <div id="resume-education"></div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Certifications</h3>
+        <div id="resume-certs"></div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Contact</h3>
+        <div class="contact-list" style="margin-top:0;">
+          <div class="contact-row"><span class="k">Email</span><span class="v" id="resume-email"></span></div>
+          <div class="contact-row"><span class="k">Phone</span><span class="v" id="resume-phone"></span></div>
+          <div class="contact-row"><span class="k">LinkedIn</span><span class="v" id="resume-linkedin"></span></div>
+          <div class="contact-row"><span class="k">Location</span><span class="v" id="resume-location"></span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  renderHeader("resume.html");
+  renderFooter();
+
+  document.getElementById("resume-name").textContent = PROFILE.name;
+  document.getElementById("resume-title").textContent = PROFILE.title;
+  document.getElementById("resume-summary").textContent = PROFILE.summary;
+  document.getElementById("resume-email").innerHTML = `<a href="mailto:${PROFILE.email}">${PROFILE.email}</a>`;
+  document.getElementById("resume-phone").textContent = PROFILE.phone;
+  document.getElementById("resume-linkedin").innerHTML = `<a href="${PROFILE.linkedin}" target="_blank" rel="noopener">${PROFILE.linkedin.replace('https://www.','')}</a>`;
+  document.getElementById("resume-location").textContent = PROFILE.location;
+
+  renderSkills("resume-skills");
+  renderTimeline("resume-experience");
+
+  document.getElementById("resume-education").innerHTML = EDUCATION.map(e => `
+    <div style="margin-bottom:14px;">
+      <div style="font-size:15px;">${e.degree}</div>
+      <div style="font-family:var(--font-mono);font-size:12.5px;color:var(--ink-faint);margin-top:4px;">${e.school} · ${e.year}</div>
+    </div>`).join("");
+
+  document.getElementById("resume-certs").innerHTML = CERTIFICATIONS.length
+    ? CERTIFICATIONS.map(c => `<div>${c}</div>`).join("")
+    : `<p class="placeholder-note">[ADD CERTIFICATIONS]</p>`;
+</script>
+</body>
+</html>
