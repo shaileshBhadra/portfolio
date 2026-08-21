@@ -76,6 +76,17 @@
     </div>
   </section>
 
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Case studies</div>
+        <h2>Work across markets and problem types.</h2>
+        <p>Client details are withheld where confidential — shown by industry and region instead. Content reflects real work, not invented scenarios.</p>
+      </div>
+      <div class="case-slider" id="case-slider"></div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container two-col">
       <div>
@@ -85,6 +96,7 @@
       <div>
         <p class="prose">Every engagement starts with the objective — not a checklist of tactics. I audit the current state, form a view from the data, prioritise the changes with the most impact, implement them, and measure against the original goal. AI speeds up the research and build steps; the judgment calls stay mine.</p>
         <a href="about.html" class="btn btn--sm btn--ghost" style="margin-top:20px;">More about how I work</a>
+        <a href="approach.html" class="btn btn--sm btn--ghost" style="margin-top:20px;margin-left:12px;">See problems I've solved</a>
       </div>
     </div>
   </section>
@@ -108,8 +120,9 @@
   renderMetricStrip("metric-strip");
   renderAboutTeaser("about-teaser");
   renderWorkAreas("work-areas");
-  renderProjectCards("featured-projects");
+  renderProjectCards("featured-projects", PROJECTS.map(p => ({ ...p, _kind: "Client Project" })));
   renderCtaBanner("cta-banner");
+  renderCaseStudySlider("case-slider");
   injectPersonSchema();
 </script>
 </body>

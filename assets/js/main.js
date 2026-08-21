@@ -184,26 +184,128 @@ function renderSkills(targetId){
       <div class="tool-list">
         ${block.tools.map(t => `
           <div class="tool-row">
-            <div class="tool-name">${t.name}</div>
+            <div class="tool-row-head">
+              <div class="tool-name">${t.name}</div>
+              ${t.tier && t.tier !== "—" ? `<span class="tier-badge tier-badge--${t.tier.toLowerCase().replace(/[^a-z]+/g,'-')}">${t.tier}</span>` : ""}
+            </div>
             <div class="tool-use">${t.use}</div>
           </div>`).join("")}
       </div>
     </div>`).join("");
 }
 
-function renderProjectCards(targetId){
+function allWorkItems(){
+  const named = PROJECTS.map(p => ({ ...p, _kind: "Client Project" }));
+  const studies = (typeof CASE_STUDIES !== "undefined" ? CASE_STUDIES : []).map(c => ({ ...c, _kind: c.type || "Case Study" }));
+  return [...named, ...studies];
+}
+
+function findWorkItem(slug){
+  return allWorkItems().find(i => i.slug === slug);
+}
+
+function renderProjectCards(targetId, items){
   const el = document.getElementById(targetId);
   if(!el) return;
-  el.innerHTML = PROJECTS.map(p => `
+  const list = items || allWorkItems();
+  el.innerHTML = list.map(p => `
     <a class="project-card" href="project-detail.html?slug=${p.slug}">
       <div class="project-body">
-        <div class="eyebrow">${p.company}</div>
+        <div class="project-card-top">
+          <div class="eyebrow">${p.company || p.industry}</div>
+          <span class="kind-badge kind-badge--${(p._kind||'').toLowerCase().replace(/\s+/g,'-')}">${p._kind}</span>
+        </div>
         <h3>${p.name}</h3>
         <p class="summary">${p.summary}</p>
         <div class="project-tags">${p.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
         <div class="project-result">${p.result}</div>
       </div>
     </a>`).join("");
+}
+
+function renderProjectFilters(filterTargetId, gridTargetId){
+  const filterEl = document.getElementById(filterTargetId);
+  if(!filterEl) return;
+  const items = allWorkItems();
+  const kinds = ["All", ...Array.from(new Set(items.map(i => i._kind)))];
+  let active = "All";
+
+  function draw(){
+    filterEl.innerHTML = kinds.map(k =>
+      `<button class="filter-btn ${k===active?'active':''}" data-kind="${k}">${k}</button>`
+    ).join("");
+    filterEl.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        active = btn.dataset.kind;
+        draw();
+        const filtered = active === "All" ? items : items.filter(i => i._kind === active);
+        renderProjectCards(gridTargetId, filtered);
+      });
+    });
+  }
+  draw();
+  renderProjectCards(gridTargetId, items);
+}
+
+/* Homepage slider for featured case studies */
+function renderCaseStudySlider(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof CASE_STUDIES === "undefined") return;
+  const items = CASE_STUDIES;
+  let index = 0;
+
+  function draw(){
+    const c = items[index];
+    el.innerHTML = `
+      <div class="slider-card">
+        <div class="project-card-top">
+          <div class="eyebrow">${c.region} · ${c.industry}</div>
+          <span class="kind-badge kind-badge--${c.type.toLowerCase().replace(/\s+/g,'-')}">${c.type}</span>
+        </div>
+        <h3>${c.name}</h3>
+        <p class="summary">${c.summary}</p>
+        <div class="project-tags">${c.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
+        <a href="project-detail.html?slug=${c.slug}" class="btn btn--sm btn--ghost" style="margin-top:16px;">Read the case study</a>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="slider-prev" aria-label="Previous case study">←</button>
+        <div class="slider-dots">${items.map((_, i) => `<span class="slider-dot ${i===index?'active':''}"></span>`).join("")}</div>
+        <button class="slider-btn" id="slider-next" aria-label="Next case study">→</button>
+      </div>`;
+    el.querySelector("#slider-prev").addEventListener("click", () => { index = (index - 1 + items.length) % items.length; draw(); });
+    el.querySelector("#slider-next").addEventListener("click", () => { index = (index + 1) % items.length; draw(); });
+  }
+  draw();
+}
+
+function renderPlaybook(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PLAYBOOK === "undefined") return;
+  el.innerHTML = PLAYBOOK.map(section => `
+    <div class="playbook-section" id="playbook-${section.theme.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
+      <div class="section-head">
+        <div class="eyebrow">${section.theme}</div>
+        <p class="prose" style="max-width:720px;margin-top:8px;">${section.intro}</p>
+      </div>
+      <div class="playbook-grid">
+        ${section.items.map(i => `
+          <div class="playbook-card">
+            <h3>${i.issue}</h3>
+            <div class="playbook-label">The problem</div>
+            <p>${i.detail}</p>
+            <div class="playbook-label playbook-label--fix">How I approach it</div>
+            <p>${i.fix}</p>
+          </div>`).join("")}
+      </div>
+    </div>`).join("");
+}
+
+function renderPlaybookJumpNav(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PLAYBOOK === "undefined") return;
+  el.innerHTML = PLAYBOOK.map(section =>
+    `<a href="#playbook-${section.theme.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">${section.theme}</a>`
+  ).join("");
 }
 
 function renderSkillsJumpNav(targetId){
@@ -219,18 +321,23 @@ function renderProjectDetail(targetId){
   if(!el) return;
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("slug");
-  const p = PROJECTS.find(x => x.slug === slug) || PROJECTS[0];
+  const p = findWorkItem(slug) || allWorkItems()[0];
+  const isCaseStudy = !!p.industry;
   document.title = `${p.name} — Shailesh Bhadra`;
   el.innerHTML = `
     <div class="container">
       <div class="detail-hero">
         <a class="back-link" href="work.html">← All work</a>
-        <div class="eyebrow" style="margin-top:20px;">${p.company}</div>
+        <div class="project-card-top" style="margin-top:20px;">
+          <div class="eyebrow">${isCaseStudy ? `${p.region} · ${p.industry}` : p.company}</div>
+          <span class="kind-badge kind-badge--${(p._kind||p.type||'').toLowerCase().replace(/\s+/g,'-')}">${p._kind || p.type || "Client Project"}</span>
+        </div>
         <h1 style="font-size:clamp(28px,4vw,42px);margin-top:14px;">${p.name}</h1>
         <div class="detail-meta-row">
-          <span>ROLE: ${p.role}</span>
+          ${isCaseStudy ? "" : `<span>ROLE: ${p.role}</span>`}
           <span>TOOLS: ${p.tools.join(", ")}</span>
         </div>
+        ${isCaseStudy ? `<p class="prose" style="margin-top:16px;color:var(--ink-faint);font-size:13px;">Client name withheld under confidentiality. Details reflect a real engagement of this type; figures are representative, not audited public results.</p>` : ""}
       </div>
       <div class="case-block"><h3>Challenge</h3><p>${p.challenge}</p></div>
       <div class="case-block"><h3>Approach</h3><p>${p.approach}</p></div>
