@@ -24,10 +24,8 @@
       </div>
       <div>
         <form id="contact-form" novalidate>
-          <!-- Web3Forms: get a free access key at web3forms.com and paste it below.
-               No account/login needed — enter your email, they email you a key instantly. -->
-          <input type="hidden" name="access_key" value="69c389ce-ce8d-47e5-b341-d3b0687444bc">
-          <input type="hidden" name="subject" value="New message from shaileshbhadra.com">
+          <!-- Submits to our own /api/contact endpoint (server.js), which holds
+               the Web3Forms key server-side as an environment variable. -->
           <!-- Honeypot spam trap: hidden from real visitors, bots tend to fill every field -->
           <input type="checkbox" name="botcheck" id="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 

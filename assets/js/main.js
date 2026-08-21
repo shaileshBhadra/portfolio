@@ -309,12 +309,6 @@ function initContactForm(){
       return;
     }
 
-    const accessKey = form.querySelector('input[name="access_key"]').value;
-    if(!accessKey || accessKey === "YOUR_WEB3FORMS_ACCESS_KEY"){
-      setStatus("error", "Form isn't wired up yet — add a Web3Forms access key to send this directly.");
-      return;
-    }
-
     submitBtn.disabled = true;
     submitLabel.textContent = "Sending…";
     setStatus("pending", "Sending your message…");
@@ -322,7 +316,7 @@ function initContactForm(){
     try{
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData);
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(payload),
