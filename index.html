@@ -125,9 +125,11 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+(async () => {
   renderHeader("index.html");
   renderFooter();
-  renderReadoutPanel("hero-readout");
+  const site = await loadSiteContent();
+  renderReadoutPanel("hero-readout", site.status);
   renderTrustStrip("trust-strip");
   renderProblemCards("problem-cards");
   renderServiceCards("service-cards", HOME_SERVICE_SLUGS);
@@ -142,6 +144,7 @@
   injectPersonSchema();
   injectProfessionalServiceSchema();
   initScrollReveal();
+})();
 </script>
 </body>
 </html>

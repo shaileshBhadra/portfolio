@@ -650,14 +650,38 @@ button{ font-family:inherit; }
 .engagement-tile{ display:flex; flex-direction:column; }
 
 /* Services detail blocks (services.html) */
-.service-block{ padding:52px 0; border-top:1px solid var(--line-soft); scroll-margin-top:90px; }
-.service-block:first-of-type{ border-top:none; padding-top:24px; }
-.service-block-head h2{ font-size:clamp(22px,2.6vw,30px); margin-top:10px; }
-.service-block-body{ display:grid; grid-template-columns:1.1fr 1fr; gap:40px; margin-top:28px; }
-@media (max-width:800px){ .service-block-body{ grid-template-columns:1fr; } }
-.service-block-meta{ display:flex; flex-direction:column; gap:20px; }
-.service-block-meta p{ font-size:14px; color:var(--ink-soft); line-height:1.6; }
-.service-block-links{ display:flex; gap:12px; flex-wrap:wrap; margin-top:6px; }
+/* Compact service cards — 2-up grid, icon + outcomes + CTA, details on demand */
+.service-grid2{ display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+@media (max-width:800px){ .service-grid2{ grid-template-columns:1fr; } }
+.service-card2{
+  border:1px solid var(--line); background:var(--surface); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  border-radius:var(--radius); padding:30px; scroll-margin-top:90px;
+  transition:box-shadow .2s var(--ease), transform .2s var(--ease), border-color .2s var(--ease);
+}
+.service-card2:hover{ box-shadow:var(--shadow-glow); border-color:rgba(255,122,51,0.35); }
+.service-card2-icon{
+  width:44px; height:44px; border-radius:10px; background:var(--accent-tint); border:1px solid rgba(255,122,51,0.25);
+  display:flex; align-items:center; justify-content:center; color:var(--accent); margin-bottom:16px;
+}
+.service-card2-icon svg{ width:22px; height:22px; }
+.service-card2 h3{ font-size:19px; margin-bottom:10px; }
+.service-card2-desc{ font-size:14px; color:var(--ink-soft); line-height:1.6; margin-bottom:18px; }
+.outcome-list{ margin-top:6px; margin-bottom:20px; }
+.outcome-list li{
+  position:relative; padding-left:18px; font-size:13.5px; color:var(--ink-soft); line-height:1.7;
+}
+.outcome-list li::before{
+  content:""; position:absolute; left:0; top:9px; width:6px; height:6px; border-radius:50%; background:var(--accent);
+}
+.service-card2-actions{ display:flex; flex-direction:column; gap:10px; align-items:flex-start; }
+.service-card2-btn{ width:100%; justify-content:center; }
+.details-toggle{
+  background:none; border:none; color:var(--ink-faint); font-family:var(--font-mono); font-size:12px;
+  cursor:pointer; padding:4px 0; text-decoration:underline; text-underline-offset:3px;
+}
+.details-toggle:hover{ color:var(--accent); }
+.service-card2-details{ margin-top:18px; padding-top:18px; border-top:1px solid var(--line-soft); }
+.service-card2-details p{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin-top:6px; }
 
 /* Insights cards — extend .article-card */
 .insight-status{ font-family:var(--font-mono); font-size:11px; color:var(--ink-faint); margin-top:14px; padding-top:12px; border-top:1px solid var(--line-soft); }

@@ -27,13 +27,13 @@
       <h1 style="font-size:clamp(30px,4.2vw,46px);margin-top:16px;max-width:760px;">SEO &amp; Digital Growth Services</h1>
       <p class="prose" style="margin-top:16px;max-width:660px;font-size:16.5px;">Senior SEO, analytics and digital growth support for businesses that need clarity, execution and measurable outcomes.</p>
       <p class="prose" style="margin-top:10px;max-width:660px;font-size:14px;color:var(--ink-faint);">For growing businesses, eCommerce brands, marketing teams and agencies that need senior expertise without the overhead of a full-time hire.</p>
-      <div class="jump-nav" id="services-jump-nav" style="margin-top:32px;"></div>
+      <div class="filter-bar" id="services-filter" style="margin-top:32px;"></div>
     </div>
   </section>
 
   <section class="section" style="padding-top:0;">
     <div class="container">
-      <div id="services-detail"></div>
+      <div class="service-grid2" id="services-detail"></div>
     </div>
   </section>
 
@@ -62,11 +62,7 @@
   renderHeader("services.html");
   renderFooter();
 
-  document.getElementById("services-jump-nav").innerHTML = SERVICES.map(s =>
-    `<a href="#${s.slug}">${s.name}</a>`
-  ).join("");
-
-  renderServiceDetail("services-detail");
+  renderServiceCatalogue("services-detail", "services-filter");
   renderEngagementModels("engagement-models");
   injectServiceListSchema();
   renderCtaBanner("cta-banner", {

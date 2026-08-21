@@ -46,9 +46,11 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+(async () => {
   renderHeader("experience.html");
   renderFooter();
-  renderTimeline("experience-timeline");
+  const site = await loadSiteContent();
+  renderTimeline("experience-timeline", site.experience);
 
   document.getElementById("education-list").innerHTML = EDUCATION.map(e => `
     <div style="margin-bottom:16px;">
@@ -59,6 +61,7 @@
   document.getElementById("cert-list").innerHTML = CERTIFICATIONS.length
     ? CERTIFICATIONS.map(c => `<div>${c}</div>`).join("")
     : `<p class="placeholder-note">[ADD CERTIFICATIONS]</p>`;
+})();
 </script>
 </body>
 </html>

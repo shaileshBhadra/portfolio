@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Shailesh Bhadra</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .admin-wrap{ max-width:760px; margin:0 auto; padding:64px 24px; }
+  .admin-card{ border:1px solid var(--line); background:var(--surface); border-radius:var(--radius); padding:32px; margin-bottom:24px; }
+  .admin-card h2{ font-size:18px; margin-bottom:16px; }
+  .admin-field{ margin-bottom:16px; }
+  .admin-field label{ display:block; font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-faint); margin-bottom:6px; }
+  .admin-field input, .admin-field textarea{ width:100%; border:1px solid var(--line); background:var(--bg-elevated); padding:11px 12px; color:var(--ink); border-radius:var(--radius-sm); font-family:var(--font-body); font-size:14px; }
+  .admin-field textarea{ min-height:80px; resize:vertical; }
+  .exp-entry{ border:1px solid var(--line-soft); border-radius:var(--radius-sm); padding:18px; margin-bottom:14px; position:relative; }
+  .exp-entry-remove{ position:absolute; top:14px; right:14px; font-family:var(--font-mono); font-size:11px; color:#FF8A7A; cursor:pointer; background:none; border:none; }
+  .admin-status{ font-size:13px; margin-top:12px; min-height:18px; }
+  .admin-status--ok{ color:#7CD992; }
+  .admin-status--err{ color:#FF8A7A; }
+  .resume-current{ font-size:13px; color:var(--ink-soft); margin-bottom:14px; }
+  #login-screen, #dashboard{ display:none; }
+</style>
+</head>
+<body>
+
+<div class="admin-wrap">
+  <div class="eyebrow">Admin</div>
+  <h1 style="font-size:26px;margin-top:12px;">Site content</h1>
+
+  <div id="login-screen">
+    <div class="admin-card" style="margin-top:24px;">
+      <h2>Log in</h2>
+      <div class="admin-field">
+        <label for="admin-password">Password</label>
+        <input type="password" id="admin-password" autocomplete="current-password">
+      </div>
+      <button class="btn btn--primary btn--sm" id="login-btn">Log in</button>
+      <div class="admin-status" id="login-status"></div>
+    </div>
+  </div>
+
+  <div id="dashboard">
+    <div class="admin-card" id="storage-status-card">
+      <h2>Storage</h2>
+      <p class="prose" style="font-size:13px;" id="storage-status-text">Checking…</p>
+    </div>
+
+    <div class="admin-card">
+      <h2>Resume PDF</h2>
+      <div class="resume-current" id="resume-current-info">Checking current file…</div>
+      <div class="admin-field">
+        <label for="resume-file">Replace with a new PDF</label>
+        <input type="file" id="resume-file" accept="application/pdf">
+      </div>
+      <button class="btn btn--primary btn--sm" id="resume-upload-btn">Upload</button>
+      <div class="admin-status" id="resume-status"></div>
+    </div>
+
+    <div class="admin-card">
+      <h2>Status line</h2>
+      <p class="prose" style="font-size:13px;color:var(--ink-faint);margin-bottom:14px;">Shown on the homepage hero readout panel.</p>
+      <div class="admin-field">
+        <label for="status-field">Status</label>
+        <input type="text" id="status-field" placeholder="e.g. Open to new projects">
+      </div>
+      <div class="admin-field">
+        <label for="title-field">Current title</label>
+        <input type="text" id="title-field" placeholder="e.g. Senior SEO, Performance Marketing & Analytics Specialist">
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <h2>Experience</h2>
+      <p class="prose" style="font-size:13px;color:var(--ink-faint);margin-bottom:14px;">Left a job, joined a new one? Add a new entry at the top and edit the rest as needed.</p>
+      <div id="experience-list"></div>
+      <button class="btn btn--ghost btn--sm" id="add-exp-btn" style="margin-top:8px;">+ Add Experience Entry</button>
+    </div>
+
+    <button class="btn btn--primary" id="save-btn">Save All Changes</button>
+    <button class="btn btn--ghost btn--sm" id="logout-btn" style="margin-left:12px;">Log out</button>
+    <div class="admin-status" id="save-status"></div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+async function checkSession(){
+  const res = await fetch("/api/admin/session");
+  const data = await res.json();
+  if(data.loggedIn){
+    $("login-screen").style.display = "none";
+    $("dashboard").style.display = "block";
+    const statusEl = $("storage-status-text");
+    if(data.usingMongo){
+      statusEl.textContent = "✓ Connected to MongoDB — changes here will survive redeploys.";
+      statusEl.style.color = "#7CD992";
+    } else {
+      statusEl.textContent = "⚠ Using local files — changes here will reset the next time this site redeploys. See MONGODB_SETUP.md to fix this permanently.";
+      statusEl.style.color = "#FF8A7A";
+    }
+    loadContent();
+  } else {
+    $("login-screen").style.display = "block";
+    $("dashboard").style.display = "none";
+  }
+}
+
+$("login-btn").addEventListener("click", async () => {
+  const password = $("admin-password").value;
+  const statusEl = $("login-status");
+  statusEl.textContent = "Logging in…";
+  statusEl.className = "admin-status";
+  try{
+    const res = await fetch("/api/admin/login", {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ password }),
+    });
+    const data = await res.json();
+    if(data.success){
+      checkSession();
+    } else {
+      statusEl.textContent = data.message || "Login failed.";
+      statusEl.className = "admin-status admin-status--err";
+    }
+  } catch(e){
+    statusEl.textContent = "Network error.";
+    statusEl.className = "admin-status admin-status--err";
+  }
+});
+
+$("logout-btn").addEventListener("click", async () => {
+  await fetch("/api/admin/logout", { method: "POST" });
+  checkSession();
+});
+
+function expEntryHTML(exp, i){
+  return `
+    <div class="exp-entry" data-index="${i}">
+      <button class="exp-entry-remove" data-remove="${i}">Remove</button>
+      <div class="admin-field"><label>Company</label><input type="text" data-field="company" value="${(exp.company||"").replace(/"/g,'&quot;')}"></div>
+      <div class="admin-field"><label>Role</label><input type="text" data-field="role" value="${(exp.role||"").replace(/"/g,'&quot;')}"></div>
+      <div class="admin-field"><label>Location</label><input type="text" data-field="location" value="${(exp.location||"").replace(/"/g,'&quot;')}"></div>
+      <div class="admin-field"><label>Dates</label><input type="text" data-field="dates" value="${(exp.dates||"").replace(/"/g,'&quot;')}" placeholder="e.g. Jan 2026 – Present"></div>
+      <div class="admin-field"><label>Responsibilities (one per line)</label><textarea data-field="responsibilities">${(exp.responsibilities||[]).join("\n")}</textarea></div>
+      <div class="admin-field"><label>Achievement (optional)</label><input type="text" data-field="achievement" value="${(exp.achievement||"").replace(/"/g,'&quot;')}"></div>
+      <div class="admin-field"><label>Tools (comma separated)</label><input type="text" data-field="tools" value="${(exp.tools||[]).join(", ")}"></div>
+    </div>`;
+}
+
+let experienceData = [];
+
+function drawExperience(){
+  $("experience-list").innerHTML = experienceData.map((exp, i) => expEntryHTML(exp, i)).join("");
+  $("experience-list").querySelectorAll("[data-remove]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      experienceData.splice(Number(btn.dataset.remove), 1);
+      drawExperience();
+    });
+  });
+}
+
+$("add-exp-btn").addEventListener("click", () => {
+  experienceData.unshift({ company:"", role:"", location:"", dates:"", responsibilities:[], achievement:"", tools:[] });
+  drawExperience();
+});
+
+function collectExperienceFromDOM(){
+  const entries = Array.from($("experience-list").querySelectorAll(".exp-entry"));
+  return entries.map(entry => {
+    const get = (field) => entry.querySelector(`[data-field="${field}"]`).value;
+    return {
+      company: get("company"),
+      role: get("role"),
+      location: get("location"),
+      dates: get("dates"),
+      responsibilities: get("responsibilities").split("\n").map(s => s.trim()).filter(Boolean),
+      achievement: get("achievement") || null,
+      tools: get("tools").split(",").map(s => s.trim()).filter(Boolean),
+    };
+  });
+}
+
+async function loadContent(){
+  const res = await fetch("/api/site-content");
+  const data = await res.json();
+  $("status-field").value = data.status || "";
+  $("title-field").value = data.currentTitle || "";
+  experienceData = data.experience || [];
+  drawExperience();
+  $("resume-current-info").textContent = data.resumeUpdatedAt
+    ? `Current file uploaded ${new Date(data.resumeUpdatedAt).toLocaleString()}`
+    : "No file uploaded yet — serving the default resume from the repo.";
+}
+
+$("resume-upload-btn").addEventListener("click", async () => {
+  const fileInput = $("resume-file");
+  const statusEl = $("resume-status");
+  if(!fileInput.files[0]){
+    statusEl.textContent = "Choose a PDF file first.";
+    statusEl.className = "admin-status admin-status--err";
+    return;
+  }
+  const formData = new FormData();
+  formData.append("resume", fileInput.files[0]);
+  statusEl.textContent = "Uploading…";
+  statusEl.className = "admin-status";
+  try{
+    const res = await fetch("/api/admin/resume", { method: "POST", body: formData });
+    const data = await res.json();
+    if(data.success){
+      statusEl.textContent = "Uploaded. Live at /resume/download.";
+      statusEl.className = "admin-status admin-status--ok";
+      loadContent();
+    } else {
+      statusEl.textContent = data.message || "Upload failed.";
+      statusEl.className = "admin-status admin-status--err";
+    }
+  } catch(e){
+    statusEl.textContent = "Network error.";
+    statusEl.className = "admin-status admin-status--err";
+  }
+});
+
+$("save-btn").addEventListener("click", async () => {
+  const statusEl = $("save-status");
+  statusEl.textContent = "Saving…";
+  statusEl.className = "admin-status";
+  try{
+    const res = await fetch("/api/admin/site-content", {
+      method: "POST", headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        status: $("status-field").value,
+        currentTitle: $("title-field").value,
+        experience: collectExperienceFromDOM(),
+      }),
+    });
+    const data = await res.json();
+    statusEl.textContent = data.success ? "Saved." : (data.message || "Save failed.");
+    statusEl.className = "admin-status " + (data.success ? "admin-status--ok" : "admin-status--err");
+  } catch(e){
+    statusEl.textContent = "Network error.";
+    statusEl.className = "admin-status admin-status--err";
+  }
+});
+
+checkSession();
+</script>
+</body>
+</html>

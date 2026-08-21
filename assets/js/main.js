@@ -109,6 +109,7 @@ function renderFooter(){
             <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>
             <a href="${PROFILE.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
             <a href="contact.html">Contact form</a>
+            <a href="/resume/download" download>Download Resume (PDF)</a>
           </div>
         </div>
       </div>
@@ -164,11 +165,11 @@ function renderCtaBanner(targetId, opts){
   `;
 }
 
-function renderReadoutPanel(targetId){
+function renderReadoutPanel(targetId, dynamicStatus){
   const el = document.getElementById(targetId);
   if(!el) return;
   const rows = [
-    { k: "Status", v: "Open to new projects" },
+    { k: "Status", v: dynamicStatus || "Open to new projects" },
     { k: "Based in", v: PROFILE.location.split("—")[0].trim() },
     { k: "Experience", v: `${PROFILE.yearsExperience} years` },
     { k: "Core focus", v: "SEO · Analytics · Growth" },
@@ -220,6 +221,25 @@ function renderProcessSteps(targetId){
         <p>${s.copy}</p>
       </div>
     </div>`).join("");
+}
+
+/* Fetches admin-editable content (resume updates, career changes) from
+   the server. Falls back to the static defaults in data.js if the
+   request fails — e.g. if the page is opened outside the Express
+   server, or the admin panel has never been used. */
+async function loadSiteContent(){
+  try{
+    const res = await fetch("/api/site-content");
+    if(!res.ok) throw new Error("bad response");
+    const data = await res.json();
+    return {
+      status: data.status || "Open to new projects",
+      currentTitle: data.currentTitle || PROFILE.title,
+      experience: (Array.isArray(data.experience) && data.experience.length) ? data.experience : EXPERIENCE,
+    };
+  } catch(e){
+    return { status: "Open to new projects", currentTitle: PROFILE.title, experience: EXPERIENCE };
+  }
 }
 
 function renderTimeline(targetId, items){
@@ -365,31 +385,74 @@ function renderServiceCards(targetId, slugs){
     </div>`).join("");
 }
 
-function renderServiceDetail(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof SERVICES === "undefined") return;
-  el.innerHTML = SERVICES.map(s => `
-    <div class="service-block reveal" id="${s.slug}">
-      <div class="service-block-head">
-        <div class="eyebrow">${s.name}</div>
-        <h2>${s.headline}</h2>
-        <p class="prose" style="max-width:640px;margin-top:12px;">${s.copy}</p>
+function renderServiceCard(s){
+  const icon = (typeof SERVICE_ICONS !== "undefined" && SERVICE_ICONS[s.category]) || "";
+  return `
+    <div class="service-card2 reveal" data-category="${s.category}" id="${s.slug}">
+      <div class="service-card2-icon">${icon}</div>
+      <h3>${s.name}</h3>
+      <p class="service-card2-desc">${s.short}</p>
+      <div class="playbook-label">Key Outcomes</div>
+      <ul class="outcome-list">${(s.outcomes||[]).map(o => `<li>${o}</li>`).join("")}</ul>
+      <div class="service-card2-actions">
+        <a href="contact.html?service=${encodeURIComponent(s.name)}" class="btn btn--primary btn--sm service-card2-btn">${s.ctaLabel} →</a>
+        <button class="details-toggle" data-toggle="${s.slug}" aria-expanded="false">View full details</button>
       </div>
-      <div class="service-block-body">
-        <div>
-          <div class="playbook-label">What's included</div>
-          <ul class="chip-list">${s.includes.map(i => `<li>${i}</li>`).join("")}</ul>
-        </div>
-        <div class="service-block-meta">
-          <div><div class="playbook-label">Deliverable</div><p>${s.deliverable}</p></div>
-          <div><div class="playbook-label">Who it's for</div><p>${s.whoFor}</p></div>
-          <div class="service-block-links">
-            <a href="project-detail.html?slug=${s.caseStudySlug}" class="btn btn--sm btn--ghost">Relevant case study →</a>
-            <a href="contact.html?service=${encodeURIComponent(s.name)}" class="btn btn--sm btn--primary">${s.ctaLabel}</a>
-          </div>
-        </div>
+      <div class="service-card2-details" id="details-${s.slug}" hidden>
+        <div class="playbook-label">What's included</div>
+        <ul class="chip-list">${s.includes.map(i => `<li>${i}</li>`).join("")}</ul>
+        <div class="playbook-label" style="margin-top:14px;">Deliverable</div>
+        <p>${s.deliverable}</p>
+        <div class="playbook-label" style="margin-top:14px;">Who it's for</div>
+        <p>${s.whoFor}</p>
+        <a href="project-detail.html?slug=${s.caseStudySlug}" class="more" style="margin-top:10px;display:inline-block;">Relevant case study →</a>
       </div>
-    </div>`).join("");
+    </div>`;
+}
+
+function renderServiceCatalogue(gridTargetId, filterTargetId){
+  const gridEl = document.getElementById(gridTargetId);
+  const filterEl = filterTargetId ? document.getElementById(filterTargetId) : null;
+  if(!gridEl || typeof SERVICES === "undefined") return;
+
+  const categories = ["All", ...Array.from(new Set(SERVICES.map(s => s.category)))];
+  let active = "All";
+
+  function bindCardEvents(){
+    gridEl.querySelectorAll("[data-toggle]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const slug = btn.dataset.toggle;
+        const panel = document.getElementById(`details-${slug}`);
+        const open = !panel.hidden;
+        panel.hidden = open;
+        btn.setAttribute("aria-expanded", String(!open));
+        btn.textContent = open ? "View full details" : "Hide details";
+      });
+    });
+  }
+
+  function drawGrid(){
+    const list = active === "All" ? SERVICES : SERVICES.filter(s => s.category === active);
+    gridEl.innerHTML = list.map(renderServiceCard).join("");
+    bindCardEvents();
+  }
+
+  function drawFilters(){
+    if(!filterEl) return;
+    filterEl.innerHTML = categories.map(c =>
+      `<button class="filter-btn ${c===active?'active':''}" data-cat="${c}">${c}</button>`
+    ).join("");
+    filterEl.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        active = btn.dataset.cat;
+        drawFilters();
+        drawGrid();
+      });
+    });
+  }
+
+  drawFilters();
+  drawGrid();
 }
 
 function renderEngagementModels(targetId){

@@ -22,7 +22,7 @@
           <h1 style="font-size:clamp(30px,4vw,44px);margin-top:16px;" id="resume-name"></h1>
           <p class="prose" style="margin-top:10px;" id="resume-title"></p>
         </div>
-        <a href="assets/Shailesh_Bhadra_Resume.pdf" download class="btn btn--primary">Download Resume (PDF)</a>
+        <a href="/resume/download" download class="btn btn--primary">Download Resume (PDF)</a>
       </div>
     </div>
   </section>
@@ -74,11 +74,13 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+(async () => {
   renderHeader("resume.html");
   renderFooter();
+  const site = await loadSiteContent();
 
   document.getElementById("resume-name").textContent = PROFILE.name;
-  document.getElementById("resume-title").textContent = PROFILE.title;
+  document.getElementById("resume-title").textContent = site.currentTitle;
   document.getElementById("resume-summary").textContent = PROFILE.summary;
   document.getElementById("resume-email").innerHTML = `<a href="mailto:${PROFILE.email}">${PROFILE.email}</a>`;
   document.getElementById("resume-phone").textContent = PROFILE.phone;
@@ -86,7 +88,7 @@
   document.getElementById("resume-location").textContent = PROFILE.location;
 
   renderSkills("resume-skills");
-  renderTimeline("resume-experience");
+  renderTimeline("resume-experience", site.experience);
 
   document.getElementById("resume-education").innerHTML = EDUCATION.map(e => `
     <div style="margin-bottom:14px;">
@@ -97,6 +99,7 @@
   document.getElementById("resume-certs").innerHTML = CERTIFICATIONS.length
     ? CERTIFICATIONS.map(c => `<div>${c}</div>`).join("")
     : `<p class="placeholder-note">[ADD CERTIFICATIONS]</p>`;
+})();
 </script>
 </body>
 </html>

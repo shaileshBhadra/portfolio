@@ -425,6 +425,8 @@ const SERVICES = [
   {
     slug: "technical-seo",
     name: "Technical SEO",
+    category: "Technical SEO",
+    outcomes: ["Faster, cleaner crawling", "More pages properly indexed", "Fewer duplicate/thin-content flags", "A site structure that scales"],
     short: "Find and fix the technical barriers affecting crawling, indexing, architecture and search visibility.",
     headline: "Find what's preventing your website from being understood by search engines.",
     copy: "Technical SEO is the infrastructure behind search visibility. I identify and prioritise issues affecting crawling, indexation, architecture, internal linking and search accessibility.",
@@ -437,6 +439,8 @@ const SERVICES = [
   {
     slug: "seo-audit",
     name: "SEO Audit",
+    category: "Technical SEO",
+    outcomes: ["A ranked priority list, not 100 flat items", "Clarity on what to fix first", "A defensible plan to show stakeholders", "No wasted effort on low-impact fixes"],
     short: "A prioritised audit that tells you what matters, why it matters, and what to do next — not a 100-item checklist.",
     headline: "Stop guessing what is wrong with your SEO.",
     copy: "A useful SEO audit should not be a list of 100 problems. It should explain what matters, why it matters and what should happen next.",
@@ -449,6 +453,8 @@ const SERVICES = [
   {
     slug: "seo-strategy",
     name: "SEO Strategy",
+    category: "Strategy",
+    outcomes: ["A roadmap tied to business impact", "Keyword targets worth the effort", "Clear content and technical priorities", "A plan you can actually execute"],
     short: "Turn search demand, competition and business priorities into a practical SEO roadmap.",
     headline: "Turn search opportunity into a practical growth roadmap.",
     copy: "Strategy that starts with the business, not a keyword list — so the roadmap reflects what will actually move revenue, not just rankings.",
@@ -461,6 +467,8 @@ const SERVICES = [
   {
     slug: "content-strategy",
     name: "Content Strategy",
+    category: "Strategy",
+    outcomes: ["Content built around real search intent", "Fewer pages competing with each other", "Briefs your writers can actually use", "Content that supports conversion, not just traffic"],
     short: "Create content because your audience needs it — not simply because a keyword tool suggested it.",
     headline: "Create content your audience actually needs.",
     copy: "Content should solve a real problem, demonstrate expertise and support the customer journey — not simply exist because a keyword has search volume.",
@@ -473,6 +481,8 @@ const SERVICES = [
   {
     slug: "ga4-gtm",
     name: "GA4 & GTM",
+    category: "Analytics",
+    outcomes: ["GA4 numbers you can trust", "Clean, documented tag setup", "Fewer discrepancies vs Ads/CRM", "A tracking QA process going forward"],
     short: "Build a measurement system you can actually trust.",
     headline: "Build a measurement system you can trust.",
     copy: "Most 'attribution problems' are broken or duplicated tags, not modeling issues. I audit the measurement layer end to end before touching strategy.",
@@ -485,6 +495,8 @@ const SERVICES = [
   {
     slug: "conversion-tracking",
     name: "Conversion Tracking",
+    category: "Analytics",
+    outcomes: ["Every meaningful action captured as an event", "Clear channel-level attribution", "Confidence in what's actually converting", "A foundation for smarter budget decisions"],
     short: "Know what happens after someone finds your website.",
     headline: "Know what happens after someone finds your website.",
     copy: "Forms, calls, WhatsApp clicks, bookings and purchases all need to be captured as real events — not assumed from session counts.",
@@ -497,6 +509,8 @@ const SERVICES = [
   {
     slug: "ecommerce-seo",
     name: "eCommerce SEO",
+    category: "eCommerce",
+    outcomes: ["Cleaner, indexable category structure", "Less thin/duplicate product content", "Better commercial-intent visibility", "A roadmap prioritised by revenue impact"],
     short: "Improve visibility across category, product and commercial search while removing technical barriers to discovery.",
     headline: "Turn product discovery into organic growth.",
     copy: "Faceted navigation, duplicate variants and thin category templates are the most common ceilings on e-commerce organic growth — usually one root cause, not hundreds of individual page problems.",
@@ -509,6 +523,8 @@ const SERVICES = [
   {
     slug: "google-ads",
     name: "Google Ads",
+    category: "Paid Media",
+    outcomes: ["Account structure aligned to real intent", "Verified conversion tracking", "Spend judged by outcomes, not vanity ROAS", "A prioritised list of account fixes"],
     short: "Connect paid search to measurable outcomes, not platform-reported vanity metrics.",
     headline: "Connect paid search to measurable outcomes.",
     copy: "Performance Max and automated bidding still need real signal quality behind them. I audit account structure and tracking before touching budget.",
@@ -521,6 +537,8 @@ const SERVICES = [
   {
     slug: "seo-analytics-consulting",
     name: "SEO & Analytics Consulting",
+    category: "Consulting",
+    outcomes: ["Senior technical review on a recurring basis", "A second opinion before big decisions", "Faster unblocking on technical issues", "Strategy kept honest against the data"],
     short: "Senior SEO, analytics or technical expertise when your internal team needs support — without a full-time hire.",
     headline: "Senior expertise, without the overhead of a full-time hire.",
     copy: "For teams that already have marketing capacity but need a senior technical SEO/analytics perspective on a recurring basis — reviewing work, unblocking technical problems, and keeping strategy honest against the data.",
@@ -533,6 +551,15 @@ const SERVICES = [
 ];
 
 const HOME_SERVICE_SLUGS = ["technical-seo", "seo-strategy", "content-strategy", "ga4-gtm", "ecommerce-seo", "google-ads"];
+
+const SERVICE_ICONS = {
+  "Technical SEO": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>`,
+  "Strategy": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v6M12 16v6M2 12h6M16 12h6" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg>`,
+  "Analytics": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>`,
+  "eCommerce": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 7H6"/></svg>`,
+  "Paid Media": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l17-7-7 17-2.5-7L3 11z"/></svg>`,
+  "Consulting": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"/></svg>`,
+};
 
 const HOME_SERVICE_VALUE_PROPS = {
   "technical-seo": "Fix what's blocking search engines from understanding your site.",
@@ -621,4 +648,5 @@ const NAV_LINKS = [
   { label: "Approach", href: "approach.html" },
   { label: "About", href: "about.html" },
   { label: "Insights", href: "insights.html" },
+  { label: "Resume", href: "resume.html" },
 ];

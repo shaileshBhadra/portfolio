@@ -62,14 +62,16 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+(async () => {
   renderHeader("about.html");
   renderFooter();
+  const site = await loadSiteContent();
   document.getElementById("quick-facts").innerHTML = `
     <div class="quick-facts-id">
       <div class="avatar-mono avatar-mono--sm" style="width:48px;height:48px;font-size:16px;">${initials(PROFILE.name)}</div>
       <div>
         <div class="name">${PROFILE.name}</div>
-        <div class="title">${PROFILE.title}</div>
+        <div class="title">${site.currentTitle}</div>
       </div>
     </div>
     <div class="quick-facts-row"><div class="k">Based in</div><div class="v">${PROFILE.location}</div></div>
@@ -81,6 +83,7 @@
     </div>
     <a href="resume.html" class="btn btn--primary btn--sm" style="justify-content:center;">View Resume</a>
   `;
+})();
 </script>
 </body>
 </html>

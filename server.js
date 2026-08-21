@@ -3,20 +3,151 @@
    - Serves the static portfolio files
    - Proxies /api/contact to Web3Forms, keeping the access key
      ONLY in the server environment (never sent to the browser)
+   - Serves a small admin panel (/admin) for updating the resume
+     PDF and career/experience data without a code deploy.
+
+   PERSISTENCE: set MONGODB_URI to store admin-edited content in
+   MongoDB (survives redeploys — see store.js for setup notes).
+   Without it, falls back to local files, which reset on redeploy.
    ============================================================ */
 
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
+const crypto = require("crypto");
+const multer = require("multer");
+const store = require("./store");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Read the secret from Render's environment variables (Dashboard → Environment)
-// Locally, copy .env.example to .env and fill it in, or export it in your shell.
 const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // set this in Render → Environment
+const FALLBACK_RESUME = path.join(__dirname, "assets", "Shailesh_Bhadra_Resume.pdf");
 
-app.use(express.json());
+app.use(express.json({ limit: "2mb" }));
 app.use(express.static(path.join(__dirname)));
+
+// Public read — the frontend fetches this on page load and overlays it
+// on top of the static defaults in assets/js/data.js.
+app.get("/api/site-content", async (req, res) => {
+  try {
+    res.json(await store.getSiteContent());
+  } catch (err) {
+    console.error("site-content read error:", err);
+    res.status(500).json({ status: "Open to new projects", currentTitle: "", experience: [], resumeUpdatedAt: null });
+  }
+});
+
+// --- Admin auth --------------------------------------------------------
+// Single-admin, password-only. Sessions are an in-memory token set, so
+// everyone is logged out if the server restarts — acceptable for a
+// personal-site admin panel with one user.
+const sessions = new Set();
+
+function makeToken() {
+  return crypto.randomBytes(24).toString("hex");
+}
+function requireAdmin(req, res, next) {
+  const token = req.cookies_token; // set by cookie parser below
+  if (token && sessions.has(token)) return next();
+  return res.status(401).json({ success: false, message: "Not logged in." });
+}
+// Tiny manual cookie parser (avoids adding cookie-parser as a dependency)
+app.use((req, res, next) => {
+  const raw = req.headers.cookie || "";
+  const match = raw.split(";").map(s => s.trim()).find(s => s.startsWith("admin_session="));
+  req.cookies_token = match ? match.split("=")[1] : null;
+  next();
+});
+
+app.post("/api/admin/login", (req, res) => {
+  if (!ADMIN_PASSWORD) {
+    return res.status(500).json({ success: false, message: "Admin panel isn't configured yet (ADMIN_PASSWORD not set)." });
+  }
+  const { password } = req.body || {};
+  if (password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ success: false, message: "Incorrect password." });
+  }
+  const token = makeToken();
+  sessions.add(token);
+  res.setHeader("Set-Cookie", `admin_session=${token}; HttpOnly; Path=/; SameSite=Strict; Max-Age=${8 * 60 * 60}`);
+  res.json({ success: true });
+});
+
+app.post("/api/admin/logout", (req, res) => {
+  if (req.cookies_token) sessions.delete(req.cookies_token);
+  res.setHeader("Set-Cookie", "admin_session=; HttpOnly; Path=/; Max-Age=0");
+  res.json({ success: true });
+});
+
+app.get("/api/admin/session", (req, res) => {
+  res.json({ loggedIn: !!(req.cookies_token && sessions.has(req.cookies_token)), usingMongo: store.isUsingMongo() });
+});
+
+// --- Admin: update career data / status line -------------------------------
+app.post("/api/admin/site-content", requireAdmin, async (req, res) => {
+  try {
+    const { status, currentTitle, experience } = req.body || {};
+    if (!Array.isArray(experience)) {
+      return res.status(400).json({ success: false, message: "Experience must be a list." });
+    }
+    const current = await store.getSiteContent();
+    await store.setSiteContent({
+      status: status || current.status,
+      currentTitle: currentTitle || current.currentTitle,
+      experience,
+    });
+    res.json({ success: true });
+  } catch (err) {
+    console.error("site-content write error:", err);
+    res.status(500).json({ success: false, message: "Couldn't save — check server logs." });
+  }
+});
+
+// --- Admin: resume PDF upload/download --------------------------------------
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 8 * 1024 * 1024 }, // 8MB
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype !== "application/pdf") return cb(new Error("Only PDF files are accepted."));
+    cb(null, true);
+  },
+});
+
+app.post("/api/admin/resume", requireAdmin, (req, res) => {
+  upload.single("resume")(req, res, async (err) => {
+    if (err) {
+      // Covers both multer's own errors (file too large) and our fileFilter rejection
+      return res.status(400).json({ success: false, message: err.message || "Upload failed." });
+    }
+    if (!req.file) return res.status(400).json({ success: false, message: "No file received." });
+    try {
+      await store.setResume(req.file.buffer, req.file.originalname || "resume.pdf");
+      res.json({ success: true });
+    } catch (writeErr) {
+      console.error("Resume upload error:", writeErr);
+      res.status(500).json({ success: false, message: "Couldn't save the file." });
+    }
+  });
+});
+
+// Public download — serves the admin-uploaded PDF if one exists, otherwise
+// falls back to the resume shipped in the repo.
+app.get("/resume/download", async (req, res) => {
+  try {
+    const resume = await store.getResume();
+    if (resume) {
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader("Content-Disposition", 'attachment; filename="Shailesh_Bhadra_Resume.pdf"');
+      return res.send(resume.buffer);
+    }
+    res.download(FALLBACK_RESUME, "Shailesh_Bhadra_Resume.pdf");
+  } catch (err) {
+    console.error("Resume download error:", err);
+    res.download(FALLBACK_RESUME, "Shailesh_Bhadra_Resume.pdf");
+  }
+});
 
 // --- Very small in-memory rate limiter (per IP) ---------------------------
 // Resets on server restart; fine for a portfolio contact form. Blocks
@@ -92,6 +223,17 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+// Safety net: any unhandled error becomes clean JSON, never a raw stack trace
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  if (res.headersSent) return next(err);
+  res.status(500).json({ success: false, message: "Something went wrong." });
+});
+
+// Connect to the store (MongoDB if configured, else local files) before
+// accepting requests, so the very first request doesn't race the connection.
+store.initStore().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 });

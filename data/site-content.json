@@ -1,0 +1,157 @@
+{
+  "status": "Open to new projects",
+  "currentTitle": "Senior SEO, Performance Marketing & Analytics Specialist",
+  "experience": [
+    {
+      "company": "Neat Everyday (Mangalam Groups)",
+      "role": "Deputy SEO Manager",
+      "location": "Ahmedabad",
+      "dates": "Jan 2026 – Present",
+      "responsibilities": [
+        "Lead integrated SEO and performance marketing strategy across multiple B2C client projects.",
+        "Implemented GA4 advanced e-commerce tracking across multiple stores and cross-domain environments.",
+        "Deployed server-side Google Tag Manager to improve first-party tracking accuracy and privacy compliance.",
+        "Designed and optimized GA4 conversion funnels for e-commerce and lead generation.",
+        "Delivered advanced reporting dashboards for C-level strategic decision-making.",
+        "Managed and optimized Google Ads campaigns with custom performance reporting frameworks.",
+        "Oversaw social media content strategy and paid advertising across Meta platforms.",
+        "Began integrating AEO (Answer Engine Optimization) and schema markup for AI-driven search visibility."
+      ],
+      "achievement": "60%+ increase in organic traffic within the first months, via technical fixes, content strategy, and link building.",
+      "tools": [
+        "GA4",
+        "Server-side GTM",
+        "Google Ads",
+        "Meta Ads",
+        "Schema markup",
+        "Looker Studio"
+      ]
+    },
+    {
+      "company": "Equest Solutions",
+      "role": "Sr. SEO Analyst",
+      "location": "Ahmedabad",
+      "dates": "Jan 2025 – Nov 2025",
+      "responsibilities": [
+        "Implemented GA4 advanced e-commerce tracking across multiple stores, including cross-domain environments.",
+        "Deployed server-side GTM to improve first-party tracking accuracy and strengthen data privacy posture.",
+        "Built and optimized GA4 conversion funnels for e-commerce and lead generation clients.",
+        "Developed performance dashboards and analytics reports for data-driven client decisions.",
+        "Managed and optimized Google Ads campaigns using custom reporting frameworks aligned to client KPIs.",
+        "Executed technical SEO and analytics initiatives across multiple client projects simultaneously."
+      ],
+      "achievement": "25% improvement in client conversion rates through CRO, landing page optimization, and A/B testing.",
+      "tools": [
+        "GA4",
+        "Server-side GTM",
+        "Google Ads",
+        "CRO",
+        "A/B Testing"
+      ]
+    },
+    {
+      "company": "ManekTech",
+      "role": "Sr. SEO Executive",
+      "location": "Ahmedabad",
+      "dates": "May 2023 – Mar 2024",
+      "responsibilities": [
+        "Led SEO and analytics strategy for multiple internal websites.",
+        "Deployed GA4 and GTM (client & server-side) for accurate conversion tracking and measurement.",
+        "Improved landing page performance through CRO practices.",
+        "Generated qualified leads via integrated SEO and paid campaigns (Google Ads & Meta Ads).",
+        "Implemented technical SEO improvements — Core Web Vitals, site speed, structured data — reducing crawl errors.",
+        "Delivered data-driven insights through GA4 dashboards and reports."
+      ],
+      "achievement": null,
+      "tools": [
+        "GA4",
+        "GTM",
+        "Google Ads",
+        "Meta Ads",
+        "Core Web Vitals"
+      ]
+    },
+    {
+      "company": "Atlas Softweb Pvt Ltd",
+      "role": "Sr. Digital Marketing Executive",
+      "location": "Ahmedabad",
+      "dates": "Oct 2021 – Feb 2023",
+      "responsibilities": [
+        "Developed and executed SEO and content strategies to improve keyword rankings and drive qualified conversions.",
+        "Managed and optimized Google Ads, retargeting campaigns, and social media marketing.",
+        "Created buyer personas and conversion funnels to enhance audience targeting."
+      ],
+      "achievement": "30% reduction in Cost Per Acquisition through audience segmentation and bid strategy optimization.",
+      "tools": [
+        "Google Ads",
+        "Retargeting",
+        "SEO"
+      ]
+    },
+    {
+      "company": "Rivulet",
+      "role": "Sr. SEO Analyst",
+      "location": "Ahmedabad",
+      "dates": "Apr 2021 – Dec 2021",
+      "responsibilities": [
+        "Led SEO campaigns targeting the USA market.",
+        "Conducted comprehensive SEO audits and implemented technical fixes.",
+        "Developed SEO content strategies and managed PPC campaigns (Google Ads & Meta Ads)."
+      ],
+      "achievement": null,
+      "tools": [
+        "SEO Audits",
+        "Google Ads",
+        "Meta Ads"
+      ]
+    },
+    {
+      "company": "Proactii",
+      "role": "Sr. SEO Executive",
+      "location": "Vapi",
+      "dates": "May 2020 – Oct 2021",
+      "responsibilities": [
+        "Led e-commerce SEO and competitive strategy.",
+        "Managed and optimized multi-channel paid campaigns (Google Ads, AdRoll, ShareChat).",
+        "Improved conversion rates by aligning organic and paid strategies."
+      ],
+      "achievement": null,
+      "tools": [
+        "E-commerce SEO",
+        "Google Ads",
+        "AdRoll"
+      ]
+    },
+    {
+      "company": "Xira Infotech",
+      "role": "SEO Executive",
+      "location": "Vapi",
+      "dates": "Mar 2018 – May 2020",
+      "responsibilities": [
+        "Executed on-page and off-page SEO strategies.",
+        "Optimized local SEO and Google Business Profile for local search presence."
+      ],
+      "achievement": null,
+      "tools": [
+        "On-page SEO",
+        "Local SEO",
+        "GBP"
+      ]
+    },
+    {
+      "company": "Cears Infotech",
+      "role": "SEO Executive",
+      "location": "Surat",
+      "dates": "Apr 2017 – Mar 2018",
+      "responsibilities": [
+        "Implemented on-page and off-page SEO initiatives, enhancing keyword rankings and organic traffic."
+      ],
+      "achievement": null,
+      "tools": [
+        "On-page SEO",
+        "Off-page SEO"
+      ]
+    }
+  ],
+  "resumeUpdatedAt": null
+}
