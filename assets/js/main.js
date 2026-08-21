@@ -208,6 +208,20 @@ function renderWorkAreas(targetId){
     </a>`).join("");
 }
 
+function renderProcessSteps(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PROCESS_STEPS === "undefined") return;
+  el.innerHTML = PROCESS_STEPS.map(s => `
+    <div class="process-step reveal">
+      <div class="process-step-n">${s.n}</div>
+      <div class="process-step-body">
+        <div class="eyebrow">${s.subtitle}</div>
+        <h3>${s.title}</h3>
+        <p>${s.copy}</p>
+      </div>
+    </div>`).join("");
+}
+
 function renderTimeline(targetId, items){
   const el = document.getElementById(targetId);
   if(!el) return;
@@ -297,211 +311,6 @@ function renderProjectFilters(filterTargetId, gridTargetId){
   renderProjectCards(gridTargetId, items);
 }
 
-/* Homepage slider for featured case studies */
-function renderCaseStudySlider(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof CASE_STUDIES === "undefined") return;
-  const items = CASE_STUDIES;
-  let index = 0;
-
-  function draw(){
-    const c = items[index];
-    el.innerHTML = `
-      <div class="slider-card">
-        <div class="project-card-top">
-          <div class="eyebrow">${c.region} · ${c.industry}</div>
-          <span class="kind-badge kind-badge--${c.type.toLowerCase().replace(/\s+/g,'-')}">${c.type}</span>
-        </div>
-        <h3>${c.name}</h3>
-        <p class="summary">${c.summary}</p>
-        <div class="project-tags">${c.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
-        <a href="project-detail.html?slug=${c.slug}" class="btn btn--sm btn--ghost" style="margin-top:16px;">Read the case study</a>
-      </div>
-      <div class="slider-controls">
-        <button class="slider-btn" id="slider-prev" aria-label="Previous case study">←</button>
-        <div class="slider-dots">${items.map((_, i) => `<span class="slider-dot ${i===index?'active':''}"></span>`).join("")}</div>
-        <button class="slider-btn" id="slider-next" aria-label="Next case study">→</button>
-      </div>`;
-    el.querySelector("#slider-prev").addEventListener("click", () => { index = (index - 1 + items.length) % items.length; draw(); });
-    el.querySelector("#slider-next").addEventListener("click", () => { index = (index + 1) % items.length; draw(); });
-  }
-  draw();
-}
-
-function renderPlaybook(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PLAYBOOK === "undefined") return;
-  el.innerHTML = PLAYBOOK.map(section => `
-    <div class="playbook-section" id="playbook-${section.theme.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">
-      <div class="section-head">
-        <div class="eyebrow">${section.theme}</div>
-        <p class="prose" style="max-width:720px;margin-top:8px;">${section.intro}</p>
-      </div>
-      <div class="playbook-grid">
-        ${section.items.map(i => `
-          <div class="playbook-card">
-            <h3>${i.issue}</h3>
-            <div class="playbook-label">The problem</div>
-            <p>${i.detail}</p>
-            <div class="playbook-label playbook-label--fix">How I approach it</div>
-            <p>${i.fix}</p>
-          </div>`).join("")}
-      </div>
-    </div>`).join("");
-}
-
-function renderPlaybookJumpNav(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PLAYBOOK === "undefined") return;
-  el.innerHTML = PLAYBOOK.map(section =>
-    `<a href="#playbook-${section.theme.toLowerCase().replace(/[^a-z0-9]+/g,'-')}">${section.theme}</a>`
-  ).join("");
-}
-
-/* ============================================================
-   APPROACH PAGE renderers
-   ============================================================ */
-
-function renderCapabilitySnapshot(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof CAPABILITY_SNAPSHOT === "undefined") return;
-  el.innerHTML = CAPABILITY_SNAPSHOT.map(m => `
-    <div class="metric-cell reveal">
-      <div class="metric-value">${m.value}</div>
-      <div class="metric-label">${m.label}</div>
-    </div>`).join("");
-}
-
-function renderProcessSteps(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PROCESS_STEPS === "undefined") return;
-  el.innerHTML = PROCESS_STEPS.map(s => `
-    <div class="process-step reveal">
-      <div class="process-step-n">${s.n}</div>
-      <div class="process-step-body">
-        <div class="eyebrow">${s.subtitle}</div>
-        <h3>${s.title}</h3>
-        <p>${s.copy}</p>
-      </div>
-    </div>`).join("");
-}
-
-function renderProblemsSolved(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PROBLEMS_SOLVED === "undefined") return;
-  el.innerHTML = PROBLEMS_SOLVED.map(p => `
-    <div class="problem-card reveal">
-      <h3>${p.title}</h3>
-      <div class="playbook-label">Investigate</div>
-      <ul class="chip-list">${p.investigate.map(i => `<li>${i}</li>`).join("")}</ul>
-      <div class="playbook-label playbook-label--fix">Approach</div>
-      <p>${p.approach}</p>
-    </div>`).join("");
-}
-
-function renderGrowthFunnel(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof GROWTH_FUNNEL === "undefined") return;
-  el.innerHTML = GROWTH_FUNNEL.map((step, i) =>
-    `<div class="funnel-step reveal">${step}</div>${i < GROWTH_FUNNEL.length - 1 ? `<div class="funnel-arrow" aria-hidden="true">↓</div>` : ""}`
-  ).join("");
-}
-
-function renderPriorityTiers(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PRIORITY_TIERS === "undefined") return;
-  el.innerHTML = PRIORITY_TIERS.map(t => `
-    <div class="priority-card priority-card--${t.status.toLowerCase().replace(/\s+/g,'-')} reveal">
-      <div class="eyebrow">${t.tier}</div>
-      <p>${t.example}</p>
-      <div class="priority-status">${t.status}</div>
-    </div>`).join("");
-}
-
-function renderLookAtColumns(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof LOOK_AT_COLUMNS === "undefined") return;
-  el.innerHTML = LOOK_AT_COLUMNS.map(col => `
-    <div class="lookat-card reveal">
-      <h3>${col.title}</h3>
-      <ul class="lookat-list">${col.items.map(i => `<li>${i}</li>`).join("")}</ul>
-    </div>`).join("");
-}
-
-function renderDiagnosticExample(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof DIAGNOSTIC_EXAMPLE === "undefined") return;
-  const d = DIAGNOSTIC_EXAMPLE;
-  el.innerHTML = `
-    <div class="diagnostic-label">${d.label}</div>
-    <div class="diagnostic-flow">
-      <div class="diagnostic-step reveal"><div class="eyebrow">Problem</div><p>${d.problem}</p></div>
-      <div class="funnel-arrow funnel-arrow--h" aria-hidden="true">→</div>
-      <div class="diagnostic-step reveal"><div class="eyebrow">Diagnosis</div><p>${d.diagnosis}</p></div>
-      <div class="funnel-arrow funnel-arrow--h" aria-hidden="true">→</div>
-      <div class="diagnostic-step reveal"><div class="eyebrow">Action</div><p>${d.action}</p></div>
-      <div class="funnel-arrow funnel-arrow--h" aria-hidden="true">→</div>
-      <div class="diagnostic-step reveal"><div class="eyebrow">Measurement</div><p>${d.measurement}</p></div>
-    </div>`;
-}
-
-function renderAISearchComparison(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof AI_SEARCH_COMPARISON === "undefined") return;
-  const c = AI_SEARCH_COMPARISON;
-  el.innerHTML = `
-    <div class="compare-row reveal">
-      <div class="compare-label">Traditional Search</div>
-      <div class="compare-flow">${c.traditional.map((s,i) => `<span class="compare-chip">${s}</span>${i<c.traditional.length-1?'<span class="compare-arrow" aria-hidden="true">→</span>':''}`).join("")}</div>
-    </div>
-    <div class="compare-row reveal">
-      <div class="compare-label">AI Search</div>
-      <div class="compare-flow">${c.ai.map((s,i) => `<span class="compare-chip compare-chip--ai">${s}</span>${i<c.ai.length-1?'<span class="compare-arrow" aria-hidden="true">→</span>':''}`).join("")}</div>
-    </div>`;
-}
-
-function renderToolsGrouped(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof TOOLS_GROUPED === "undefined") return;
-  el.innerHTML = TOOLS_GROUPED.map(g => `
-    <div class="lookat-card reveal">
-      <h3>${g.group}</h3>
-      <ul class="lookat-list">${g.tools.map(t => `<li>${t}</li>`).join("")}</ul>
-    </div>`).join("");
-}
-
-function renderDeliverables(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof DELIVERABLES === "undefined") return;
-  el.innerHTML = DELIVERABLES.map(d => `
-    <div class="lookat-card reveal">
-      <h3>${d.title}</h3>
-      <ul class="lookat-list">${d.items.map(i => `<li>${i}</li>`).join("")}</ul>
-    </div>`).join("");
-}
-
-function renderPrinciples(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PRINCIPLES === "undefined") return;
-  el.innerHTML = PRINCIPLES.map(p => `
-    <div class="principle-row ${p.prominent ? 'principle-row--prominent' : ''} reveal">
-      <h3>${p.title}</h3>
-      <p>${p.copy}</p>
-    </div>`).join("");
-}
-
-function renderProofLinks(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PROOF_LINKS === "undefined") return;
-  el.innerHTML = PROOF_LINKS.map(p => `
-    <a class="work-card proof-card reveal" href="project-detail.html?slug=${p.slug}">
-      <div class="eyebrow">Proof</div>
-      <h3>${p.title}</h3>
-      <p>${p.copy}</p>
-      <div class="more">View the case study →</div>
-    </a>`).join("");
-}
-
 /* Fade/slide-in on scroll for elements with .reveal — respects reduced motion */
 function initScrollReveal(){
   if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
@@ -551,8 +360,8 @@ function renderServiceCards(targetId, slugs){
   el.innerHTML = list.map(s => `
     <div class="work-card service-tile reveal">
       <div class="eyebrow">${s.name}</div>
-      <p style="margin-top:14px;">${s.short}</p>
-      <a href="services.html#${s.slug}" class="more">${s.name} →</a>
+      <p style="margin-top:14px;">${(typeof HOME_SERVICE_VALUE_PROPS !== "undefined" && HOME_SERVICE_VALUE_PROPS[s.slug]) || s.short}</p>
+      <a href="services.html#${s.slug}" class="more">Learn more →</a>
     </div>`).join("");
 }
 
@@ -593,29 +402,6 @@ function renderEngagementModels(targetId){
       <div class="playbook-label" style="margin-top:16px;">Best for</div>
       <p style="font-size:13.5px;">${m.bestFor}</p>
       <a href="contact.html" class="more">${m.ctaLabel}</a>
-    </div>`).join("");
-}
-
-function renderWhoIHelp(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof WHO_I_HELP === "undefined") return;
-  el.innerHTML = WHO_I_HELP.map(w => `
-    <div class="lookat-card reveal">
-      <h3>${w.title}</h3>
-      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">${w.copy}</p>
-    </div>`).join("");
-}
-
-function renderWhyWorkWithMe(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof WHY_WORK_WITH_ME === "undefined") return;
-  el.innerHTML = WHY_WORK_WITH_ME.map(w => `
-    <div class="process-step reveal">
-      <div class="process-step-n">${w.n}</div>
-      <div class="process-step-body">
-        <h3>${w.title}</h3>
-        <p>${w.copy}</p>
-      </div>
     </div>`).join("");
 }
 
@@ -663,6 +449,84 @@ function renderCaseStudyShowcase(targetId){
     </div>`;
 }
 
+/* Generic vertical chain visual — used by Approach's Measurement section */
+function renderChainVisual(targetId, steps){
+  const el = document.getElementById(targetId);
+  if(!el || !steps) return;
+  el.innerHTML = steps.map((step, i) =>
+    `<div class="funnel-step reveal">${step}</div>${i < steps.length - 1 ? `<div class="funnel-arrow" aria-hidden="true">↓</div>` : ""}`
+  ).join("");
+}
+
+/* ============================================================
+   APPROACH v2 renderers
+   ============================================================ */
+
+function renderDiagnosisExample(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DIAGNOSIS_EXAMPLE === "undefined") return;
+  el.innerHTML = `
+    <div class="symptom-statement reveal">${DIAGNOSIS_EXAMPLE.symptom}</div>
+    <div class="causes-grid">
+      ${DIAGNOSIS_EXAMPLE.causes.map(c => `
+        <div class="cause-card reveal">
+          <div class="eyebrow">${c.label}</div>
+          <p>${c.copy}</p>
+        </div>`).join("")}
+    </div>`;
+}
+
+function renderSystemDiagram(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof SYSTEM_NODES === "undefined") return;
+  el.innerHTML = SYSTEM_NODES.map((node, i) =>
+    `<span class="system-node reveal">${node}</span>${i < SYSTEM_NODES.length - 1 ? `<span class="system-link" aria-hidden="true">+</span>` : ""}`
+  ).join("");
+}
+
+function renderDecisionTiers(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DECISION_TIERS_V2 === "undefined") return;
+  el.innerHTML = DECISION_TIERS_V2.map(t => `
+    <div class="priority-card priority-card--${t.label.toLowerCase().replace(/\s+/g,'-')} reveal">
+      <div class="priority-status" style="border-top:none;padding-top:0;">${t.label}</div>
+      <p>${t.copy}</p>
+    </div>`).join("");
+}
+
+function renderAIChanges(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof AI_CHANGES === "undefined") return;
+  el.innerHTML = `
+    <div class="compare-row reveal">
+      <div class="compare-label">What Changes</div>
+      <ul class="chip-list">${AI_CHANGES.changes.map(c => `<li>${c}</li>`).join("")}</ul>
+    </div>
+    <div class="compare-row reveal">
+      <div class="compare-label">What Doesn't</div>
+      <ul class="chip-list">${AI_CHANGES.staysSame.map(c => `<li class="chip-stay">${c}</li>`).join("")}</ul>
+    </div>`;
+}
+
+function renderWhatIDontDo(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof WHAT_I_DONT_DO === "undefined") return;
+  el.innerHTML = WHAT_I_DONT_DO.map(line => `<p class="dont-do-line reveal">${line}</p>`).join("");
+}
+
+function renderProjectStartSteps(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PROJECT_START_STEPS === "undefined") return;
+  el.innerHTML = PROJECT_START_STEPS.map(s => `
+    <div class="process-step reveal">
+      <div class="process-step-n">${s.n}</div>
+      <div class="process-step-body">
+        <h3>${s.title}</h3>
+        <p>${s.copy}</p>
+      </div>
+    </div>`).join("");
+}
+
 function renderSkillsJumpNav(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
@@ -694,11 +558,11 @@ function renderProjectDetail(targetId){
         </div>
         ${isCaseStudy ? `<p class="prose" style="margin-top:16px;color:var(--ink-faint);font-size:13px;">Client name withheld under confidentiality. Details reflect a real engagement of this type; figures are representative, not audited public results.</p>` : ""}
       </div>
-      <div class="case-block"><h3>Challenge</h3><p>${p.challenge}</p></div>
-      <div class="case-block"><h3>Approach</h3><p>${p.approach}</p></div>
-      <div class="case-block"><h3>Implementation</h3><p>${p.implementation}</p></div>
-      <div class="case-block"><h3>Result</h3><p>${p.result}</p></div>
-      <div class="case-block"><h3>Learning</h3><p>${p.learning}</p></div>
+      <div class="case-block"><h3>The Challenge</h3><p>${p.challenge}</p></div>
+      <div class="case-block"><h3>The Investigation</h3><p>${p.approach}</p></div>
+      <div class="case-block"><h3>The Work</h3><p>${p.implementation}</p></div>
+      <div class="case-block"><h3>The Outcome</h3><p>${p.result}</p></div>
+      <div class="case-block"><h3>The Takeaway</h3><p>${p.learning}</p></div>
     </div>`;
 }
 

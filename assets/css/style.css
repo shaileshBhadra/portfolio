@@ -581,8 +581,8 @@ button{ font-family:inherit; }
   font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em;
   padding:6px 0; border-top:1px solid var(--line-soft); color:var(--ink-faint);
 }
-.priority-card--optimise-immediately .priority-status{ color:#7CD992; }
-.priority-card--build-roadmap .priority-status{ color:var(--accent-2); }
+.priority-card--do-now .priority-status{ color:#7CD992; }
+.priority-card--plan .priority-status{ color:var(--accent-2); }
 .priority-card--defer .priority-status{ color:var(--ink-faint); }
 
 /* What I Actually Look At / Tools Grouped / Deliverables — shared 4-col card */
@@ -684,6 +684,35 @@ button{ font-family:inherit; }
 
 /* Full-width statement (Core Differentiator style reuse of funnel-section) */
 .statement-huge{ font-size:clamp(34px,6vw,64px); text-align:center; letter-spacing:-0.01em; line-height:1.05; }
+
+/* ============================================================
+   APPROACH v2 — diagnosis, system, decision, don't-do sections
+   ============================================================ */
+
+.symptom-statement{
+  font-family:var(--font-display); font-size:clamp(20px,2.4vw,28px); text-align:center;
+  color:var(--ink); max-width:600px; margin:0 auto 32px; padding-bottom:24px; border-bottom:1px solid var(--line-soft);
+}
+.causes-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+@media (max-width:800px){ .causes-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:520px){ .causes-grid{ grid-template-columns:1fr; } }
+.cause-card{ border:1px solid var(--line); background:var(--surface); border-radius:var(--radius-sm); padding:18px; }
+.cause-card p{ font-size:13.5px; color:var(--ink-soft); margin-top:8px; line-height:1.55; }
+
+.system-diagram{ display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px; margin-top:28px; }
+.system-node{
+  font-family:var(--font-mono); font-size:13px; color:var(--ink); background:var(--surface-hi);
+  border:1px solid var(--line); padding:10px 18px; border-radius:999px;
+}
+.system-link{ color:var(--accent); font-size:14px; }
+
+.dont-do-line{
+  font-family:var(--font-display); font-size:clamp(17px,2vw,21px); color:var(--ink);
+  padding:20px 0; border-top:1px solid var(--line-soft);
+}
+.dont-do-line:first-child{ border-top:none; }
+
+.chip-stay{ color:var(--ink) !important; border-color:rgba(255,122,51,0.3) !important; background:var(--accent-tint) !important; }
 
 /* ---------- Project card tag row ---------- */
 .project-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }

@@ -26,6 +26,7 @@
       <div class="eyebrow">Services</div>
       <h1 style="font-size:clamp(30px,4.2vw,46px);margin-top:16px;max-width:760px;">SEO &amp; Digital Growth Services</h1>
       <p class="prose" style="margin-top:16px;max-width:660px;font-size:16.5px;">Senior SEO, analytics and digital growth support for businesses that need clarity, execution and measurable outcomes.</p>
+      <p class="prose" style="margin-top:10px;max-width:660px;font-size:14px;color:var(--ink-faint);">For growing businesses, eCommerce brands, marketing teams and agencies that need senior expertise without the overhead of a full-time hire.</p>
       <div class="jump-nav" id="services-jump-nav" style="margin-top:32px;"></div>
     </div>
   </section>
@@ -33,6 +34,16 @@
   <section class="section" style="padding-top:0;">
     <div class="container">
       <div id="services-detail"></div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Engagement</div>
+        <h2>How we can work together.</h2>
+      </div>
+      <div class="grid-6" id="engagement-models"></div>
     </div>
   </section>
 
@@ -56,11 +67,12 @@
   ).join("");
 
   renderServiceDetail("services-detail");
+  renderEngagementModels("engagement-models");
   injectServiceListSchema();
   renderCtaBanner("cta-banner", {
     heading: "Not sure which service fits?",
     body: "Tell me what you're trying to achieve and what's not working — I'll help you figure out where to start.",
-    ctaLabel: "Start the Conversation",
+    ctaLabel: "Discuss a Service",
     ctaHref: "contact.html",
   });
 

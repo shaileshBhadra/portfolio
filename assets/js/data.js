@@ -383,146 +383,8 @@ const CASE_STUDIES = [
   },
 ];
 
-/* Problem-solving playbook — grouped by theme. Used on approach.html.
-   Written from real recurring patterns in SEO/paid media work, plus
-   current (2026) shifts in AI search that every SEO professional now
-   has to account for. */
-const PLAYBOOK = [
-  {
-    theme: "Technical SEO",
-    intro: "The problems that quietly cap growth before any content or link strategy can work.",
-    items: [
-      {
-        issue: "Crawl budget wasted on low-value URLs",
-        detail: "On large sites, Googlebot burns crawl budget on filtered/faceted URLs, internal search results, and thin tag pages instead of money pages — so new or updated content gets indexed slowly.",
-        fix: "Audit crawl stats in GSC, identify low-value URL patterns via Screaming Frog log-file analysis, and control them with robots.txt, noindex, or parameter handling — then re-check crawl stats over the following weeks to confirm budget shifted toward priority pages.",
-      },
-      {
-        issue: "Duplicate and thin content at template scale",
-        detail: "A single broken template (e.g. a portfolio or product page generating near-identical copy) can create hundreds of duplicate-title or thin-content flags in one pass — this is usually one root cause, not hundreds of separate problems.",
-        fix: "Find the shared template first before touching individual pages. Fixing the template to pull unique data per page resolves the flags at scale, instead of hand-editing every URL.",
-      },
-      {
-        issue: "JavaScript-rendered content not indexing",
-        detail: "Client-side rendered content (common on React/Vue-driven sites) can be invisible to Google's renderer or delayed in indexing, especially on sites with heavy hydration.",
-        fix: "Test with GSC's URL Inspection tool's rendered HTML view, compare against the raw source, and push critical content (titles, main copy, internal links) into server-side or pre-rendered output rather than relying entirely on client-side JS.",
-      },
-      {
-        issue: "Core Web Vitals regressions after a redesign",
-        detail: "New themes and page builders routinely ship unoptimized hero images and render-blocking scripts that tank LCP and CLS — usually invisible to the team until Search Console flags it weeks later.",
-        fix: "Treat Core Web Vitals as a pre-launch gate, not a post-launch fix: run PageSpeed Insights/Lighthouse on staging before go-live, and set image/script budgets into the build process itself.",
-      },
-      {
-        issue: "International/multi-region sites splitting authority",
-        detail: "Missing or incorrect hreflang tags cause the wrong regional page to rank in the wrong country, and can split ranking signals across near-duplicate country pages instead of consolidating them.",
-        fix: "Audit hreflang return-tag pairs (every page must reference every alternate, and be referenced back), validate with a dedicated hreflang tester, and confirm the correct page actually serves in each region with a VPN/GSC's URL inspection.",
-      },
-      {
-        issue: "Migrations breaking rankings and tracking simultaneously",
-        detail: "Replatforming (CMS switch, domain change, HTTPS migration) is the highest-risk SEO event — broken redirect chains, lost canonical tags, and untested tracking often surface only after traffic has already dropped.",
-        fix: "Treat redirects, canonicals, and tracking as launch-blocking checks, not post-launch cleanup: map every legacy URL to its new destination before launch, and verify GA4/GTM/conversion tracking on staging before DNS cuts over.",
-      },
-    ],
-  },
-  {
-    theme: "Across Industries",
-    intro: "The same root problems show up differently depending on the business model.",
-    items: [
-      {
-        issue: "E-commerce: faceted navigation creating index bloat",
-        detail: "Every filter combination (size × color × price) can generate a crawlable, indexable URL — multiplying thin, near-duplicate pages that dilute category-level ranking signals.",
-        fix: "Decide deliberately which facet combinations deserve their own indexable URL (usually high-search-volume ones) and canonicalize or noindex the rest, rather than leaving it to the platform's defaults.",
-      },
-      {
-        issue: "SaaS: landing pages competing with each other",
-        detail: "Marketing and growth teams often spin up near-duplicate landing pages per campaign or persona, which end up cannibalizing each other in search instead of ranking as one strong page.",
-        fix: "Consolidate overlapping pages around a single target query, use the strongest version as canonical, and reserve new pages for genuinely distinct intent — not just a different campaign name.",
-      },
-      {
-        issue: "Local/multi-location service businesses invisible outside their home city",
-        detail: "A business can rank well in its home city while being completely invisible in every other city or region it actually serves, because there's no dedicated, locally-relevant page for those areas.",
-        fix: "Build real location pages with locally-relevant proof (not just a swapped city name), keep Google Business Profiles consistent across every location, and match paid search targeting to the same location map.",
-      },
-      {
-        issue: "Content/media sites losing traffic to keyword cannibalization",
-        detail: "Years of publishing without a content map leaves multiple articles competing for the same query, splitting authority and confusing which page Google should rank.",
-        fix: "Run a cannibalization audit in GSC (queries where multiple URLs get impressions), then merge, redirect, or clearly differentiate the competing pages by intent.",
-      },
-    ],
-  },
-  {
-    theme: "Paid Media (Google Ads & Meta)",
-    intro: "Both platforms changed how they measure results in 2026 — most 'performance drops' right now are measurement changes, not real ones.",
-    items: [
-      {
-        issue: "Meta's March 2026 attribution change making performance look worse",
-        detail: "Meta redefined click-through attribution to count only genuine link clicks — likes, shares, saves and comments moved into a separate 'engage-through' bucket. Accounts with unchanged real performance saw reported conversions and ROAS drop overnight.",
-        fix: "Don't panic-pause campaigns. Set a new baseline from the change date forward, add the engage-through column to reporting, and stop comparing pre/post-change numbers directly — they're measuring different things.",
-      },
-      {
-        issue: "Pixel-only tracking losing conversions to iOS/browser restrictions",
-        detail: "Browser privacy changes and ad blockers mean pixel-only Meta tracking now misses a meaningful share of real conversions, making campaigns look less efficient than they are.",
-        fix: "Implement Meta Conversions API server-side alongside the pixel to recover missed events and feed the algorithm better data for optimization.",
-      },
-      {
-        issue: "Performance Max acting as a black box",
-        detail: "PMax often over-indexes on retargeting and existing customers by default (the easiest conversions to win), and it's hard to see why it's serving the ads it is — advertisers can end up funding demand that already existed.",
-        fix: "Tighten conversion signal quality (require click attribution rather than view-through for the primary goal), feed it a real first-party audience and data feed, and monitor search-term/placement reports where visible to catch obvious waste.",
-      },
-      {
-        issue: "GA4 and Google/Meta Ads numbers not matching",
-        detail: "Different attribution windows, models, and event definitions across GA4, Google Ads and Meta mean the three will rarely match exactly — and when they diverge sharply, teams lose trust in all three.",
-        fix: "Pick one system as the source of truth for budget decisions (usually GA4 or a CRM), document why the others differ, and only investigate when the gap moves outside its normal range — not every week.",
-      },
-    ],
-  },
-  {
-    theme: "SEO in the AI Search Era",
-    intro: "Google AI Overviews and AI answer engines (ChatGPT, Perplexity, Copilot, Gemini, Claude) are changing what 'ranking #1' is even worth — this is the shift I'm actively building for, not just watching.",
-    items: [
-      {
-        issue: "AI Overviews cutting click-through rates on top-ranking pages",
-        detail: "Google now answers a large share of queries directly on the results page, and industry data has shown top-ranking pages losing over half their historical click-through rate when an AI Overview appears above them.",
-        fix: "Stop measuring success by ranking position alone. Track impressions-to-click ratio by query, identify which queries now trigger AI Overviews, and prioritize the queries where a click still has real commercial intent behind it.",
-      },
-      {
-        issue: "Being invisible in AI-generated answers even while ranking well",
-        detail: "Ranking #1 in traditional search no longer guarantees being cited in ChatGPT, Perplexity, or Google's own AI Overview — those systems select and summarize sources differently than the classic ranking algorithm.",
-        fix: "Structure key pages with clear, extractable answers near the top (a direct answer-first paragraph before the deeper explanation), strengthen entity clarity (consistent naming, schema markup, an About/author presence), and periodically test target queries directly in ChatGPT, Perplexity, and Google AI Overviews to see who's getting cited instead of guessing.",
-      },
-      {
-        issue: "No visibility into whether AI platforms are sending any traffic",
-        detail: "AI-referred traffic (from chat.openai.com, perplexity.ai, Gemini, Copilot) is real but usually invisible unless someone deliberately looks for it — it doesn't show up in a standard channel report.",
-        fix: "Filter GA4 traffic by AI-platform referral sources as a standing report, not a one-off check, so AI-driven visibility becomes a tracked metric rather than a guess.",
-      },
-      {
-        issue: "Treating Bing as irrelevant",
-        detail: "Bing's index quietly matters more in 2026 than it used to, because Microsoft Copilot draws on Bing's index for many of its answers — a site that's never been optimized for Bing is invisible to that whole surface.",
-        fix: "Verify the site in Bing Webmaster Tools, submit sitemaps there too, and don't assume 'ranks on Google' automatically means 'visible to Copilot.'",
-      },
-      {
-        issue: "Chasing AI visibility with tricks instead of fundamentals",
-        detail: "A lot of 'AEO/GEO' advice oversells shortcuts. In practice, AI answer engines still lean heavily on pages that already rank well organically and read as genuinely authoritative — there's no reliable way to fake that.",
-        fix: "Keep technical SEO and content quality as the foundation, then layer AEO-specific formatting (clear answers, schema, entity consistency) on top of pages that already earn organic trust — not as a replacement for it.",
-      },
-    ],
-  },
-];
-
-/* ============================================================
-   APPROACH PAGE — structured content for approach.html.
-   Kept separate from PLAYBOOK/SKILLS above; this page tells the
-   same story in a tighter, more senior-portfolio format.
-   No invented metrics: anywhere a real number isn't available,
-   the copy uses a category label instead of a placeholder stat.
-   ============================================================ */
-
-const CAPABILITY_SNAPSHOT = [
-  { value: "9+", label: "Years Experience" },
-  { value: "SEO", label: "Technical + Content" },
-  { value: "Analytics", label: "GA4 + GTM + GSC" },
-  { value: "Paid", label: "Google Ads + Meta Ads" },
-];
+/* Six-step framework — shared by the homepage teaser and Approach
+   page section 02. Each step is intentionally one sentence. */
 
 const PROCESS_STEPS = [
   { n: "01", title: "Understand", subtitle: "Business & Growth Context", copy: "Understand the business model, target audience, commercial priorities and what success actually means." },
@@ -531,91 +393,6 @@ const PROCESS_STEPS = [
   { n: "04", title: "Plan", subtitle: "Build the Roadmap", copy: "Turn findings into a practical roadmap with clear priorities, dependencies, owners and measurable outcomes." },
   { n: "05", title: "Implement", subtitle: "Execute & Validate", copy: "Work with development, content, design and marketing teams to implement changes and validate that they work as expected." },
   { n: "06", title: "Measure", subtitle: "Prove the Outcome", copy: "Track visibility, traffic, engagement, leads, transactions and revenue to understand whether the work created meaningful business value." },
-];
-
-const PROBLEMS_SOLVED = [
-  {
-    title: "Organic Traffic Is Declining",
-    investigate: ["Search Console trends", "Ranking changes", "Technical changes", "Content decay", "Search demand", "Algorithm/environment changes"],
-    approach: "Separate demand changes from technical, content and visibility problems before deciding what to fix.",
-  },
-  {
-    title: "Google Isn't Indexing the Right Pages",
-    investigate: ["Crawlability", "Indexation", "Canonicals", "Robots.txt", "XML sitemaps", "Duplicate URLs", "Internal linking"],
-    approach: "Identify where the site's information architecture is preventing search engines from discovering or understanding the right content.",
-  },
-  {
-    title: "Traffic Is High, But Leads Aren't",
-    investigate: ["Search intent", "Landing pages", "Conversion tracking", "CTAs", "User behaviour", "Lead quality"],
-    approach: "Connect search performance with conversion behaviour instead of treating traffic as the final KPI.",
-  },
-  {
-    title: "Rankings Are Improving, But Revenue Isn't",
-    investigate: ["Keyword intent", "Commercial pages", "Conversion rate", "Attribution", "Traffic quality"],
-    approach: "Move the focus from ranking improvement to qualified traffic and business outcomes.",
-  },
-  {
-    title: "Analytics Data Can't Be Trusted",
-    investigate: ["GA4", "GTM", "Events", "Parameters", "Attribution", "Consent", "Cross-domain tracking"],
-    approach: "Audit the measurement architecture, identify discrepancies and create a reliable foundation for decision-making.",
-  },
-];
-
-const GROWTH_FUNNEL = ["SEO", "Visibility", "Qualified Traffic", "Engagement", "Leads / Transactions", "Revenue"];
-
-const PRIORITY_TIERS = [
-  { tier: "High Priority", status: "Optimise immediately", example: "Existing page ranking near page one + strong commercial intent + meaningful search demand + relatively low implementation effort." },
-  { tier: "Strategic", status: "Build roadmap", example: "Large content opportunity + strong commercial relevance + requires new content architecture." },
-  { tier: "Low Priority", status: "Defer", example: "Minor technical or metadata issue with limited traffic or business impact." },
-];
-
-const LOOK_AT_COLUMNS = [
-  { title: "Technical SEO", items: ["Crawlability", "Indexation", "Canonicals", "Redirects", "XML sitemaps", "Robots.txt", "JavaScript SEO", "Internal linking", "Structured data", "Core Web Vitals", "Site architecture", "Migration issues"] },
-  { title: "Search & Content", items: ["Search intent", "Keyword research", "SERP analysis", "Topic clusters", "Content gaps", "Content decay", "Cannibalisation", "On-page optimisation", "Internal linking", "Content architecture"] },
-  { title: "Analytics & Measurement", items: ["GA4", "Google Tag Manager", "Search Console", "Conversion tracking", "Event architecture", "Attribution", "Funnel analysis", "Data validation", "Marketing dashboards"] },
-  { title: "Paid Performance", items: ["Google Ads", "Meta Ads", "Campaign structure", "Conversion tracking", "Landing page analysis", "Search query analysis", "Budget allocation", "CPL / CPA / ROAS"] },
-];
-
-const DIAGNOSTIC_EXAMPLE = {
-  label: "Example diagnostic workflow — illustrates methodology, not a specific client result.",
-  problem: "Organic traffic is declining.",
-  diagnosis: "Search Console + GA4 + technical crawl + ranking data",
-  action: "Technical correction + content restructuring + internal linking",
-  measurement: "Clicks → Impressions → Rankings → Sessions → Conversions",
-};
-
-const AI_SEARCH_COMPARISON = {
-  traditional: ["Query", "SERP", "Website", "Conversion"],
-  ai: ["Query", "AI Answer", "Brand / Source Visibility", "Website / Action"],
-};
-
-const TOOLS_GROUPED = [
-  { group: "Search Intelligence", tools: ["Google Search Console", "Ahrefs", "SEMrush", "Screaming Frog", "Keyword Hero"] },
-  { group: "Measurement", tools: ["GA4", "Google Tag Manager", "Looker Studio", "Google Ads Conversion Tracking"] },
-  { group: "Paid Media", tools: ["Google Ads", "Meta Ads", "Meta Conversions API"] },
-  { group: "Technical", tools: ["Chrome DevTools", "PageSpeed Insights", "Rich Results Test", "Schema markup tools"] },
-  { group: "AI / Productivity", tools: ["ChatGPT", "Claude", "Perplexity", "Gemini", "AI-assisted research & automation workflows"] },
-];
-
-const DELIVERABLES = [
-  { title: "Technical SEO", items: ["Technical audit", "Prioritised implementation roadmap", "Indexation analysis", "Migration checklist"] },
-  { title: "SEO Strategy", items: ["SEO roadmap", "Keyword strategy", "Competitor analysis", "Content strategy", "Opportunity analysis"] },
-  { title: "Analytics", items: ["GA4 audit", "GTM implementation", "Conversion tracking", "Measurement framework"] },
-  { title: "Performance Marketing", items: ["Campaign audit", "Tracking setup", "Landing-page analysis", "Performance optimisation"] },
-];
-
-const PRINCIPLES = [
-  { title: "I Don't Chase Vanity Metrics.", copy: "Traffic is useful only when it supports the business." },
-  { title: "I Don't Blindly Follow SEO Checklists.", copy: "Every recommendation should have a reason." },
-  { title: "I Don't Separate SEO From Measurement.", copy: "If we can't measure the outcome, we can't properly evaluate the strategy." },
-  { title: "I Don't Recommend Everything at Once.", copy: "Prioritisation is part of the job." },
-  { title: "I Don't Hide Behind Tools.", copy: "Tools provide evidence. Experience provides judgement.", prominent: true },
-];
-
-const PROOF_LINKS = [
-  { title: "Technical SEO Case Study", copy: "See how technical problems can be diagnosed, prioritised and resolved.", slug: "neat-everyday-organic-growth" },
-  { title: "Analytics Case Study", copy: "See how tracking and measurement problems can be investigated and validated.", slug: "cs-tracking-audit-saas" },
-  { title: "Growth & Conversion Case Study", copy: "See how SEO, analytics and conversion performance can work together.", slug: "equest-cro-funnel" },
 ];
 
 /* ============================================================
@@ -757,26 +534,20 @@ const SERVICES = [
 
 const HOME_SERVICE_SLUGS = ["technical-seo", "seo-strategy", "content-strategy", "ga4-gtm", "ecommerce-seo", "google-ads"];
 
+const HOME_SERVICE_VALUE_PROPS = {
+  "technical-seo": "Fix what's blocking search engines from understanding your site.",
+  "seo-strategy": "Turn search demand into a roadmap worth acting on.",
+  "content-strategy": "Content built for intent, not keyword volume.",
+  "ga4-gtm": "A measurement setup you can actually trust.",
+  "ecommerce-seo": "Remove the technical ceiling on product visibility.",
+  "google-ads": "Paid search judged by outcomes, not platform metrics.",
+};
+
 const ENGAGEMENT_MODELS = [
   { title: "Audit", copy: "One-time diagnosis and prioritised recommendations.", bestFor: "Businesses that need clarity before investing in ongoing SEO.", ctaLabel: "Request an Audit →" },
   { title: "Project", copy: "Strategy and implementation around a specific growth problem.", bestFor: "Businesses with a defined SEO, analytics or acquisition challenge.", ctaLabel: "Discuss a Project →" },
   { title: "Consulting", copy: "Senior SEO, analytics or technical expertise when your internal team needs support.", bestFor: "Marketing teams that need specialist guidance without a full-time hire.", ctaLabel: "Book a Consultation →" },
   { title: "Ongoing", copy: "Continuous strategic and technical support across SEO, analytics and digital acquisition.", bestFor: "Businesses looking for an experienced long-term partner.", ctaLabel: "Let's Talk →" },
-];
-
-const WHO_I_HELP = [
-  { title: "Growing Businesses", copy: "Businesses that need experienced SEO and analytics support without building a large internal team." },
-  { title: "eCommerce", copy: "Brands looking to improve organic product/category visibility and connect search performance to transactions." },
-  { title: "Marketing Teams", copy: "Internal teams that need senior SEO, analytics, tracking or technical support." },
-  { title: "Agencies", copy: "Agencies looking for an experienced SEO and analytics partner for client projects." },
-];
-
-const WHY_WORK_WITH_ME = [
-  { n: "01", title: "Technical + Commercial Thinking", copy: "I can investigate technical SEO problems while understanding their impact on marketing and business performance." },
-  { n: "02", title: "Data-Led Decisions", copy: "I use Search Console, GA4, GTM, advertising data and website behaviour to understand the complete picture." },
-  { n: "03", title: "Practical Recommendations", copy: "The goal isn't the longest audit. It's knowing what should happen next." },
-  { n: "04", title: "Cross-Functional Experience", copy: "I can translate SEO requirements into practical actions for developers, content teams, marketers and business stakeholders." },
-  { n: "05", title: "Senior-Level Perspective", copy: "9+ years of hands-on experience across SEO, analytics, paid media, eCommerce and lead generation." },
 ];
 
 /* Insights — teaser topics with a real, specific angle each.
@@ -794,6 +565,54 @@ const INSIGHTS_ARTICLES = [
 ];
 
 const INQUIRY_TYPES = ["SEO Audit", "Technical SEO", "SEO Strategy", "Content Strategy", "Analytics / GA4 / GTM", "Conversion Tracking", "eCommerce SEO", "Google Ads", "Ongoing Consulting", "Not sure yet"];
+
+/* ============================================================
+   APPROACH v2 — "how I think" page. Distinct from PLAYBOOK/
+   SERVICES: no service scope, no tool lists — just the reasoning.
+   ============================================================ */
+
+const DIAGNOSIS_EXAMPLE = {
+  symptom: "Organic traffic is declining.",
+  causes: [
+    { label: "Technical", copy: "Something broke — indexation, a template, a migration." },
+    { label: "Search demand", copy: "Fewer people are searching for it at all." },
+    { label: "Content", copy: "The content decayed or a competitor's got better." },
+    { label: "Competition", copy: "Someone else earned the position instead." },
+    { label: "Intent", copy: "The query's meaning shifted under the same keyword." },
+    { label: "Measurement", copy: "Nothing changed — the tracking did." },
+  ],
+};
+
+const SYSTEM_NODES = ["SEO", "Content", "Website", "Analytics", "Conversion", "Paid", "Growth"];
+
+const DECISION_TIERS_V2 = [
+  { label: "Do Now", copy: "High business impact, real search opportunity, low effort to ship." },
+  { label: "Plan", copy: "Real opportunity, but it needs a roadmap, not a sprint." },
+  { label: "Defer", copy: "Low impact relative to effort — noted, not ignored." },
+];
+
+const MEASUREMENT_CHAIN = ["Impressions", "Clicks", "Qualified Visits", "Engagement", "Leads / Transactions", "Revenue"];
+
+const AI_CHANGES = {
+  changes: ["AI Overviews", "AI search", "Conversational discovery", "SERP behaviour", "Zero-click journeys"],
+  staysSame: ["Useful information", "Technical accessibility", "Expertise", "Originality", "Strong architecture", "Search intent", "Measurement"],
+};
+
+const WHAT_I_DONT_DO = [
+  "I don't chase rankings without context.",
+  "I don't create huge audits just to look thorough.",
+  "I don't recommend changes simply because a tool flagged them.",
+  "I don't create content just to fill a calendar.",
+  "I don't promise numbers I can't substantiate.",
+];
+
+const PROJECT_START_STEPS = [
+  { n: "01", title: "Tell me what is happening.", copy: "The symptom, in your own words — no need to diagnose it yourself first." },
+  { n: "02", title: "We understand the problem.", copy: "A short conversation to separate what's assumed from what's actually known." },
+  { n: "03", title: "We define the right scope.", copy: "Only the work that addresses the actual problem — not a standard package." },
+  { n: "04", title: "We agree on priorities.", copy: "What happens first, and why, before anything is billed or built." },
+  { n: "05", title: "We start.", copy: "Work begins against the agreed priorities, measured against the original problem." },
+];
 
 const NAV_LINKS = [
   { label: "Home", href: "index.html" },
