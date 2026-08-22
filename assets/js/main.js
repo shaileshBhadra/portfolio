@@ -70,7 +70,7 @@ function renderHeader(activeHref){
       <a href="index.html" class="brand">Shailesh<span>.</span>Bhadra</a>
       <nav class="nav-links" id="nav-links">
         ${links}
-        <a href="resume.html" class="nav-cta">View Resume</a>
+        <a href="contact.html" class="nav-cta" data-track="primary_cta_click">Let's Talk</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -107,9 +107,9 @@ function renderFooter(){
           </div>
           <div class="footer-col">
             <h4>Contact</h4>
-            <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>
-            <a href="${PROFILE.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="/resume/download" download>Download Resume (PDF)</a>
+            <a href="mailto:${PROFILE.email}" data-track="email_click">${PROFILE.email}</a>
+            <a href="${PROFILE.linkedin}" target="_blank" rel="noopener" data-track="linkedin_click">LinkedIn</a>
+            <a href="/resume/download" download data-track="resume_download">Download Resume (PDF)</a>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@ function renderCtaBanner(targetId, opts){
       <p>${o.body}</p>
     </div>
     <div class="btn-row">
-      <a href="${o.ctaHref}" class="btn btn--primary">${o.ctaLabel}</a>
+      <a href="${o.ctaHref}" class="btn btn--primary" data-track="primary_cta_click">${o.ctaLabel}</a>
       ${extra}
     </div>
   `;
@@ -251,8 +251,10 @@ function renderTimeline(targetId, items){
       <div class="timeline-meta">${job.dates} — ${job.location}</div>
       <h3>${job.company}</h3>
       <div class="role">${job.role}</div>
+      <div class="playbook-label" style="margin-top:14px;">What I Owned</div>
       <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join("")}</ul>
       ${job.achievement ? `<div class="achievement-pill">▲ ${job.achievement}</div>` : ""}
+      <div class="playbook-label" style="margin-top:14px;">Key Focus</div>
       <div class="tool-tags">${job.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
     </div>`).join("");
 }
@@ -297,7 +299,7 @@ function renderProjectCards(targetId, items){
     const context = isCaseStudy ? `${p.region} · ${p.industry}` : p.company;
     const role = isCaseStudy ? "Owned diagnosis through implementation" : p.role;
     return `
-    <a class="project-card" href="project-detail.html?slug=${p.slug}">
+    <a class="project-card" href="project-detail.html?slug=${p.slug}" data-track="case_study_click">
       <div class="project-body">
         <div class="project-card-top">
           <div class="eyebrow">${context}</div>
@@ -377,6 +379,7 @@ function renderProblemCards(targetId){
     <div class="work-card problem-tile reveal">
       <h3>${p.title}</h3>
       <p>${p.copy}</p>
+      <a href="${p.ctaHref}" class="more">${p.ctaLabel}</a>
     </div>`).join("");
 }
 
@@ -393,10 +396,11 @@ function renderServiceCards(targetId, slugs){
 }
 
 function renderServiceCard(s){
-  const icon = (typeof SERVICE_ICONS !== "undefined" && SERVICE_ICONS[s.category]) || "";
+  const iconName = (typeof SERVICE_ICON_NAMES !== "undefined" && SERVICE_ICON_NAMES[s.slug]) || "wrench";
   return `
     <div class="service-card2 reveal" data-category="${s.category}" id="${s.slug}">
-      <div class="service-card2-icon">${icon}</div>
+      <div class="service-card2-icon"><i data-lucide="${iconName}"></i></div>
+      <div class="eyebrow" style="margin-bottom:8px;">${s.category}</div>
       <h3>${s.name}</h3>
       <p class="service-card2-desc">${s.short}</p>
       <div class="playbook-label">Key Outcomes</div>
@@ -412,7 +416,7 @@ function renderServiceCard(s){
         <p>${s.deliverable}</p>
         <div class="playbook-label" style="margin-top:14px;">Who it's for</div>
         <p>${s.whoFor}</p>
-        <a href="project-detail.html?slug=${s.caseStudySlug}" class="more" style="margin-top:10px;display:inline-block;">Relevant case study →</a>
+        <a href="project-detail.html?slug=${s.caseStudySlug}" class="more" style="margin-top:10px;display:inline-block;" data-track="case_study_click">Relevant case study →</a>
       </div>
     </div>`;
 }
@@ -442,6 +446,7 @@ function renderServiceCatalogue(gridTargetId, filterTargetId){
     const list = active === "All" ? SERVICES : SERVICES.filter(s => s.category === active);
     gridEl.innerHTML = list.map(renderServiceCard).join("");
     bindCardEvents();
+    if(window.lucide) lucide.createIcons();
   }
 
   function drawFilters(){
@@ -471,6 +476,8 @@ function renderEngagementModels(targetId){
       <p style="margin-top:14px;">${m.copy}</p>
       <div class="playbook-label" style="margin-top:16px;">Best for</div>
       <p style="font-size:13.5px;">${m.bestFor}</p>
+      <div class="playbook-label" style="margin-top:16px;">What you get</div>
+      <ul class="outcome-list">${(m.whatYouGet||[]).map(w => `<li>${w}</li>`).join("")}</ul>
       <a href="contact.html" class="more">${m.ctaLabel}</a>
     </div>`).join("");
 }
@@ -498,7 +505,7 @@ function renderCaseStudyShowcase(targetId){
   if(items.length < 3) return;
   const [a, b, c] = items;
   el.innerHTML = `
-    <a class="showcase-feature reveal" href="project-detail.html?slug=${a.slug}">
+    <a class="showcase-feature reveal" href="project-detail.html?slug=${a.slug}" data-track="case_study_click">
       <div class="project-card-top"><div class="eyebrow">${a.company || a.industry}</div><span class="kind-badge kind-badge--${(a._kind||'').toLowerCase().replace(/\s+/g,'-')}">${a._kind}</span></div>
       <h3>${a.name}</h3>
       <p>${a.summary}</p>
@@ -506,12 +513,12 @@ function renderCaseStudyShowcase(targetId){
       <div class="more">Read Case Study →</div>
     </a>
     <div class="showcase-side">
-      <a class="showcase-compact reveal" href="project-detail.html?slug=${b.slug}">
+      <a class="showcase-compact reveal" href="project-detail.html?slug=${b.slug}" data-track="case_study_click">
         <div class="eyebrow">${b.region ? `${b.region} · ${b.industry}` : b.company}</div>
         <h3>${b.name}</h3>
         <div class="more">Read Case Study →</div>
       </a>
-      <a class="showcase-compact reveal" href="project-detail.html?slug=${c.slug}">
+      <a class="showcase-compact reveal" href="project-detail.html?slug=${c.slug}" data-track="case_study_click">
         <div class="eyebrow">${c.company || c.industry}</div>
         <h3>${c.name}</h3>
         <div class="more">Read Case Study →</div>
@@ -568,11 +575,15 @@ function renderHomeProcessSteps(targetId){
 function renderCapabilities(targetId){
   const el = document.getElementById(targetId);
   if(!el || typeof CAPABILITIES === "undefined") return;
-  el.innerHTML = CAPABILITIES.map(c => `
+  el.innerHTML = CAPABILITIES.map(c => {
+    const iconName = (typeof CAPABILITY_ICON_NAMES !== "undefined" && CAPABILITY_ICON_NAMES[c.title]) || "wrench";
+    return `
     <div class="lookat-card reveal">
+      <div class="service-card2-icon" style="margin-bottom:14px;"><i data-lucide="${iconName}"></i></div>
       <h3>${c.title}</h3>
       <ul class="lookat-list">${c.items.map(i => `<li>${i}</li>`).join("")}</ul>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 }
 
 function renderWhoWorkWith(targetId){
@@ -594,10 +605,22 @@ function renderUnderstandBusiness(targetId){
   const el = document.getElementById(targetId);
   if(!el || typeof UNDERSTAND_BUSINESS === "undefined") return;
   const d = UNDERSTAND_BUSINESS;
+  const e = typeof UNDERSTAND_EDITORIAL !== "undefined" ? UNDERSTAND_EDITORIAL : null;
   el.innerHTML = `
-    <p class="prose reveal" style="font-size:16px;margin-bottom:18px;">${d.lead}</p>
-    <ul class="chip-list">${d.items.map(i => `<li>${i}</li>`).join("")}</ul>
-    <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>`;
+    <div class="about-grid">
+      <div>
+        <p class="prose reveal" style="font-size:16px;margin-bottom:18px;">${d.lead}</p>
+        <ul class="chip-list">${d.items.map(i => `<li>${i}</li>`).join("")}</ul>
+        <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>
+      </div>
+      ${e ? `
+      <aside class="glass quick-facts reveal">
+        <div class="playbook-label">Question First</div>
+        <p style="font-size:14px;color:var(--ink-soft);margin-top:8px;line-height:1.6;">${e.questionFirst}</p>
+        <div class="playbook-label" style="margin-top:20px;">What Success Looks Like</div>
+        <ul class="checklist" style="margin-top:10px;">${e.successLooksLike.map(s => `<li>${s}</li>`).join("")}</ul>
+      </aside>` : ""}
+    </div>`;
 }
 
 function renderDiagnoseGroups(targetId){
@@ -632,6 +655,49 @@ function renderMeasureGroups(targetId){
 
 function renderExecutionCollaborators(targetId){
   renderChipList(targetId, typeof EXECUTION_COLLABORATORS !== "undefined" ? EXECUTION_COLLABORATORS : null);
+}
+
+function renderImpactEffortConfidence(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof IMPACT_EFFORT_CONFIDENCE === "undefined") return;
+  el.innerHTML = IMPACT_EFFORT_CONFIDENCE.map(b => `
+    <div class="cause-card reveal">
+      <div class="eyebrow">${b.title}</div>
+      <p>${b.copy}</p>
+    </div>`).join("");
+}
+
+function renderDiagnoseStatement(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DIAGNOSE_STATEMENT === "undefined") return;
+  const d = DIAGNOSE_STATEMENT;
+  el.innerHTML = `
+    <div class="eyebrow">${d.heading}</div>
+    <p class="symptom-statement reveal" style="margin-top:16px;">${d.question}</p>
+    <p class="prose reveal" style="text-align:center;max-width:600px;margin:0 auto;">${d.copy}</p>`;
+}
+
+function renderExecutionSplit(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof EXECUTION_SPLIT === "undefined") return;
+  el.innerHTML = EXECUTION_SPLIT.map(b => `
+    <div class="cause-card reveal">
+      <div class="eyebrow">${b.title}</div>
+      <p>${b.copy}</p>
+    </div>`).join("");
+}
+
+function renderImproveSteps(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof IMPROVE_STEPS === "undefined") return;
+  el.innerHTML = IMPROVE_STEPS.map(s => `
+    <div class="process-step reveal">
+      <div class="process-step-n">${s.n}</div>
+      <div class="process-step-body">
+        <h3>${s.title}</h3>
+        <p>${s.copy}</p>
+      </div>
+    </div>`).join("");
 }
 
 function renderWorkingPrinciples(targetId){
@@ -673,6 +739,43 @@ function renderAboutHowIWork(targetId){
     <p class="prose reveal" style="margin-bottom:10px;">Give me an account where:</p>
     <ul class="chip-list">${d.giveMe.map(i => `<li>${i}</li>`).join("")}</ul>
     <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>`;
+}
+
+function renderAboutStory(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_STORY === "undefined") return;
+  const d = ABOUT_STORY;
+  el.innerHTML = d.paragraphs.map(p => `<p class="prose reveal" style="margin-bottom:14px;">${p}</p>`).join("");
+}
+
+function renderAboutAISection(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_AI_SECTION === "undefined") return;
+  const d = ABOUT_AI_SECTION;
+  el.innerHTML = d.paragraphs.map(p => `<p class="prose reveal" style="margin-bottom:14px;">${p}</p>`).join("");
+}
+
+function renderAboutWhatYouGet(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_WHAT_YOU_GET === "undefined") return;
+  el.innerHTML = ABOUT_WHAT_YOU_GET.map(g => `
+    <div class="lookat-card reveal">
+      <h3>${g.title}</h3>
+      <ul class="lookat-list">${g.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderAboutNextProblem(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_NEXT_PROBLEM === "undefined") return;
+  const d = ABOUT_NEXT_PROBLEM;
+  el.innerHTML = `
+    <div class="eyebrow">${d.eyebrow}</div>
+    <h2 style="margin-top:12px;">${d.heading}</h2>
+    <div style="margin-top:18px;">
+      ${d.lines.map(l => `<p class="dont-do-line reveal" style="font-size:15.5px;padding:10px 0;">${l}</p>`).join("")}
+    </div>
+    <p class="prose" style="margin-top:14px;font-style:italic;">${d.closing}</p>`;
 }
 
 function renderAgencySection(capTargetId, fitTargetId){
@@ -821,6 +924,7 @@ function initContactForm(){
         form.reset();
         if(charCount) charCount.textContent = "0 / 1000";
         setStatus("success", "Thanks — your message is on its way. I'll reply within 1–2 business days.");
+        trackEvent("contact_submission", { inquiry_type: payload.inquiry_type || "" });
       } else {
         setStatus("error", "Something went wrong sending that. Try again, or email me directly below.");
       }
@@ -831,4 +935,57 @@ function initContactForm(){
       submitLabel.textContent = submitLabelDefault;
     }
   });
+}
+
+/* ============================================================
+   ANALYTICS — GA4 via gtag.js, loaded only if a real Measurement
+   ID is configured. No fake/placeholder ID is ever sent to Google.
+
+   To enable: replace GA4_MEASUREMENT_ID below with your real ID
+   (format "G-XXXXXXXXXX") from GA4 Admin → Data Streams. Until
+   then this stays fully inert — no script loads, no requests fire.
+   ============================================================ */
+const GA4_MEASUREMENT_ID = ""; // [ADD GA4 MEASUREMENT ID] — e.g. "G-XXXXXXXXXX"
+
+function initAnalytics(){
+  if(!GA4_MEASUREMENT_ID) return; // not configured — do nothing, no fake ID sent anywhere
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag("js", new Date());
+  gtag("config", GA4_MEASUREMENT_ID);
+
+  bindTrackedClicks();
+}
+
+/* Fires a GA4 event if analytics is configured; otherwise a no-op.
+   Safe to call unconditionally from anywhere in the codebase. */
+function trackEvent(eventName, params){
+  if(!GA4_MEASUREMENT_ID || typeof gtag !== "function") return;
+  gtag("event", eventName, params || {});
+}
+
+/* Event delegation on document, not per-element listeners — most
+   data-track elements (case study cards, CTA banners) render
+   dynamically after page load via JS, so binding at load time would
+   miss them entirely. Delegation catches them regardless of when
+   they're added to the DOM. */
+function bindTrackedClicks(){
+  document.addEventListener("click", (e) => {
+    const el = e.target.closest("[data-track]");
+    if(!el) return;
+    trackEvent(el.dataset.track, { link_url: el.href || "" });
+  });
+}
+
+// Run on every page once the DOM is ready — inert until GA4_MEASUREMENT_ID is set.
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initAnalytics);
+} else {
+  initAnalytics();
 }

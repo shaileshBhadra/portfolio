@@ -429,13 +429,12 @@ const TRUST_STRIP = [
 const PROBLEM_CARDS_INTRO = "Most digital problems don't start with a lack of tools. They start with not knowing what is actually wrong.";
 
 const PROBLEM_CARDS = [
-  { title: "Organic traffic is declining.", copy: "I investigate whether the cause is technical, content-related, algorithmic, competitive or driven by changes in search demand — then prioritize the recovery opportunities." },
-  { title: "You're getting traffic, but not enough leads.", copy: "I connect search intent, landing pages, analytics and conversion data to identify where the acquisition funnel is losing potential customers." },
-  { title: "Your SEO data cannot be trusted.", copy: "I diagnose GA4, GTM, GSC and conversion-tracking issues so decisions are based on reliable measurement rather than conflicting numbers." },
-  { title: "SEO recommendations aren't getting implemented.", copy: "I turn audits into prioritized, actionable work that developers, content teams and marketers can actually execute." },
-  { title: "Your eCommerce site isn't getting enough search visibility.", copy: "I work across technical SEO, product visibility, search demand, Merchant Center, structured data and measurement to identify where growth is being constrained." },
-  { title: "Paid acquisition is becoming harder to scale.", copy: "I analyse search intent, campaign performance, landing pages, tracking and conversion data to identify opportunities to improve acquisition efficiency." },
-  { title: "You need senior SEO expertise without another layer of management.", copy: "I can work directly with marketing, product, development and leadership teams — owning the problem rather than simply delivering a report." },
+  { title: "Organic traffic isn't growing.", copy: "Technical issues, content gaps, search intent, competition or changing demand may be hiding the real problem.", ctaLabel: "Explore SEO →", ctaHref: "services.html#technical-seo" },
+  { title: "Your data can't be trusted.", copy: "GA4, GTM, advertising platforms and business data don't tell the same story.", ctaLabel: "Explore Analytics →", ctaHref: "services.html#ga4-gtm" },
+  { title: "Traffic isn't becoming leads.", copy: "You have visibility, but the visitors aren't taking the actions that matter.", ctaLabel: "Explore Conversion →", ctaHref: "services.html#conversion-tracking" },
+  { title: "You don't know what to fix first.", copy: "Your audit has dozens of recommendations but no clear business priority.", ctaLabel: "Explore Strategy →", ctaHref: "approach.html#prioritize" },
+  { title: "Your SEO work isn't moving the business.", copy: "You have rankings, reports and activity — but no clear connection between SEO work and leads, revenue or meaningful business outcomes.", ctaLabel: "Explore Growth →", ctaHref: "approach.html" },
+  { title: "Your site has grown faster than its structure.", copy: "New pages, products or markets have created technical debt, weak architecture or competing URLs that make search performance harder to scale.", ctaLabel: "Explore Technical SEO →", ctaHref: "services.html#technical-seo" },
 ];
 
 const WHAT_I_BRING = [
@@ -605,13 +604,27 @@ const SERVICES = [
 
 const HOME_SERVICE_SLUGS = ["technical-seo", "seo-strategy", "content-strategy", "ga4-gtm", "ecommerce-seo", "google-ads"];
 
-const SERVICE_ICONS = {
-  "Technical SEO": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3" stroke-linecap="round"/></svg>`,
-  "Strategy": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v6M12 16v6M2 12h6M16 12h6" stroke-linecap="round"/><circle cx="12" cy="12" r="3"/></svg>`,
-  "Analytics": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>`,
-  "eCommerce": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 7H6"/></svg>`,
-  "Paid Media": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l17-7-7 17-2.5-7L3 11z"/></svg>`,
-  "Consulting": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"/></svg>`,
+/* Lucide icon names — loaded via CDN, one semantic icon per service/capability,
+   matching the exact mapping requested (no duplicate icons for unrelated items). */
+const SERVICE_ICON_NAMES = {
+  "technical-seo": "search-code",
+  "seo-audit": "scan-search",
+  "seo-strategy": "route",
+  "content-strategy": "file-search",
+  "ga4-gtm": "chart-no-axes-combined",
+  "conversion-tracking": "trending-up",
+  "ecommerce-seo": "shopping-bag",
+  "google-ads": "mouse-pointer-click",
+  "seo-analytics-consulting": "users-round",
+};
+
+const CAPABILITY_ICON_NAMES = {
+  "Technical SEO": "search-code",
+  "SEO Strategy": "route",
+  "Analytics & Measurement": "chart-spline",
+  "Performance": "mouse-pointer-click",
+  "eCommerce": "shopping-bag",
+  "Reporting & Growth": "presentation",
 };
 
 const HOME_SERVICE_VALUE_PROPS = {
@@ -624,10 +637,10 @@ const HOME_SERVICE_VALUE_PROPS = {
 };
 
 const ENGAGEMENT_MODELS = [
-  { title: "Audit", copy: "One-time diagnosis and prioritised recommendations.", bestFor: "Businesses that need clarity before investing in ongoing SEO.", ctaLabel: "Request an Audit →" },
-  { title: "Project", copy: "Strategy and implementation around a specific growth problem.", bestFor: "Businesses with a defined SEO, analytics or acquisition challenge.", ctaLabel: "Discuss a Project →" },
-  { title: "Consulting", copy: "Senior SEO, analytics or technical expertise when your internal team needs support.", bestFor: "Marketing teams that need specialist guidance without a full-time hire.", ctaLabel: "Book a Consultation →" },
-  { title: "Ongoing", copy: "Continuous strategic and technical support across SEO, analytics and digital acquisition.", bestFor: "Businesses looking for an experienced long-term partner.", ctaLabel: "Let's Talk →" },
+  { title: "Audit", copy: "One-time diagnosis and prioritised recommendations.", bestFor: "Businesses that need clarity before investing in ongoing SEO.", whatYouGet: ["Technical/search/measurement diagnosis", "Prioritized findings", "Action roadmap"], ctaLabel: "Request an Audit →" },
+  { title: "Project", copy: "Strategy and implementation around a specific growth problem.", bestFor: "Businesses with a defined SEO, analytics or acquisition challenge.", whatYouGet: ["Defined scope", "Implementation roadmap", "Measurement framework"], ctaLabel: "Discuss a Project →" },
+  { title: "Consulting", copy: "Senior SEO, analytics or technical expertise when your internal team needs support.", bestFor: "Marketing teams that need specialist guidance without a full-time hire.", whatYouGet: ["Expert diagnosis", "Strategic guidance", "Team collaboration"], ctaLabel: "Book a Consultation →" },
+  { title: "Ongoing", copy: "Continuous strategic and technical support across SEO, analytics and digital acquisition.", bestFor: "Businesses looking for an experienced long-term partner.", whatYouGet: ["Ongoing prioritization", "Performance reviews", "Strategic and technical support"], ctaLabel: "Let's Talk →" },
 ];
 
 /* Insights — teaser topics with a real, specific angle each.
@@ -751,6 +764,102 @@ const HIRING_MANAGER_SECTION = {
   ],
   whatYouGet: ["Senior-level judgment", "Hands-on execution", "Cross-functional collaboration", "Data-led decision making", "Clear communication", "Accountability for outcomes"],
 };
+
+const RESUME_CORE_EXPERTISE = [
+  { title: "SEO", items: ["Technical SEO", "SEO Strategy", "On-page SEO", "Keyword Research", "Content Strategy", "Site Architecture"] },
+  { title: "Analytics", items: ["GA4", "Google Tag Manager", "Google Search Console", "Conversion Tracking", "eCommerce Tracking", "Looker Studio"] },
+  { title: "Performance", items: ["Google Ads", "Meta Ads", "Landing Page Analysis", "Conversion Optimization"] },
+  { title: "eCommerce", items: ["Shopify", "Merchant Center", "Product SEO", "Product Visibility", "eCommerce Measurement"] },
+];
+
+const RESUME_TOOLS = [
+  { title: "Search", items: ["Google Search Console", "Screaming Frog", "SEMrush", "Ahrefs", "Google Trends"] },
+  { title: "Analytics", items: ["GA4", "Google Tag Manager", "Looker Studio"] },
+  { title: "Paid", items: ["Google Ads", "Meta Ads"] },
+  { title: "eCommerce", items: ["Shopify", "Google Merchant Center", "GA4 eCommerce"] },
+];
+
+const RESUME_SELECTED_IMPACT = [
+  { value: "60%+", label: "Organic traffic lift delivered at Neat Everyday once measurement was fixed first.", caseStudySlug: "neat-everyday-organic-growth" },
+  { value: "25%", label: "Improvement in client conversion rates once the GA4 funnel data was rebuilt and trustworthy.", caseStudySlug: "equest-cro-funnel" },
+];
+
+const ABOUT_STORY = {
+  eyebrow: "The Work Behind the Title",
+  heading: "I didn't start with growth. I started by fixing what was broken.",
+  paragraphs: [
+    "Early in my career, SEO was largely about visibility — rankings, technical issues, content and search demand.",
+    "Over time, the problems became more connected.",
+    "A traffic drop could be technical. A conversion problem could be tracking. A reporting problem could be attribution. An SEO opportunity could be limited by implementation.",
+    "That's what pushed my work beyond SEO alone.",
+    "Today, I work across SEO, analytics, paid acquisition and eCommerce, connecting the pieces that influence digital performance rather than treating each channel as a separate system.",
+  ],
+};
+
+const ABOUT_AI_SECTION = {
+  heading: "AI accelerates the work. It doesn't replace the judgment.",
+  paragraphs: [
+    "I use AI tools such as ChatGPT and Claude to accelerate research, analysis, first-pass content, debugging, dashboards and automation workflows.",
+    "The output is never treated as final.",
+    "Data is checked against source platforms. Code is tested before deployment. AI-assisted content goes through factual and quality review.",
+    "AI helps me move faster. Experience decides what gets shipped.",
+  ],
+};
+
+const ABOUT_WHAT_YOU_GET = [
+  { title: "Strategy", items: ["SEO strategy", "Search opportunity analysis", "Competitor analysis", "Content direction", "Growth roadmaps"] },
+  { title: "Technical", items: ["Technical SEO", "Crawling & indexation", "Site architecture", "Structured data", "Migration support"] },
+  { title: "Measurement", items: ["GA4", "GTM", "GSC", "Conversion tracking", "Data validation"] },
+  { title: "Acquisition", items: ["Google Ads", "Meta Ads", "Landing pages", "Conversion analysis"] },
+  { title: "Business", items: ["Reporting", "Prioritization", "Stakeholder communication", "Cross-functional collaboration", "Performance analysis"] },
+];
+
+const ABOUT_NEXT_PROBLEM = {
+  eyebrow: "The Next Problem",
+  heading: "What are you trying to solve?",
+  lines: [
+    "Organic growth that has stalled?",
+    "Data you can't trust?",
+    "An SEO roadmap that isn't getting implemented?",
+    "A team that needs senior SEO ownership?",
+  ],
+  closing: "Let's talk.",
+};
+
+const UNDERSTAND_EDITORIAL = {
+  questionFirst: "Before deciding what to optimize, I want to understand what the business is trying to change.",
+  successLooksLike: ["Traffic?", "Qualified leads?", "Revenue?", "Acquisition efficiency?", "Better measurement?"],
+};
+
+const DIAGNOSE_STATEMENT = {
+  heading: "The Question Behind the Audit",
+  question: "What changed, why did it change, and what is actually worth fixing?",
+  copy: "I don't treat every audit finding as an action item. The objective is to separate symptoms from constraints.",
+};
+
+const IMPACT_EFFORT_CONFIDENCE = [
+  { title: "Impact", copy: "How much could this change the outcome?" },
+  { title: "Effort", copy: "What will it take to implement?" },
+  { title: "Confidence", copy: "How strong is the evidence?" },
+];
+
+const EXECUTION_SPLIT = [
+  { title: "Recommendation", copy: "An audit can tell you what is wrong." },
+  { title: "Implementation", copy: "Execution determines whether anything changes." },
+];
+
+const IMPROVE_STEPS = [
+  { n: "01", title: "Measure", copy: "Go back to the original objective and see what actually changed." },
+  { n: "02", title: "Compare", copy: "Check the result against what was expected." },
+  { n: "03", title: "Learn", copy: "Understand why it worked, or why it didn't." },
+  { n: "04", title: "Prioritize again", copy: "Feed what was learned back into the next round of priorities." },
+];
+
+const STRATEGY_ROADMAP_TIERS = [
+  { label: "Now", copy: "Fix constraints that are blocking performance." },
+  { label: "Next", copy: "Build systems that support sustainable growth." },
+  { label: "Later", copy: "Optimize lower-priority opportunities." },
+];
 
 const NAV_LINKS = [
   { label: "Home", href: "index.html" },

@@ -54,6 +54,11 @@
     </div>
   </section>
 
+  <!-- DIAGNOSE STATEMENT (full-width) -->
+  <section class="section funnel-section">
+    <div class="container" id="diagnose-statement" style="text-align:center;"></div>
+  </section>
+
   <!-- 03 PRIORITIZE -->
   <section class="section" id="prioritize">
     <div class="container">
@@ -61,6 +66,7 @@
         <div class="eyebrow">03 — Prioritize the Opportunities</div>
         <h2>Not every issue deserves the same amount of time.</h2>
       </div>
+      <div class="causes-grid" id="impact-effort-confidence"></div>
       <div class="priority-formula">Potential Impact × Effort × Confidence</div>
       <div class="priority-grid" id="prioritize-tiers"></div>
       <p class="funnel-footer" style="margin-top:28px;">A focused roadmap is more valuable than a spreadsheet containing 200 equally important recommendations.</p>
@@ -75,6 +81,8 @@
         <p style="max-width:640px;">The strategy connects the findings to the business goal.</p>
       </div>
       <ul class="chip-list" id="strategy-items"></ul>
+      <div class="playbook-label" style="margin-top:28px;">From Findings to Roadmap</div>
+      <div class="priority-grid" id="strategy-roadmap-tiers" style="margin-top:16px;"></div>
       <p class="funnel-footer" style="margin-top:28px;">The strategy should tell the team what to do, why it matters and how success will be measured.</p>
     </div>
   </section>
@@ -86,6 +94,7 @@
         <div class="eyebrow">05 — Move from Recommendations to Execution</div>
         <h2>Recommendations only create value when somebody implements them.</h2>
       </div>
+      <div class="causes-grid" id="execution-split" style="margin-bottom:24px;grid-template-columns:repeat(2,1fr);"></div>
       <p class="prose reveal" style="max-width:660px;">I work with the teams responsible for execution — including developers, content teams, designers, paid media specialists and marketing stakeholders — to turn strategy into action.</p>
       <p class="prose reveal" style="max-width:660px;margin-top:14px;">Where appropriate, I can work directly on implementation rather than stopping at the recommendation.</p>
       <div id="execution-collaborators" style="margin-top:24px;"></div>
@@ -103,12 +112,15 @@
     </div>
   </section>
 
-  <!-- 07 LEARN, ITERATE & SCALE -->
-  <section class="section funnel-section">
+  <!-- 07 IMPROVE -->
+  <section class="section">
     <div class="container">
-      <h2 class="funnel-headline">SEO and digital acquisition are not one-time projects.</h2>
-      <p class="funnel-copy">After implementation, I look at what changed, what worked, what didn't and where the next opportunity exists.</p>
-      <p class="funnel-headline" style="font-size:clamp(15px,1.8vw,19px);font-family:var(--font-mono);font-weight:400;margin-top:32px;">Diagnose → Prioritize → Execute → Measure → Learn → Improve</p>
+      <div class="section-head">
+        <div class="eyebrow">07 — Improve</div>
+        <h2>What happens after implementation?</h2>
+      </div>
+      <div class="process-flow" id="improve-steps"></div>
+      <p class="funnel-footer" style="margin-top:28px;">SEO is not audit → report → done.<br>Diagnose → Execute → Measure → Learn → Improve.</p>
     </div>
   </section>
 
@@ -137,10 +149,19 @@
 
   renderUnderstandBusiness("understand-business");
   renderDiagnoseGroups("diagnose-groups");
+  renderDiagnoseStatement("diagnose-statement");
+  renderImpactEffortConfidence("impact-effort-confidence");
   renderPrioritizeTiers("prioritize-tiers");
   document.getElementById("strategy-items").innerHTML = BUILD_STRATEGY_ITEMS.map(i => `<li>${i}</li>`).join("");
+  document.getElementById("strategy-roadmap-tiers").innerHTML = STRATEGY_ROADMAP_TIERS.map(t => `
+    <div class="priority-card priority-card--${t.label.toLowerCase()} reveal">
+      <div class="priority-status" style="border-top:none;padding-top:0;">${t.label}</div>
+      <p>${t.copy}</p>
+    </div>`).join("");
+  renderExecutionSplit("execution-split");
   renderExecutionCollaborators("execution-collaborators");
   renderMeasureGroups("measure-groups");
+  renderImproveSteps("improve-steps");
   renderWorkingPrinciples("working-principles");
 
   initScrollReveal();

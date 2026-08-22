@@ -22,6 +22,15 @@
     </div>
   </section>
 
+  <!-- STORY -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="eyebrow" id="story-eyebrow"></div>
+      <h2 id="story-heading" style="margin-top:12px;max-width:720px;"></h2>
+      <div id="about-story" style="max-width:680px;margin-top:20px;"></div>
+    </div>
+  </section>
+
   <section class="section" style="padding-top:0;">
     <div class="container about-grid">
       <div class="prose" style="font-size:17px;">
@@ -37,8 +46,6 @@
         </div>
 
         <p>From there, the work is what you'd expect: technical SEO audits, keyword and content strategy, Shopify store and product page optimization, Google Ads and Meta Ads management, and CRO testing — all judged against the same question, did the number that mattered actually move.</p>
-
-        <p>I also use AI tools — ChatGPT and Claude — as part of daily work: researching faster, drafting and debugging code for internal dashboards and automations, and speeding up first-pass content or analysis. I don't treat AI output as final. Research gets checked against Search Console or SEMrush data, code gets tested before it ships, and any AI-assisted content goes through a factual review pass.</p>
 
         <div class="playbook-label" style="margin-top:24px;">This is the work I do best</div>
         <div id="about-questions"></div>
@@ -91,6 +98,27 @@
     </div>
   </section>
 
+  <!-- AI -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">AI</div>
+      </div>
+      <div id="about-ai" style="max-width:680px;"></div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">What You Get</div>
+        <h2>A senior specialist who can move between strategy and implementation.</h2>
+      </div>
+      <div class="lookat-grid" id="about-what-you-get"></div>
+    </div>
+  </section>
+
   <!-- FOR AGENCIES -->
   <section class="section">
     <div class="container">
@@ -124,6 +152,17 @@
       <a href="resume.html" class="btn btn--primary">View My Resume →</a>
     </div>
   </section>
+
+  <!-- NEXT PROBLEM / FINAL CTA -->
+  <section class="section">
+    <div class="container">
+      <div id="next-problem" style="max-width:640px;"></div>
+      <div class="btn-row" style="margin-top:28px;">
+        <a href="contact.html" class="btn btn--primary">Start a Conversation →</a>
+        <a href="resume.html" class="btn btn--ghost">View Resume →</a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer class="site-footer" id="site-footer"></footer>
@@ -152,11 +191,18 @@
     </div>
     <a href="resume.html" class="btn btn--primary btn--sm" style="justify-content:center;">View Resume</a>
   `;
+  document.getElementById("story-eyebrow").textContent = ABOUT_STORY.eyebrow;
+  document.getElementById("story-heading").textContent = ABOUT_STORY.heading;
+  renderAboutStory("about-story");
   renderAboutOpeningQuestions("about-questions");
   renderAboutWhatIBring("about-what-i-bring");
   renderAboutHowIWork("about-how-i-work");
+  renderAboutAISection("about-ai");
+  renderAboutWhatYouGet("about-what-you-get");
   renderAgencySection("agency-capabilities", "agency-fit");
   renderHiringManagerSection("hiring-problems", "hiring-get");
+  renderAboutNextProblem("next-problem");
+  initScrollReveal();
 })();
 </script>
 </body>
