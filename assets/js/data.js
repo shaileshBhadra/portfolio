@@ -35,34 +35,34 @@ const WORK_AREAS = [
     title: "SEO & Organic Growth",
     description:
       "Technical SEO, keyword strategy, content, search visibility and organic growth.",
-    href: "skills.html",
+    href: "/skills",
   },
   {
     tag: "SHOPIFY",
     title: "Shopify & E-commerce",
     description:
       "Store optimization, product pages, theme improvements, tracking and conversion.",
-    href: "work.html",
+    href: "/work",
   },
   {
     tag: "ANALYTICS",
     title: "Analytics & Tracking",
     description:
       "GA4, GTM (client & server-side), GSC, Clarity, dashboards, attribution and conversion tracking.",
-    href: "skills.html",
+    href: "/skills",
   },
   {
     tag: "ADS",
     title: "Digital Marketing",
     description:
       "Google Ads, Meta Ads, campaign analysis, ROAS and performance optimization.",
-    href: "skills.html",
+    href: "/skills",
   },
   {
     tag: "DEV",
     title: "Technical Problem Solving",
     description: "APIs, scripts, integrations, debugging and practical digital solutions — with AI as a research and build accelerant, never a replacement for judgment.",
-    href: "about.html",
+    href: "/about",
   },
 ];
 
@@ -429,12 +429,12 @@ const TRUST_STRIP = [
 const PROBLEM_CARDS_INTRO = "Most digital problems don't start with a lack of tools. They start with not knowing what is actually wrong.";
 
 const PROBLEM_CARDS = [
-  { title: "Organic traffic isn't growing.", copy: "Technical issues, content gaps, search intent, competition or changing demand may be hiding the real problem.", ctaLabel: "Explore SEO →", ctaHref: "services.html#technical-seo" },
-  { title: "Your data can't be trusted.", copy: "GA4, GTM, advertising platforms and business data don't tell the same story.", ctaLabel: "Explore Analytics →", ctaHref: "services.html#ga4-gtm" },
-  { title: "Traffic isn't becoming leads.", copy: "You have visibility, but the visitors aren't taking the actions that matter.", ctaLabel: "Explore Conversion →", ctaHref: "services.html#conversion-tracking" },
-  { title: "You don't know what to fix first.", copy: "Your audit has dozens of recommendations but no clear business priority.", ctaLabel: "Explore Strategy →", ctaHref: "approach.html#prioritize" },
-  { title: "Your SEO work isn't moving the business.", copy: "You have rankings, reports and activity — but no clear connection between SEO work and leads, revenue or meaningful business outcomes.", ctaLabel: "Explore Growth →", ctaHref: "approach.html" },
-  { title: "Your site has grown faster than its structure.", copy: "New pages, products or markets have created technical debt, weak architecture or competing URLs that make search performance harder to scale.", ctaLabel: "Explore Technical SEO →", ctaHref: "services.html#technical-seo" },
+  { title: "Organic traffic isn't growing.", copy: "Technical issues, content gaps, search intent, competition or changing demand may be hiding the real problem.", ctaLabel: "Explore SEO →", ctaHref: "/services#technical-seo" },
+  { title: "Your data can't be trusted.", copy: "GA4, GTM, advertising platforms and business data don't tell the same story.", ctaLabel: "Explore Analytics →", ctaHref: "/services#ga4-gtm" },
+  { title: "Traffic isn't becoming leads.", copy: "You have visibility, but the visitors aren't taking the actions that matter.", ctaLabel: "Explore Conversion →", ctaHref: "/services#conversion-tracking" },
+  { title: "You don't know what to fix first.", copy: "Your audit has dozens of recommendations but no clear business priority.", ctaLabel: "Explore Strategy →", ctaHref: "/approach#prioritize" },
+  { title: "Your SEO work isn't moving the business.", copy: "You have rankings, reports and activity — but no clear connection between SEO work and leads, revenue or meaningful business outcomes.", ctaLabel: "Explore Growth →", ctaHref: "/approach" },
+  { title: "Your site has grown faster than its structure.", copy: "New pages, products or markets have created technical debt, weak architecture or competing URLs that make search performance harder to scale.", ctaLabel: "Explore Technical SEO →", ctaHref: "/services#technical-seo" },
 ];
 
 const WHAT_I_BRING = [
@@ -935,9 +935,9 @@ const RESUME_SNAPSHOT = [
 ];
 
 const NAV_LINKS = [
-  { label: "Home", href: "index.html" },
-  { label: "Approach", href: "approach.html" },
-  { label: "Work", href: "work.html" },
-  { label: "About", href: "about.html" },
-  { label: "Resume", href: "resume.html" },
+  { label: "Home", href: "/" },
+  { label: "Approach", href: "/approach" },
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/about" },
+  { label: "Resume", href: "/resume" },
 ];

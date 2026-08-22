@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shailesh Bhadra — Senior SEO & Analytics Specialist</title>
 <meta name="description" content="Senior SEO & Analytics Specialist who connects technical SEO, measurement, paid acquisition and business performance — from diagnosis through implementation. 9+ years, UK · USA · UAE · India.">
-<link rel="canonical" href="https://shaileshbhadra.com/index.html">
+<link rel="canonical" href="https://shaileshbhadra.com/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Shailesh Bhadra — Senior SEO & Analytics Specialist">
 <meta property="og:description" content="I turn search visibility into measurable growth. 9+ years across SEO, Analytics, Paid Media, eCommerce & Digital Growth.">
-<meta property="og:url" content="https://shaileshbhadra.com/index.html">
+<meta property="og:url" content="https://shaileshbhadra.com/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Shailesh Bhadra — Senior SEO & Analytics Specialist">
 <meta name="twitter:description" content="I turn search visibility into measurable growth.">
@@ -34,10 +34,10 @@
         <p class="lede">Senior SEO & Analytics Specialist who connects technical SEO, measurement, paid acquisition and business performance — from diagnosis through implementation.</p>
         <p class="capability-line">9+ years across SEO, Analytics, Paid Media, eCommerce &amp; Digital Growth.</p>
         <div class="btn-row">
-          <a href="work.html" class="btn btn--primary">View Case Studies</a>
-          <a href="resume.html" class="btn btn--ghost">View Resume</a>
+          <a href="/work" class="btn btn--primary">View Case Studies</a>
+          <a href="/resume" class="btn btn--ghost">View Resume</a>
         </div>
-        <a href="approach.html" class="more" style="margin-top:18px;display:inline-block;">How I Work →</a>
+        <a href="/approach" class="more" style="margin-top:18px;display:inline-block;">How I Work →</a>
         <p class="prose" style="margin-top:22px;font-size:13.5px;color:var(--ink-faint);max-width:420px;">Strategy is only valuable when it leads to better decisions and measurable outcomes.</p>
       </div>
       <div class="readout-panel glass" id="hero-readout"></div>
@@ -85,7 +85,7 @@
       </div>
       <div class="process-flow" id="home-process"></div>
       <div style="margin-top:32px;">
-        <a href="approach.html" class="btn btn--ghost">See My Approach →</a>
+        <a href="/approach" class="btn btn--ghost">See My Approach →</a>
       </div>
     </div>
   </section>
@@ -100,7 +100,7 @@
       </div>
       <div class="showcase-grid" id="case-showcase"></div>
       <div style="margin-top:36px;">
-        <a href="work.html" class="btn btn--ghost">View All Work</a>
+        <a href="/work" class="btn btn--ghost">View All Work</a>
       </div>
     </div>
   </section>
@@ -125,7 +125,7 @@
       </div>
       <div>
         <p class="prose">The strongest proof of expertise is what changes after the work is done. See the actual challenges, diagnoses and outcomes behind each engagement.</p>
-        <a href="work.html" class="btn btn--sm btn--ghost" style="margin-top:20px;">See the Work →</a>
+        <a href="/work" class="btn btn--sm btn--ghost" style="margin-top:20px;">See the Work →</a>
       </div>
     </div>
   </section>
@@ -139,7 +139,7 @@
       </div>
       <div>
         <p class="prose">I work at the intersection of SEO, analytics, paid acquisition and digital growth — connecting the layers that are often handled separately: search visibility, measurement, acquisition, conversion and business growth.</p>
-        <a href="about.html" class="btn btn--sm btn--ghost" style="margin-top:20px;">More About Me →</a>
+        <a href="/about" class="btn btn--sm btn--ghost" style="margin-top:20px;">More About Me →</a>
       </div>
     </div>
   </section>
@@ -170,7 +170,7 @@
 <script src="assets/js/main.js"></script>
 <script>
 (async () => {
-  renderHeader("index.html");
+  renderHeader("/");
   renderFooter();
   const site = await loadSiteContent();
   renderReadoutPanel("hero-readout", site.status);
@@ -187,8 +187,8 @@
     heading: "Let's Solve Something Difficult.",
     body: "Hiring for a senior SEO or growth role? Need someone to take ownership of a complex SEO account? Trying to fix an analytics or tracking problem? Tell me what isn't working. We can start there.",
     ctaLabel: "Let's Talk",
-    ctaHref: "contact.html",
-    extraButtons: [{ label: "View Resume", href: "resume.html", variant: "ghost" }],
+    ctaHref: "/contact",
+    extraButtons: [{ label: "View Resume", href: "/resume", variant: "ghost" }],
   });
   injectPersonSchema();
   injectProfessionalServiceSchema();

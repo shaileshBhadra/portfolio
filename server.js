@@ -26,6 +26,57 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // set this in Render → Env
 const FALLBACK_RESUME = path.join(__dirname, "assets", "Shailesh_Bhadra_Resume.pdf");
 
 app.use(express.json({ limit: "2mb" }));
+
+// ============================================================
+// CLEAN URL ROUTING — no .html extensions in any public URL.
+// Placed before express.static so these take precedence over the
+// raw file. Old *.html URLs 301-redirect to their clean equivalent
+// (preserves SEO value from anything already indexed/linked).
+// ============================================================
+const PAGE_ROUTES = {
+  "/": "index.html",
+  "/about": "about.html",
+  "/approach": "approach.html",
+  "/work": "work.html",
+  "/resume": "resume.html",
+  "/contact": "contact.html",
+  "/services": "services.html",
+  "/insights": "insights.html",
+  "/skills": "skills.html",
+  "/experience": "experience.html",
+  "/admin": "admin.html",
+};
+
+for (const [route, file] of Object.entries(PAGE_ROUTES)) {
+  app.get(route, (req, res) => res.sendFile(path.join(__dirname, file)));
+}
+
+// Case study detail: /work/:slug (was /project-detail.html?slug=...)
+app.get("/work/:slug", (req, res) => res.sendFile(path.join(__dirname, "project-detail.html")));
+
+// Redirect every old .html URL to its clean equivalent, 301 (permanent)
+const HTML_REDIRECTS = {
+  "/index.html": "/",
+  "/about.html": "/about",
+  "/approach.html": "/approach",
+  "/work.html": "/work",
+  "/resume.html": "/resume",
+  "/contact.html": "/contact",
+  "/services.html": "/services",
+  "/insights.html": "/insights",
+  "/skills.html": "/skills",
+  "/experience.html": "/experience",
+  "/admin.html": "/admin",
+};
+for (const [oldPath, newPath] of Object.entries(HTML_REDIRECTS)) {
+  app.get(oldPath, (req, res) => res.redirect(301, newPath));
+}
+// Old query-param case study links: /project-detail.html?slug=X → /work/X
+app.get("/project-detail.html", (req, res) => {
+  const slug = req.query.slug;
+  res.redirect(301, slug ? `/work/${slug}` : "/work");
+});
+
 app.use(express.static(path.join(__dirname)));
 
 // Public read — the frontend fetches this on page load and overlays it
@@ -228,6 +279,11 @@ app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
   if (res.headersSent) return next(err);
   res.status(500).json({ success: false, message: "Something went wrong." });
+});
+
+// Catch-all 404 — anything that didn't match a route or a static file above
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "404.html"));
 });
 
 // Connect to the store (MongoDB if configured, else local files) before

@@ -130,6 +130,43 @@ button{ font-family:inherit; }
 .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:6px; }
 .nav-toggle span{ display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; transition:transform .2s var(--ease), opacity .2s var(--ease); }
 
+/* Work nav dropdown */
+.nav-dropdown-wrap{ position:relative; }
+.nav-dropdown-trigger{
+  background:none; border:none; cursor:pointer; font-family:var(--font-body);
+  font-size:14px; color:var(--ink-soft); padding:4px 0; display:flex; align-items:center; gap:5px;
+  transition:color .2s var(--ease);
+}
+.nav-dropdown-trigger:hover, .nav-dropdown-trigger[aria-current="page"], .nav-dropdown-trigger[aria-expanded="true"]{ color:var(--ink); }
+.nav-dropdown-caret{ font-size:10px; transition:transform .2s var(--ease); }
+.nav-dropdown-trigger[aria-expanded="true"] .nav-dropdown-caret{ transform:rotate(180deg); }
+.nav-dropdown-panel{
+  position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%);
+  width:320px; max-height:420px; overflow-y:auto;
+  background:var(--bg-elevated); border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:0 20px 50px rgba(0,0,0,0.5); padding:10px; z-index:60;
+}
+.nav-dropdown-item{
+  display:block; padding:10px 12px; border-radius:var(--radius-sm); font-size:13.5px; color:var(--ink-soft);
+  transition:background .15s var(--ease), color .15s var(--ease);
+}
+.nav-dropdown-item:hover{ background:var(--surface-hi); color:var(--ink); }
+.nav-dropdown-item--all{ color:var(--accent-2); }
+.nav-dropdown-kind{
+  display:block; font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.04em;
+  color:var(--ink-faint); margin-bottom:2px;
+}
+.nav-dropdown-divider{ height:1px; background:var(--line-soft); margin:8px 4px; }
+
+@media (max-width:900px){
+  .nav-dropdown-trigger{ width:100%; padding:16px 0; border-bottom:1px solid var(--line-soft); font-size:16px; justify-content:space-between; }
+  .nav-dropdown-panel{
+    position:static; transform:none; width:100%; max-height:none; overflow-y:visible;
+    background:none; border:none; box-shadow:none; padding:0 0 8px;
+  }
+  .nav-dropdown-item{ padding:12px 8px; border-bottom:1px solid var(--line-soft); }
+}
+
 @media (max-width:900px){
   .nav-links{
     position:fixed; inset:72px 0 0 0; background:var(--bg);

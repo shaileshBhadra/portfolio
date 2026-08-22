@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shailesh Bhadra Resume | Senior SEO & Analytics Specialist</title>
 <meta name="description" content="Shailesh Bhadra's resume — 9+ years across SEO, technical SEO, analytics, paid acquisition, eCommerce and digital growth. Download the PDF or view the full career history.">
-<link rel="canonical" href="https://shaileshbhadra.com/resume.html">
+<link rel="canonical" href="https://shaileshbhadra.com/resume">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Shailesh Bhadra Resume | Senior SEO & Analytics Specialist">
 <meta property="og:description" content="9+ years across SEO, technical SEO, analytics, paid acquisition, eCommerce and digital growth.">
-<meta property="og:url" content="https://shaileshbhadra.com/resume.html">
+<meta property="og:url" content="https://shaileshbhadra.com/resume">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -114,7 +114,7 @@
 <script src="assets/js/main.js"></script>
 <script>
 (async () => {
-  renderHeader("resume.html");
+  renderHeader("/resume");
   renderFooter();
   const site = await loadSiteContent();
 
@@ -146,7 +146,7 @@
     <div class="reveal" style="margin-bottom:28px;">
       ${countMarkup}
       <div class="label" style="margin-top:8px;color:var(--ink-soft);font-size:14px;max-width:480px;">${m.label}</div>
-      <a href="project-detail.html?slug=${m.caseStudySlug}" class="more" style="margin-top:8px;display:inline-block;">See the case study →</a>
+      <a href="/work/${m.caseStudySlug}" class="more" style="margin-top:8px;display:inline-block;">See the case study →</a>
     </div>`;
   }).join("");
 
@@ -160,7 +160,7 @@
     heading: "Looking for someone who can own the problem?",
     body: "If you're hiring for senior SEO, SEO & Analytics, technical SEO or digital growth — I'd be happy to talk.",
     ctaLabel: "Let's Talk",
-    ctaHref: "contact.html",
+    ctaHref: "/contact",
     extraButtons: [
       { label: "Download Resume", href: "/resume/download", variant: "ghost", download: true },
       { label: "LinkedIn", href: PROFILE.linkedin, variant: "ghost" },

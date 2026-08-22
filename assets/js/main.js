@@ -53,7 +53,7 @@ function injectServiceListSchema(){
         "name": s.name,
         "description": s.short,
         "provider": { "@type": "Person", "name": PROFILE.name },
-        "url": `https://shaileshbhadra.com/services.html#${s.slug}`,
+        "url": `https://shaileshbhadra.com/services#${s.slug}`,
       },
     })),
   });
@@ -62,15 +62,34 @@ function injectServiceListSchema(){
 function renderHeader(activeHref){
   const el = document.getElementById("site-header");
   if(!el) return;
-  const links = NAV_LINKS.map(l =>
-    `<a href="${l.href}" ${l.href===activeHref ? 'aria-current="page"' : ''}>${l.label}</a>`
-  ).join("");
+  const links = NAV_LINKS.map(l => {
+    if(l.label === "Work" && typeof allWorkItems === "function"){
+      const items = allWorkItems();
+      const dropdownItems = items.map(w =>
+        `<a href="/work/${w.slug}" class="nav-dropdown-item">
+           <span class="nav-dropdown-kind">${w._kind}</span>${w.name}
+         </a>`
+      ).join("");
+      return `
+        <div class="nav-dropdown-wrap">
+          <button class="nav-dropdown-trigger" ${l.href===activeHref ? 'aria-current="page"' : ''} aria-expanded="false" aria-haspopup="true">
+            ${l.label} <span class="nav-dropdown-caret">▾</span>
+          </button>
+          <div class="nav-dropdown-panel" hidden>
+            <a href="${l.href}" class="nav-dropdown-item nav-dropdown-item--all"><strong>View All Work →</strong></a>
+            <div class="nav-dropdown-divider"></div>
+            ${dropdownItems}
+          </div>
+        </div>`;
+    }
+    return `<a href="${l.href}" ${l.href===activeHref ? 'aria-current="page"' : ''}>${l.label}</a>`;
+  }).join("");
   el.innerHTML = `
     <div class="container nav-row">
-      <a href="index.html" class="brand">Shailesh<span>.</span>Bhadra</a>
+      <a href="/" class="brand">Shailesh<span>.</span>Bhadra</a>
       <nav class="nav-links" id="nav-links">
         ${links}
-        <a href="contact.html" class="nav-cta" data-track="primary_cta_click">Let's Talk</a>
+        <a href="/contact" class="nav-cta" data-track="primary_cta_click">Let's Talk</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -82,6 +101,29 @@ function renderHeader(activeHref){
     const open = nav.classList.toggle("open");
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
   });
+
+  // Work dropdown: click/tap to toggle (works on touch, not just hover), closes on outside click or Escape
+  const trigger = el.querySelector(".nav-dropdown-trigger");
+  const panel = el.querySelector(".nav-dropdown-panel");
+  if(trigger && panel){
+    trigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = trigger.getAttribute("aria-expanded") === "true";
+      trigger.setAttribute("aria-expanded", String(!open));
+      panel.hidden = open;
+    });
+    document.addEventListener("click", (e) => {
+      if(e.target.closest(".nav-dropdown-wrap")) return; // click was inside the dropdown — let its own handler manage it
+      trigger.setAttribute("aria-expanded", "false");
+      panel.hidden = true;
+    });
+    document.addEventListener("keydown", (e) => {
+      if(e.key === "Escape"){
+        trigger.setAttribute("aria-expanded", "false");
+        panel.hidden = true;
+      }
+    });
+  }
 }
 
 function renderFooter(){
@@ -98,12 +140,12 @@ function renderFooter(){
         <div class="footer-cols">
           <div class="footer-col">
             <h4>Site</h4>
-            <a href="index.html">Home</a>
-            <a href="approach.html">Approach</a>
-            <a href="work.html">Work</a>
-            <a href="about.html">About</a>
-            <a href="resume.html">Resume</a>
-            <a href="contact.html">Contact</a>
+            <a href="/">Home</a>
+            <a href="/approach">Approach</a>
+            <a href="/work">Work</a>
+            <a href="/about">About</a>
+            <a href="/resume">Resume</a>
+            <a href="/contact">Contact</a>
           </div>
           <div class="footer-col">
             <h4>Contact</h4>
@@ -115,7 +157,7 @@ function renderFooter(){
       </div>
       <div class="footer-bottom">
         <span>© ${new Date().getFullYear()} ${PROFILE.name}</span>
-        <span><a href="services.html" style="color:var(--ink-faint);">Services</a> · <a href="insights.html" style="color:var(--ink-faint);">Insights</a> · ${PROFILE.location}</span>
+        <span><a href="/services" style="color:var(--ink-faint);">Services</a> · <a href="/insights" style="color:var(--ink-faint);">Insights</a> · <a href="/skills" style="color:var(--ink-faint);">Skills &amp; Tools</a> · <a href="/experience" style="color:var(--ink-faint);">Experience</a> · ${PROFILE.location}</span>
       </div>
     </div>`;
 }
@@ -136,7 +178,7 @@ function renderAboutTeaser(targetId){
       <blockquote>Find out why a business isn't converting or ranking the way it should, then fix the actual cause.</blockquote>
       <div class="teaser-name">— how ${PROFILE.name.split(" ")[0]} approaches every engagement</div>
     </div>
-    <a href="about.html" class="btn btn--ghost btn--sm">Get to know me →</a>
+    <a href="/about" class="btn btn--ghost btn--sm">Get to know me →</a>
   `;
 }
 
@@ -147,7 +189,7 @@ function renderCtaBanner(targetId, opts){
     heading: "Let's talk about what's actually going on.",
     body: PROFILE.location + " · " + PROFILE.email,
     ctaLabel: "Start a conversation",
-    ctaHref: "contact.html",
+    ctaHref: "/contact",
     extraButtons: [], // [{ label, href, variant: "ghost"|"primary" }]
   }, opts || {});
   const extra = o.extraButtons.map(b =>
@@ -299,7 +341,7 @@ function renderProjectCards(targetId, items){
     const context = isCaseStudy ? `${p.region} · ${p.industry}` : p.company;
     const role = isCaseStudy ? "Owned diagnosis through implementation" : p.role;
     return `
-    <a class="project-card" href="project-detail.html?slug=${p.slug}" data-track="case_study_click">
+    <a class="project-card" href="/work/${p.slug}" data-track="case_study_click">
       <div class="project-body">
         <div class="project-card-top">
           <div class="eyebrow">${context}</div>
@@ -391,7 +433,7 @@ function renderServiceCards(targetId, slugs){
     <div class="work-card service-tile reveal">
       <div class="eyebrow">${s.name}</div>
       <p style="margin-top:14px;">${(typeof HOME_SERVICE_VALUE_PROPS !== "undefined" && HOME_SERVICE_VALUE_PROPS[s.slug]) || s.short}</p>
-      <a href="services.html#${s.slug}" class="more">Learn more →</a>
+      <a href="/services#${s.slug}" class="more">Learn more →</a>
     </div>`).join("");
 }
 
@@ -406,7 +448,7 @@ function renderServiceCard(s){
       <div class="playbook-label">Key Outcomes</div>
       <ul class="outcome-list">${(s.outcomes||[]).map(o => `<li>${o}</li>`).join("")}</ul>
       <div class="service-card2-actions">
-        <a href="contact.html?service=${encodeURIComponent(s.name)}" class="btn btn--primary btn--sm service-card2-btn">${s.ctaLabel} →</a>
+        <a href="/contact?service=${encodeURIComponent(s.name)}" class="btn btn--primary btn--sm service-card2-btn">${s.ctaLabel} →</a>
         <button class="details-toggle" data-toggle="${s.slug}" aria-expanded="false">View full details</button>
       </div>
       <div class="service-card2-details" id="details-${s.slug}" hidden>
@@ -416,7 +458,7 @@ function renderServiceCard(s){
         <p>${s.deliverable}</p>
         <div class="playbook-label" style="margin-top:14px;">Who it's for</div>
         <p>${s.whoFor}</p>
-        <a href="project-detail.html?slug=${s.caseStudySlug}" class="more" style="margin-top:10px;display:inline-block;" data-track="case_study_click">Relevant case study →</a>
+        <a href="/work/${s.caseStudySlug}" class="more" style="margin-top:10px;display:inline-block;" data-track="case_study_click">Relevant case study →</a>
       </div>
     </div>`;
 }
@@ -478,7 +520,7 @@ function renderEngagementModels(targetId){
       <p style="font-size:13.5px;">${m.bestFor}</p>
       <div class="playbook-label" style="margin-top:16px;">What you get</div>
       <ul class="outcome-list">${(m.whatYouGet||[]).map(w => `<li>${w}</li>`).join("")}</ul>
-      <a href="contact.html" class="more">${m.ctaLabel}</a>
+      <a href="/contact" class="more">${m.ctaLabel}</a>
     </div>`).join("");
 }
 
@@ -505,7 +547,7 @@ function renderCaseStudyShowcase(targetId){
   if(items.length < 3) return;
   const [a, b, c] = items;
   el.innerHTML = `
-    <a class="showcase-feature reveal" href="project-detail.html?slug=${a.slug}" data-track="case_study_click">
+    <a class="showcase-feature reveal" href="/work/${a.slug}" data-track="case_study_click">
       <div class="project-card-top"><div class="eyebrow">${a.company || a.industry}</div><span class="kind-badge kind-badge--${(a._kind||'').toLowerCase().replace(/\s+/g,'-')}">${a._kind}</span></div>
       <h3>${a.name}</h3>
       <p>${a.summary}</p>
@@ -513,12 +555,12 @@ function renderCaseStudyShowcase(targetId){
       <div class="more">Read Case Study →</div>
     </a>
     <div class="showcase-side">
-      <a class="showcase-compact reveal" href="project-detail.html?slug=${b.slug}" data-track="case_study_click">
+      <a class="showcase-compact reveal" href="/work/${b.slug}" data-track="case_study_click">
         <div class="eyebrow">${b.region ? `${b.region} · ${b.industry}` : b.company}</div>
         <h3>${b.name}</h3>
         <div class="more">Read Case Study →</div>
       </a>
-      <a class="showcase-compact reveal" href="project-detail.html?slug=${c.slug}" data-track="case_study_click">
+      <a class="showcase-compact reveal" href="/work/${c.slug}" data-track="case_study_click">
         <div class="eyebrow">${c.company || c.industry}</div>
         <h3>${c.name}</h3>
         <div class="more">Read Case Study →</div>
@@ -945,18 +987,22 @@ function renderSkillsJumpNav(targetId){
 function renderProjectDetail(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
+  const pathMatch = window.location.pathname.match(/\/work\/([^/]+)/);
+  const slug = pathMatch ? decodeURIComponent(pathMatch[1]) : new URLSearchParams(window.location.search).get("slug");
   const p = findWorkItem(slug) || allWorkItems()[0];
   const isCaseStudy = !!p.industry;
   document.title = `${p.name} — Shailesh Bhadra`;
+  const canonicalEl = document.getElementById("canonical-link");
+  if(canonicalEl) canonicalEl.href = `https://shaileshbhadra.com/work/${p.slug}`;
+  const descEl = document.querySelector('meta[name="description"]');
+  if(descEl) descEl.setAttribute("content", p.summary || p.challenge || `Case study: ${p.name}`);
   const myRole = isCaseStudy
     ? `I owned the diagnosis and implementation described below — investigating the problem, prioritising the fix, and carrying it through to the outcome.`
     : `${p.role} at ${p.company}, owning this engagement end to end — from the initial diagnosis through to implementation and measurement.`;
   el.innerHTML = `
     <div class="container">
       <div class="detail-hero">
-        <a class="back-link" href="work.html">← All work</a>
+        <a class="back-link" href="/work">← All work</a>
         <div class="project-card-top" style="margin-top:20px;">
           <div class="eyebrow">${isCaseStudy ? `${p.region} · ${p.industry}` : p.company}</div>
           <span class="kind-badge kind-badge--${(p._kind||p.type||'').toLowerCase().replace(/\s+/g,'-')}">${p._kind || p.type || "Client Project"}</span>
