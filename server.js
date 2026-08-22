@@ -28,6 +28,17 @@ const PORT = process.env.PORT || 3000;
 
 const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // set this in Render → Environment
+
+// --- Email transport: SMTP is primary (reliable, not behind Cloudflare),
+// Web3Forms is an automatic fallback if SMTP isn't configured. See
+// SMTP_SETUP.md for how to generate a Gmail App Password.
+const nodemailer = require("nodemailer");
+const SMTP_USER = process.env.SMTP_USER;
+const SMTP_PASS = process.env.SMTP_PASS;
+const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || "shaileshbhadra@gmail.com";
+const smtpTransport = (SMTP_USER && SMTP_PASS)
+  ? nodemailer.createTransport({ service: "gmail", auth: { user: SMTP_USER, pass: SMTP_PASS } })
+  : null;
 const FALLBACK_RESUME = path.join(__dirname, "assets", "Shailesh_Bhadra_Resume.pdf");
 
 app.use(express.json({ limit: "2mb" }));
@@ -251,6 +262,42 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ success: false, message: "That email address doesn't look valid." });
     }
 
+    const emailSubject = inquiry_type ? `New consulting inquiry: ${inquiry_type}` : "New message from shaileshbhadra.com";
+    const emailBody = [
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Company: ${company || "(not provided)"}`,
+      `Website: ${website || "(not provided)"}`,
+      `Inquiry type: ${inquiry_type || "(not specified)"}`,
+      `Budget: ${budget || "(not provided)"}`,
+      "",
+      "Message:",
+      message,
+    ].join("\n");
+
+    // --- Primary: SMTP (direct to Gmail's servers, not behind Cloudflare) ---
+    if (smtpTransport) {
+      try {
+        await smtpTransport.sendMail({
+          from: `"Portfolio Contact Form" <${SMTP_USER}>`,
+          to: RECIPIENT_EMAIL,
+          replyTo: email,
+          subject: emailSubject,
+          text: emailBody,
+        });
+        return res.json({ success: true });
+      } catch (smtpErr) {
+        console.error("SMTP send failed:", smtpErr.message);
+        return res.status(502).json({ success: false, message: `Email send failed: ${smtpErr.message}` });
+      }
+    }
+
+    // --- Fallback: Web3Forms (only used if SMTP isn't configured) ---
+    if (!WEB3FORMS_ACCESS_KEY) {
+      console.error("Neither SMTP (SMTP_USER/SMTP_PASS) nor WEB3FORMS_ACCESS_KEY is configured.");
+      return res.status(500).json({ success: false, message: "Email sending isn't configured yet." });
+    }
+
     let web3formsRes;
     try {
       web3formsRes = await fetchImpl("https://api.web3forms.com/submit", {
@@ -258,7 +305,7 @@ app.post("/api/contact", async (req, res) => {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_ACCESS_KEY,
-          subject: inquiry_type ? `New consulting inquiry: ${inquiry_type}` : "New message from shaileshbhadra.com",
+          subject: emailSubject,
           name,
           email,
           company: company || "(not provided)",
