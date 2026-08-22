@@ -273,12 +273,16 @@ app.post("/api/contact", async (req, res) => {
       return res.status(502).json({ success: false, message: "Could not reach the email service. Please try again shortly." });
     }
 
+    const rawBody = await web3formsRes.text();
     let result;
     try {
-      result = await web3formsRes.json();
+      result = JSON.parse(rawBody);
     } catch (parseErr) {
-      console.error("Web3Forms returned a non-JSON response:", parseErr.message);
-      return res.status(502).json({ success: false, message: "The email service returned an unexpected response." });
+      console.error(`Web3Forms returned a non-JSON response. Status: ${web3formsRes.status}. Body: ${rawBody.slice(0, 500)}`);
+      return res.status(502).json({
+        success: false,
+        message: `Email service returned HTTP ${web3formsRes.status}: ${rawBody.slice(0, 200) || "(empty body)"}`,
+      });
     }
 
     if (web3formsRes.ok && result.success) {
