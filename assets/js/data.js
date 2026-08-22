@@ -918,11 +918,11 @@ const ABOUT_HOW_I_THINK = [
 ];
 
 const AGENCY_ROWS = [
-  { title: "Complex SEO Accounts", copy: "Technical diagnosis, strategy and prioritization." },
-  { title: "Analytics & Tracking", copy: "GA4, GTM, GSC and conversion measurement." },
-  { title: "eCommerce SEO", copy: "Technical SEO, product visibility and measurement." },
-  { title: "Client Delivery", copy: "Audits, strategy presentations, reporting and technical explanations." },
-  { title: "Execution Support", copy: "Working with developers, content and marketing teams to move recommendations into implementation." },
+  { title: "Complex SEO Accounts", copy: "Technical diagnosis, strategy and prioritization.", icon: "search-code" },
+  { title: "Analytics & Tracking", copy: "GA4, GTM, GSC and conversion measurement.", icon: "chart-no-axes-combined" },
+  { title: "eCommerce SEO", copy: "Technical SEO, product visibility and measurement.", icon: "shopping-bag" },
+  { title: "Client Delivery", copy: "Audits, strategy presentations, reporting and technical explanations.", icon: "presentation" },
+  { title: "Execution Support", copy: "Working with developers, content and marketing teams to move recommendations into implementation.", icon: "wrench" },
 ];
 
 const RESUME_SNAPSHOT = [

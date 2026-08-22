@@ -464,6 +464,7 @@ button{ font-family:inherit; }
 .quick-facts-row .v{ font-size:14px; color:var(--ink-soft); margin-top:6px; line-height:1.5; }
 .about-grid{ display:grid; grid-template-columns:1fr 300px; gap:56px; align-items:start; }
 @media (max-width:900px){ .about-grid{ grid-template-columns:1fr; } .quick-facts{ position:static; } }
+.side-note{ padding:24px; }
 .pull-stat{
   margin:32px 0; padding:22px 26px; border-left:2px solid var(--accent);
   background:var(--accent-tint); border-radius:0 var(--radius) var(--radius) 0;

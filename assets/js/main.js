@@ -614,7 +614,7 @@ function renderUnderstandBusiness(targetId){
         <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>
       </div>
       ${e ? `
-      <aside class="glass quick-facts reveal">
+      <aside class="glass side-note reveal">
         <div class="playbook-label">Question First</div>
         <p style="font-size:14px;color:var(--ink-soft);margin-top:8px;line-height:1.6;">${e.questionFirst}</p>
         <div class="playbook-label" style="margin-top:20px;">What Success Looks Like</div>
@@ -741,7 +741,7 @@ function renderAboutHowIWork(targetId){
   if(!el || typeof ABOUT_HOW_I_WORK === "undefined") return;
   const d = ABOUT_HOW_I_WORK;
   el.innerHTML = `
-    <p class="prose reveal" style="font-size:16px;margin-bottom:18px;">${d.lead}</p>
+    <h2 class="reveal" style="margin-bottom:18px;">I am most effective when the problem is not completely defined yet.</h2>
     <p class="prose reveal" style="margin-bottom:10px;">Give me an account where:</p>
     <ul class="chip-list">${d.giveMe.map(i => `<li>${i}</li>`).join("")}</ul>
     <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>`;
@@ -758,7 +758,9 @@ function renderAboutAISection(targetId){
   const el = document.getElementById(targetId);
   if(!el || typeof ABOUT_AI_SECTION === "undefined") return;
   const d = ABOUT_AI_SECTION;
-  el.innerHTML = d.paragraphs.map(p => `<p class="prose reveal" style="margin-bottom:14px;">${p}</p>`).join("");
+  el.innerHTML = `
+    <h2 class="reveal" style="margin-bottom:18px;">${d.heading}</h2>
+    ${d.paragraphs.map(p => `<p class="prose reveal" style="margin-bottom:14px;">${p}</p>`).join("")}`;
 }
 
 function renderAboutWhatYouGet(tabBarId, panelsId){
@@ -806,7 +808,11 @@ function renderAgencySection(rowsTargetId){
   el.innerHTML = AGENCY_ROWS.map((r, i) => `
     <div class="acc-item reveal">
       <button class="acc-trigger" data-acc-target="agency-panel-${i}" aria-expanded="false" aria-controls="agency-panel-${i}">
-        <span><strong>${r.title}</strong></span><span class="acc-icon">+</span>
+        <span style="display:flex;align-items:center;gap:14px;">
+          <span class="service-card2-icon" style="width:36px;height:36px;margin-bottom:0;flex-shrink:0;"><i data-lucide="${r.icon}" style="width:18px;height:18px;"></i></span>
+          <strong>${r.title}</strong>
+        </span>
+        <span class="acc-icon">+</span>
       </button>
       <div class="acc-panel" id="agency-panel-${i}" hidden>
         <p>${r.copy}</p>
