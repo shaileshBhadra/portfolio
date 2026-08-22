@@ -581,9 +581,9 @@ button{ font-family:inherit; }
   font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em;
   padding:6px 0; border-top:1px solid var(--line-soft); color:var(--ink-faint);
 }
-.priority-card--do-now .priority-status{ color:#7CD992; }
-.priority-card--plan .priority-status{ color:var(--accent-2); }
-.priority-card--defer .priority-status{ color:var(--ink-faint); }
+.priority-card--now .priority-status{ color:#7CD992; }
+.priority-card--next .priority-status{ color:var(--accent-2); }
+.priority-card--later .priority-status{ color:var(--ink-faint); }
 
 /* What I Actually Look At / Tools Grouped / Deliverables — shared 4-col card */
 .lookat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:32px; }

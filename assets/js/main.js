@@ -70,7 +70,7 @@ function renderHeader(activeHref){
       <a href="index.html" class="brand">Shailesh<span>.</span>Bhadra</a>
       <nav class="nav-links" id="nav-links">
         ${links}
-        <a href="contact.html" class="nav-cta">Let's Talk</a>
+        <a href="resume.html" class="nav-cta">View Resume</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -93,29 +93,29 @@ function renderFooter(){
         <div class="footer-brand">
           <span class="brand">Shailesh<span style="color:var(--accent)">.</span>Bhadra</span>
           <p>SEO · Analytics · Digital Growth</p>
+          <p style="margin-top:8px;font-size:12.5px;color:var(--ink-faint);">Turning complex search and acquisition problems into measurable growth.</p>
         </div>
         <div class="footer-cols">
           <div class="footer-col">
             <h4>Site</h4>
-            <a href="services.html">Services</a>
-            <a href="work.html">Work</a>
+            <a href="index.html">Home</a>
             <a href="approach.html">Approach</a>
+            <a href="work.html">Work</a>
             <a href="about.html">About</a>
-            <a href="insights.html">Insights</a>
             <a href="resume.html">Resume</a>
+            <a href="contact.html">Contact</a>
           </div>
           <div class="footer-col">
             <h4>Contact</h4>
             <a href="mailto:${PROFILE.email}">${PROFILE.email}</a>
             <a href="${PROFILE.linkedin}" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="contact.html">Contact form</a>
             <a href="/resume/download" download>Download Resume (PDF)</a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <span>© ${new Date().getFullYear()} ${PROFILE.name}</span>
-        <span>${PROFILE.location}</span>
+        <span><a href="services.html" style="color:var(--ink-faint);">Services</a> · <a href="insights.html" style="color:var(--ink-faint);">Insights</a> · ${PROFILE.location}</span>
       </div>
     </div>`;
 }
@@ -292,19 +292,27 @@ function renderProjectCards(targetId, items){
   const el = document.getElementById(targetId);
   if(!el) return;
   const list = items || allWorkItems();
-  el.innerHTML = list.map(p => `
+  el.innerHTML = list.map(p => {
+    const isCaseStudy = !!p.industry;
+    const context = isCaseStudy ? `${p.region} · ${p.industry}` : p.company;
+    const role = isCaseStudy ? "Owned diagnosis through implementation" : p.role;
+    return `
     <a class="project-card" href="project-detail.html?slug=${p.slug}">
       <div class="project-body">
         <div class="project-card-top">
-          <div class="eyebrow">${p.company || p.industry}</div>
+          <div class="eyebrow">${context}</div>
           <span class="kind-badge kind-badge--${(p._kind||'').toLowerCase().replace(/\s+/g,'-')}">${p._kind}</span>
         </div>
         <h3>${p.name}</h3>
-        <p class="summary">${p.summary}</p>
-        <div class="project-tags">${p.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
-        <div class="project-result">${p.result}</div>
+        <p class="summary">${p.challenge}</p>
+        <div class="playbook-label" style="margin-top:14px;">My Role</div>
+        <p style="font-size:13px;color:var(--ink-soft);">${role}</p>
+        <div class="playbook-label" style="margin-top:12px;">Outcome</div>
+        <p style="font-size:13px;color:var(--ink-soft);">${p.result}</p>
+        <div class="more" style="margin-top:16px;">Read Case Study →</div>
       </div>
-    </a>`).join("");
+    </a>`;
+  }).join("");
 }
 
 function renderProjectFilters(filterTargetId, gridTargetId){
@@ -369,7 +377,6 @@ function renderProblemCards(targetId){
     <div class="work-card problem-tile reveal">
       <h3>${p.title}</h3>
       <p>${p.copy}</p>
-      <a href="${p.ctaHref}" class="more">${p.ctaLabel}</a>
     </div>`).join("");
 }
 
@@ -512,7 +519,7 @@ function renderCaseStudyShowcase(targetId){
     </div>`;
 }
 
-/* Generic vertical chain visual — used by Approach's Measurement section */
+/* Generic vertical chain visual — reused by Approach's Measurement section */
 function renderChainVisual(targetId, steps){
   const el = document.getElementById(targetId);
   if(!el || !steps) return;
@@ -521,66 +528,34 @@ function renderChainVisual(targetId, steps){
   ).join("");
 }
 
+/* Generic chip-list renderer — used by several plain "list of terms" sections */
+function renderChipList(targetId, items){
+  const el = document.getElementById(targetId);
+  if(!el || !items) return;
+  el.innerHTML = `<ul class="chip-list">${items.map(i => `<li>${i}</li>`).join("")}</ul>`;
+}
+
 /* ============================================================
-   APPROACH v2 renderers
+   HOMEPAGE renderers (new sections)
    ============================================================ */
 
-function renderDiagnosisExample(targetId){
+function renderWhatIBring(targetId){
   const el = document.getElementById(targetId);
-  if(!el || typeof DIAGNOSIS_EXAMPLE === "undefined") return;
-  el.innerHTML = `
-    <div class="symptom-statement reveal">${DIAGNOSIS_EXAMPLE.symptom}</div>
-    <div class="causes-grid">
-      ${DIAGNOSIS_EXAMPLE.causes.map(c => `
-        <div class="cause-card reveal">
-          <div class="eyebrow">${c.label}</div>
-          <p>${c.copy}</p>
-        </div>`).join("")}
-    </div>`;
-}
-
-function renderSystemDiagram(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof SYSTEM_NODES === "undefined") return;
-  el.innerHTML = SYSTEM_NODES.map((node, i) =>
-    `<span class="system-node reveal">${node}</span>${i < SYSTEM_NODES.length - 1 ? `<span class="system-link" aria-hidden="true">+</span>` : ""}`
-  ).join("");
-}
-
-function renderDecisionTiers(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof DECISION_TIERS_V2 === "undefined") return;
-  el.innerHTML = DECISION_TIERS_V2.map(t => `
-    <div class="priority-card priority-card--${t.label.toLowerCase().replace(/\s+/g,'-')} reveal">
-      <div class="priority-status" style="border-top:none;padding-top:0;">${t.label}</div>
-      <p>${t.copy}</p>
+  if(!el || typeof WHAT_I_BRING === "undefined") return;
+  el.innerHTML = WHAT_I_BRING.map((p, i) => `
+    <div class="process-step reveal">
+      <div class="process-step-n">0${i+1}</div>
+      <div class="process-step-body">
+        <h3>${p.title}</h3>
+        <p>${p.copy}</p>
+      </div>
     </div>`).join("");
 }
 
-function renderAIChanges(targetId){
+function renderHomeProcessSteps(targetId){
   const el = document.getElementById(targetId);
-  if(!el || typeof AI_CHANGES === "undefined") return;
-  el.innerHTML = `
-    <div class="compare-row reveal">
-      <div class="compare-label">What Changes</div>
-      <ul class="chip-list">${AI_CHANGES.changes.map(c => `<li>${c}</li>`).join("")}</ul>
-    </div>
-    <div class="compare-row reveal">
-      <div class="compare-label">What Doesn't</div>
-      <ul class="chip-list">${AI_CHANGES.staysSame.map(c => `<li class="chip-stay">${c}</li>`).join("")}</ul>
-    </div>`;
-}
-
-function renderWhatIDontDo(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof WHAT_I_DONT_DO === "undefined") return;
-  el.innerHTML = WHAT_I_DONT_DO.map(line => `<p class="dont-do-line reveal">${line}</p>`).join("");
-}
-
-function renderProjectStartSteps(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof PROJECT_START_STEPS === "undefined") return;
-  el.innerHTML = PROJECT_START_STEPS.map(s => `
+  if(!el || typeof HOME_PROCESS_STEPS === "undefined") return;
+  el.innerHTML = HOME_PROCESS_STEPS.map(s => `
     <div class="process-step reveal">
       <div class="process-step-n">${s.n}</div>
       <div class="process-step-body">
@@ -588,6 +563,129 @@ function renderProjectStartSteps(targetId){
         <p>${s.copy}</p>
       </div>
     </div>`).join("");
+}
+
+function renderCapabilities(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof CAPABILITIES === "undefined") return;
+  el.innerHTML = CAPABILITIES.map(c => `
+    <div class="lookat-card reveal">
+      <h3>${c.title}</h3>
+      <ul class="lookat-list">${c.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderWhoWorkWith(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof WHO_WORK_WITH === "undefined") return;
+  el.innerHTML = WHO_WORK_WITH.map(w => `
+    <div class="lookat-card reveal">
+      <h3>${w.title}</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">${w.copy}</p>
+    </div>`).join("");
+}
+
+/* ============================================================
+   APPROACH v3 renderers — Understand / Diagnose / Prioritize /
+   Strategy / Execution / Measurement / Principles
+   ============================================================ */
+
+function renderUnderstandBusiness(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof UNDERSTAND_BUSINESS === "undefined") return;
+  const d = UNDERSTAND_BUSINESS;
+  el.innerHTML = `
+    <p class="prose reveal" style="font-size:16px;margin-bottom:18px;">${d.lead}</p>
+    <ul class="chip-list">${d.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>`;
+}
+
+function renderDiagnoseGroups(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DIAGNOSE_GROUPS === "undefined") return;
+  el.innerHTML = DIAGNOSE_GROUPS.map(g => `
+    <div class="lookat-card reveal">
+      <h3>${g.title}</h3>
+      <ul class="lookat-list">${g.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderPrioritizeTiers(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PRIORITIZE_TIERS_V2 === "undefined") return;
+  el.innerHTML = PRIORITIZE_TIERS_V2.map(t => `
+    <div class="priority-card priority-card--${t.label.toLowerCase()} reveal">
+      <div class="priority-status" style="border-top:none;padding-top:0;">${t.label}</div>
+      <p>${t.copy}</p>
+    </div>`).join("");
+}
+
+function renderMeasureGroups(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof MEASURE_GROUPS === "undefined") return;
+  el.innerHTML = MEASURE_GROUPS.map(g => `
+    <div class="lookat-card reveal">
+      <h3>${g.title}</h3>
+      <ul class="lookat-list">${g.items.map(i => `<li>${i}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderExecutionCollaborators(targetId){
+  renderChipList(targetId, typeof EXECUTION_COLLABORATORS !== "undefined" ? EXECUTION_COLLABORATORS : null);
+}
+
+function renderWorkingPrinciples(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof WORKING_PRINCIPLES === "undefined") return;
+  el.innerHTML = WORKING_PRINCIPLES.map(p => `
+    <div class="principle-row reveal">
+      <h3>${p.title}</h3>
+      <p>${p.copy}</p>
+    </div>`).join("");
+}
+
+/* ============================================================
+   ABOUT PAGE renderers — Agency & Hiring Manager sections
+   ============================================================ */
+
+function renderAboutOpeningQuestions(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_OPENING_QUESTIONS === "undefined") return;
+  el.innerHTML = ABOUT_OPENING_QUESTIONS.map(q => `<p class="dont-do-line reveal" style="font-size:17px;">"${q}"</p>`).join("");
+}
+
+function renderAboutWhatIBring(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_WHAT_I_BRING === "undefined") return;
+  el.innerHTML = ABOUT_WHAT_I_BRING.map(b => `
+    <div class="lookat-card reveal">
+      <h3>${b.title}</h3>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">${b.copy}</p>
+    </div>`).join("");
+}
+
+function renderAboutHowIWork(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_HOW_I_WORK === "undefined") return;
+  const d = ABOUT_HOW_I_WORK;
+  el.innerHTML = `
+    <p class="prose reveal" style="font-size:16px;margin-bottom:18px;">${d.lead}</p>
+    <p class="prose reveal" style="margin-bottom:10px;">Give me an account where:</p>
+    <ul class="chip-list">${d.giveMe.map(i => `<li>${i}</li>`).join("")}</ul>
+    <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">${d.closing}</p>`;
+}
+
+function renderAgencySection(capTargetId, fitTargetId){
+  renderChipList(capTargetId, typeof AGENCY_SECTION !== "undefined" ? AGENCY_SECTION.capabilities : null);
+  renderChipList(fitTargetId, typeof AGENCY_SECTION !== "undefined" ? AGENCY_SECTION.bestFit : null);
+}
+
+function renderHiringManagerSection(problemsTargetId, getTargetId){
+  const pEl = document.getElementById(problemsTargetId);
+  if(pEl && typeof HIRING_MANAGER_SECTION !== "undefined"){
+    pEl.innerHTML = HIRING_MANAGER_SECTION.problems.map(p => `<p class="dont-do-line reveal" style="font-size:16px;">"${p}"</p>`).join("");
+  }
+  renderChipList(getTargetId, typeof HIRING_MANAGER_SECTION !== "undefined" ? HIRING_MANAGER_SECTION.whatYouGet : null);
 }
 
 function renderSkillsJumpNav(targetId){
@@ -606,6 +704,9 @@ function renderProjectDetail(targetId){
   const p = findWorkItem(slug) || allWorkItems()[0];
   const isCaseStudy = !!p.industry;
   document.title = `${p.name} — Shailesh Bhadra`;
+  const myRole = isCaseStudy
+    ? `I owned the diagnosis and implementation described below — investigating the problem, prioritising the fix, and carrying it through to the outcome.`
+    : `${p.role} at ${p.company}, owning this engagement end to end — from the initial diagnosis through to implementation and measurement.`;
   el.innerHTML = `
     <div class="container">
       <div class="detail-hero">
@@ -616,16 +717,19 @@ function renderProjectDetail(targetId){
         </div>
         <h1 style="font-size:clamp(28px,4vw,42px);margin-top:14px;">${p.name}</h1>
         <div class="detail-meta-row">
-          ${isCaseStudy ? "" : `<span>ROLE: ${p.role}</span>`}
-          <span>TOOLS: ${p.tools.join(", ")}</span>
+          ${isCaseStudy ? `<span>MARKET: ${p.region}</span><span>BUSINESS MODEL: ${p.industry}</span>` : `<span>ROLE: ${p.role}</span>`}
         </div>
         ${isCaseStudy ? `<p class="prose" style="margin-top:16px;color:var(--ink-faint);font-size:13px;">Client name withheld under confidentiality. Details reflect a real engagement of this type; figures are representative, not audited public results.</p>` : ""}
       </div>
       <div class="case-block"><h3>The Challenge</h3><p>${p.challenge}</p></div>
-      <div class="case-block"><h3>The Investigation</h3><p>${p.approach}</p></div>
-      <div class="case-block"><h3>The Work</h3><p>${p.implementation}</p></div>
+      <div class="case-block"><h3>What I Found</h3><p>${p.approach}</p></div>
+      <div class="case-block"><h3>My Role &amp; Ownership</h3><p>${myRole}</p></div>
+      <div class="case-block"><h3>What I Changed</h3><p>${p.implementation}</p></div>
+      <div class="case-block"><h3>Why These Changes</h3><p>${p.why || p.learning}</p></div>
       <div class="case-block"><h3>The Outcome</h3><p>${p.result}</p></div>
-      <div class="case-block"><h3>The Takeaway</h3><p>${p.learning}</p></div>
+      <div class="case-block"><h3>What I Learned</h3><p>${p.learning}</p></div>
+      <div class="case-block"><h3>What I'd Do Next</h3><p>${p.next || "—"}</p></div>
+      <div class="case-block"><h3>Skills Demonstrated</h3><ul class="chip-list">${p.tools.map(t => `<li>${t}</li>`).join("")}</ul></div>
     </div>`;
 }
 
