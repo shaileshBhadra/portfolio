@@ -730,10 +730,12 @@ const ABOUT_OPENING_QUESTIONS = [
 ];
 
 const ABOUT_WHAT_I_BRING = [
-  { title: "SEO", copy: "Technical SEO, SEO strategy, site architecture, search performance, content opportunities and growth roadmaps." },
-  { title: "Analytics", copy: "GA4, GTM, GSC, conversion tracking, measurement and data validation." },
-  { title: "Performance", copy: "Google Ads, Meta Ads, LinkedIn Ads, landing-page analysis and conversion-focused acquisition." },
-  { title: "eCommerce", copy: "Technical SEO, product visibility, Google Merchant Center, search performance and eCommerce measurement." },
+  { title: "Technical SEO", copy: "Find and fix the technical barriers affecting crawling, indexing, architecture and search visibility.", questions: ["Is the site being crawled and indexed the way it should be?", "Where is the architecture creating competing or orphaned pages?", "What's blocking Core Web Vitals from passing?"] },
+  { title: "SEO Strategy", copy: "Turn search demand, competition and business priorities into a practical roadmap.", questions: ["What does the business actually need search to do?", "Where is the real opportunity versus the obvious keyword?", "What should get built first?"] },
+  { title: "Analytics & Tracking", copy: "Build measurement systems teams can actually trust — from GA4 and GTM to conversion tracking and reporting.", questions: ["Does GA4 match what the business actually sold?", "Which events are firing, and which ones only look like they are?", "What's the source of truth when reports disagree?"] },
+  { title: "eCommerce", copy: "Connect technical SEO, product visibility, Merchant Center and measurement to improve search performance.", questions: ["Why isn't a product page ranking for its own product name?", "Is the feed the reason Shopping isn't showing the right listings?", "Where is category architecture capping growth?"] },
+  { title: "Paid Acquisition", copy: "Use Google Ads and Meta Ads as part of the acquisition system, not as isolated platform metrics.", questions: ["Is the reported conversion number the real one?", "Where is spend duplicating organic demand instead of adding to it?", "What does the account structure actually reward?"] },
+  { title: "Conversion & Growth", copy: "Connect traffic, landing pages, user behaviour and conversion data to understand where growth is being lost.", questions: ["Where does the funnel actually leak?", "Is the traffic problem or the page problem?", "What would moving this number really require?"] },
 ];
 
 const ABOUT_HOW_I_WORK = {
@@ -859,6 +861,77 @@ const STRATEGY_ROADMAP_TIERS = [
   { label: "Now", copy: "Fix constraints that are blocking performance." },
   { label: "Next", copy: "Build systems that support sustainable growth." },
   { label: "Later", copy: "Optimize lower-priority opportunities." },
+];
+
+const DIAGNOSTIC_CARDS = [
+  {
+    title: "Rankings Drop",
+    causes: ["Technical", "Content", "Search demand", "Competition", "Algorithmic changes"],
+    investigate: ["Technical health", "Indexation", "Content decay", "Search demand", "Competitor movement"],
+  },
+  {
+    title: "Traffic Isn't Converting",
+    causes: ["Intent mismatch", "Landing page", "Tracking", "UX", "Offer", "Attribution"],
+    investigate: ["Search intent", "Landing-page behaviour", "GA4 events", "Conversion paths", "Attribution"],
+  },
+  {
+    title: "Data Doesn't Agree",
+    causes: ["GA4", "GTM", "GSC", "Ads", "CRM", "Business data"],
+    investigate: ["Tracking implementation", "Event firing", "Attribution", "Data consistency", "Source-of-truth definition"],
+  },
+];
+
+const AI_SEARCH_ERA = {
+  intro: "AI search is changing how people discover information, but the fundamentals of being discoverable, understandable and useful remain important.",
+  positioning: "I treat AI search as an extension of search visibility rather than a replacement for SEO fundamentals.",
+  platforms: [
+    { name: "Google", note: "AI Overviews" },
+    { name: "ChatGPT", note: "AI discovery" },
+    { name: "Perplexity", note: "Answer discovery" },
+    { name: "Gemini", note: "AI search" },
+  ],
+  fundamentals: ["Entity Visibility", "Brand Mentions", "Structured Content", "First-Party Expertise"],
+};
+
+const TOOLS_SYSTEMS = [
+  { title: "Search", items: ["Google Search Console", "SEMrush", "Ahrefs", "Screaming Frog", "Google Trends"] },
+  { title: "Analytics", items: ["GA4", "Google Tag Manager", "Looker Studio"] },
+  { title: "Paid", items: ["Google Ads", "Meta Ads"] },
+  { title: "eCommerce", items: ["Shopify", "Google Merchant Center"] },
+];
+
+const WHAT_I_DELIVER = [
+  { title: "Audit", summary: "Prioritized findings", details: ["Technical issues", "Search opportunities", "Measurement gaps"] },
+  { title: "Roadmap", summary: "Priorities, owners, dependencies", details: ["Priorities", "Owners", "Dependencies", "Success metrics"] },
+  { title: "Measurement", summary: "A tracking framework you can trust", details: ["Tracking framework", "GA4/GTM", "Conversion validation", "Reporting"] },
+  { title: "Strategy", summary: "Search opportunities and direction", details: ["Search opportunities", "Content direction", "Technical priorities", "Growth plan"] },
+  { title: "Implementation Guidance", summary: "What the team needs to build it", details: ["Developer requirements", "Content briefs", "Tracking requirements", "QA"] },
+];
+
+const ABOUT_HOW_I_THINK = [
+  { n: "01", title: "Question the Data", copy: "Before optimizing performance, make sure the measurement can be trusted." },
+  { n: "02", title: "Find the Constraint", copy: "Don't optimize everything. Find what's actually limiting growth." },
+  { n: "03", title: "Prioritize", copy: "Focus resources where impact, effort and confidence make the case strongest." },
+  { n: "04", title: "Implement", copy: "Recommendations only matter when someone turns them into action." },
+  { n: "05", title: "Measure", copy: "Go back to the original objective and see what actually changed." },
+  { n: "06", title: "Improve", copy: "Use the evidence to decide what happens next." },
+];
+
+const AGENCY_ROWS = [
+  { title: "Complex SEO Accounts", copy: "Technical diagnosis, strategy and prioritization." },
+  { title: "Analytics & Tracking", copy: "GA4, GTM, GSC and conversion measurement." },
+  { title: "eCommerce SEO", copy: "Technical SEO, product visibility and measurement." },
+  { title: "Client Delivery", copy: "Audits, strategy presentations, reporting and technical explanations." },
+  { title: "Execution Support", copy: "Working with developers, content and marketing teams to move recommendations into implementation." },
+];
+
+const RESUME_SNAPSHOT = [
+  { value: "9+", label: "Years Experience", explain: "Hands-on SEO and analytics work, not just oversight." },
+  { value: "SEO", label: "Strategy & Technical", explain: "Technical + strategic SEO experience." },
+  { value: "GA4", label: "Analytics", explain: "Analytics and measurement." },
+  { value: "GTM", label: "Tracking", explain: "Client-side and server-side tag management." },
+  { value: "Paid Media", label: "Google · Meta", explain: "Paid search and social as part of the acquisition system." },
+  { value: "eCommerce", label: "SEO & Tracking", explain: "Product visibility, feeds and eCommerce measurement." },
 ];
 
 const NAV_LINKS = [

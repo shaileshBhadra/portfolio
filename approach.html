@@ -32,6 +32,18 @@
     </div>
   </section>
 
+  <!-- THE PROBLEMS I SOLVE (interactive diagnostic cards) -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">The Problems I Solve</div>
+        <h2>Same symptoms, different root causes.</h2>
+        <p>The same symptoms can come from very different root causes. I focus on finding the underlying problem before recommending a solution.</p>
+      </div>
+      <div class="grid-3" id="diagnostic-cards" style="border:none;background:none;gap:24px;"></div>
+    </div>
+  </section>
+
   <!-- 01 UNDERSTAND THE BUSINESS -->
   <section class="section" style="padding-top:0;">
     <div class="container">
@@ -124,6 +136,41 @@
     </div>
   </section>
 
+  <!-- AI SEARCH ERA -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">AI Search Era</div>
+        <h2>Search is changing. Measurement still matters.</h2>
+      </div>
+      <div id="ai-search-era"></div>
+    </div>
+  </section>
+
+  <!-- TOOLS & SYSTEMS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Tools &amp; Systems</div>
+        <h2>Grouped by purpose, not by logo.</h2>
+      </div>
+      <div class="tab-bar" id="tools-tab-bar" data-tabs></div>
+      <div id="tools-systems"></div>
+      <p class="funnel-footer" style="margin-top:28px;">Tools change. The methodology doesn't.</p>
+    </div>
+  </section>
+
+  <!-- WHAT I DELIVER -->
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">What I Deliver</div>
+        <h2>Concrete outputs, not vague strategy decks.</h2>
+      </div>
+      <div id="what-i-deliver"></div>
+    </div>
+  </section>
+
   <!-- WORKING PRINCIPLES -->
   <section class="section">
     <div class="container">
@@ -147,6 +194,7 @@
   renderHeader("approach.html");
   renderFooter();
 
+  renderDiagnosticCards("diagnostic-cards");
   renderUnderstandBusiness("understand-business");
   renderDiagnoseGroups("diagnose-groups");
   renderDiagnoseStatement("diagnose-statement");
@@ -162,9 +210,15 @@
   renderExecutionCollaborators("execution-collaborators");
   renderMeasureGroups("measure-groups");
   renderImproveSteps("improve-steps");
+  renderAISearchEra("ai-search-era");
+  renderToolsSystems("tools-systems", "tools-tab-bar");
+  renderWhatIDeliver("what-i-deliver");
   renderWorkingPrinciples("working-principles");
 
   initScrollReveal();
+  bindAccordions();
+  bindTabs();
+  bindScrollActiveSteps(".process-flow", ".process-step");
 </script>
 </body>
 </html>

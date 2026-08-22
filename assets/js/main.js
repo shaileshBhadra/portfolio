@@ -723,10 +723,16 @@ function renderAboutOpeningQuestions(targetId){
 function renderAboutWhatIBring(targetId){
   const el = document.getElementById(targetId);
   if(!el || typeof ABOUT_WHAT_I_BRING === "undefined") return;
-  el.innerHTML = ABOUT_WHAT_I_BRING.map(b => `
+  el.innerHTML = ABOUT_WHAT_I_BRING.map((b, i) => `
     <div class="lookat-card reveal">
       <h3>${b.title}</h3>
       <p style="font-size:13.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">${b.copy}</p>
+      <button class="acc-trigger" data-acc-target="bring-panel-${i}" aria-expanded="false" aria-controls="bring-panel-${i}" style="padding:10px 0 0;">
+        <span>Typical questions I investigate</span><span class="acc-icon">+</span>
+      </button>
+      <div class="acc-panel" id="bring-panel-${i}" hidden style="padding:8px 0 0;">
+        <ul class="lookat-list">${(b.questions||[]).map(q => `<li>${q}</li>`).join("")}</ul>
+      </div>
     </div>`).join("");
 }
 
@@ -755,13 +761,16 @@ function renderAboutAISection(targetId){
   el.innerHTML = d.paragraphs.map(p => `<p class="prose reveal" style="margin-bottom:14px;">${p}</p>`).join("");
 }
 
-function renderAboutWhatYouGet(targetId){
-  const el = document.getElementById(targetId);
-  if(!el || typeof ABOUT_WHAT_YOU_GET === "undefined") return;
-  el.innerHTML = ABOUT_WHAT_YOU_GET.map(g => `
-    <div class="lookat-card reveal">
-      <h3>${g.title}</h3>
-      <ul class="lookat-list">${g.items.map(i => `<li>${i}</li>`).join("")}</ul>
+function renderAboutWhatYouGet(tabBarId, panelsId){
+  const bar = document.getElementById(tabBarId);
+  const el = document.getElementById(panelsId);
+  if(!el || !bar || typeof ABOUT_WHAT_YOU_GET === "undefined") return;
+  bar.innerHTML = ABOUT_WHAT_YOU_GET.map((g, i) =>
+    `<button class="tab-trigger" data-tab-target="wyg-panel-${i}">${g.title}</button>`
+  ).join("");
+  el.innerHTML = ABOUT_WHAT_YOU_GET.map((g, i) => `
+    <div class="tab-panel" id="wyg-panel-${i}" hidden>
+      <ul class="lookat-list">${g.items.map(x => `<li>${x}</li>`).join("")}</ul>
     </div>`).join("");
 }
 
@@ -778,9 +787,31 @@ function renderAboutNextProblem(targetId){
     <p class="prose" style="margin-top:14px;font-style:italic;">${d.closing}</p>`;
 }
 
-function renderAgencySection(capTargetId, fitTargetId){
-  renderChipList(capTargetId, typeof AGENCY_SECTION !== "undefined" ? AGENCY_SECTION.capabilities : null);
-  renderChipList(fitTargetId, typeof AGENCY_SECTION !== "undefined" ? AGENCY_SECTION.bestFit : null);
+function renderAboutHowIThink(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof ABOUT_HOW_I_THINK === "undefined") return;
+  el.innerHTML = ABOUT_HOW_I_THINK.map(s => `
+    <div class="process-step reveal">
+      <div class="process-step-n">${s.n}</div>
+      <div class="process-step-body">
+        <h3>${s.title}</h3>
+        <p>${s.copy}</p>
+      </div>
+    </div>`).join("");
+}
+
+function renderAgencySection(rowsTargetId){
+  const el = document.getElementById(rowsTargetId);
+  if(!el || typeof AGENCY_ROWS === "undefined") return;
+  el.innerHTML = AGENCY_ROWS.map((r, i) => `
+    <div class="acc-item reveal">
+      <button class="acc-trigger" data-acc-target="agency-panel-${i}" aria-expanded="false" aria-controls="agency-panel-${i}">
+        <span><strong>${r.title}</strong></span><span class="acc-icon">+</span>
+      </button>
+      <div class="acc-panel" id="agency-panel-${i}" hidden>
+        <p>${r.copy}</p>
+      </div>
+    </div>`).join("");
 }
 
 function renderHiringManagerSection(problemsTargetId, getTargetId){
@@ -789,6 +820,112 @@ function renderHiringManagerSection(problemsTargetId, getTargetId){
     pEl.innerHTML = HIRING_MANAGER_SECTION.problems.map(p => `<p class="dont-do-line reveal" style="font-size:16px;">"${p}"</p>`).join("");
   }
   renderChipList(getTargetId, typeof HIRING_MANAGER_SECTION !== "undefined" ? HIRING_MANAGER_SECTION.whatYouGet : null);
+}
+
+function renderDiagnosticCards(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof DIAGNOSTIC_CARDS === "undefined") return;
+  el.innerHTML = DIAGNOSTIC_CARDS.map((c, i) => `
+    <div class="diag-card reveal">
+      <h3>${c.title}</h3>
+      <div class="diag-causes">${c.causes.map(x => `<span>${x}</span>`).join("")}</div>
+      <button class="acc-trigger" data-acc-target="diag-panel-${i}" aria-expanded="false" aria-controls="diag-panel-${i}" style="padding:0;">
+        <span>What I'd investigate first</span><span class="acc-icon">+</span>
+      </button>
+      <div class="acc-panel" id="diag-panel-${i}" hidden style="padding:14px 0 0;">
+        <ul class="lookat-list">${c.investigate.map(x => `<li>${x}</li>`).join("")}</ul>
+      </div>
+    </div>`).join("");
+}
+
+function renderAISearchEra(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof AI_SEARCH_ERA === "undefined") return;
+  const d = AI_SEARCH_ERA;
+  el.innerHTML = `
+    <p class="prose reveal" style="max-width:660px;">${d.intro}</p>
+    <p class="prose reveal" style="max-width:660px;margin-top:12px;font-style:italic;">${d.positioning}</p>
+    <div class="causes-grid" style="margin-top:28px;grid-template-columns:repeat(4,1fr);">
+      ${d.platforms.map(p => `
+        <div class="cause-card reveal">
+          <div class="eyebrow">${p.name}</div>
+          <p>${p.note}</p>
+        </div>`).join("")}
+    </div>
+    <ul class="chip-list" style="margin-top:24px;">${d.fundamentals.map(f => `<li>${f}</li>`).join("")}</ul>`;
+}
+
+function renderToolsSystems(targetId, tabBarId){
+  const el = document.getElementById(targetId);
+  const bar = document.getElementById(tabBarId);
+  if(!el || !bar || typeof TOOLS_SYSTEMS === "undefined") return;
+  bar.innerHTML = TOOLS_SYSTEMS.map((g, i) =>
+    `<button class="tab-trigger" data-tab-target="tools-panel-${i}">${g.title}</button>`
+  ).join("");
+  el.innerHTML = TOOLS_SYSTEMS.map((g, i) => `
+    <div class="tab-panel" id="tools-panel-${i}" hidden>
+      <ul class="chip-list">${g.items.map(x => `<li>${x}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderWhatIDeliver(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof WHAT_I_DELIVER === "undefined") return;
+  el.innerHTML = WHAT_I_DELIVER.map((d, i) => `
+    <div class="acc-item reveal">
+      <button class="acc-trigger" data-acc-target="deliver-panel-${i}" aria-expanded="false" aria-controls="deliver-panel-${i}">
+        <span><strong>${d.title}</strong> — ${d.summary}</span><span class="acc-icon">+</span>
+      </button>
+      <div class="acc-panel" id="deliver-panel-${i}" hidden>
+        <ul>${d.details.map(x => `<li>${x}</li>`).join("")}</ul>
+      </div>
+    </div>`).join("");
+}
+
+function renderResumeSnapshot(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof RESUME_SNAPSHOT === "undefined") return;
+  el.innerHTML = RESUME_SNAPSHOT.map(m => `
+    <div class="metric-cell reveal" title="${m.explain}">
+      <div class="metric-value">${m.value}</div>
+      <div class="metric-label">${m.label}</div>
+    </div>`).join("");
+}
+
+function renderResumeExpertiseTabs(tabBarId, panelsId){
+  const bar = document.getElementById(tabBarId);
+  const el = document.getElementById(panelsId);
+  if(!el || !bar || typeof RESUME_CORE_EXPERTISE === "undefined") return;
+  bar.innerHTML = RESUME_CORE_EXPERTISE.map((g, i) =>
+    `<button class="tab-trigger" data-tab-target="expertise-panel-${i}">${g.title}</button>`
+  ).join("");
+  el.innerHTML = RESUME_CORE_EXPERTISE.map((g, i) => `
+    <div class="tab-panel" id="expertise-panel-${i}" hidden>
+      <ul class="lookat-list">${g.items.map(x => `<li>${x}</li>`).join("")}</ul>
+    </div>`).join("");
+}
+
+function renderExperienceAccordion(targetId, items){
+  const el = document.getElementById(targetId);
+  if(!el) return;
+  const data = items || EXPERIENCE;
+  el.innerHTML = data.map((job, i) => `
+    <div class="acc-item reveal">
+      <button class="acc-trigger" data-acc-target="exp-panel-${i}" aria-expanded="${i===0?'true':'false'}" aria-controls="exp-panel-${i}">
+        <span>
+          <span style="font-family:var(--font-mono);font-size:12px;color:var(--ink-faint);">${job.dates}</span><br>
+          <strong>${job.company}</strong> — ${job.role}
+        </span>
+        <span class="acc-icon">${i===0?'−':'+'}</span>
+      </button>
+      <div class="acc-panel" id="exp-panel-${i}" ${i===0?'':'hidden'}>
+        <div class="playbook-label">What I Owned</div>
+        <ul>${job.responsibilities.map(r => `<li>${r}</li>`).join("")}</ul>
+        ${job.achievement ? `<div class="achievement-pill">▲ ${job.achievement}</div>` : ""}
+        <div class="playbook-label" style="margin-top:14px;">Key Focus</div>
+        <div class="tool-tags">${job.tools.map(t => `<span class="tool-tag">${t}</span>`).join("")}</div>
+      </div>
+    </div>`).join("");
 }
 
 function renderSkillsJumpNav(targetId){
@@ -988,4 +1125,105 @@ if(document.readyState === "loading"){
   document.addEventListener("DOMContentLoaded", initAnalytics);
 } else {
   initAnalytics();
+}
+
+/* ============================================================
+   REUSABLE INTERACTIVE COMPONENTS
+   Accordion, Tabs, Count-up — used across Approach/About/Resume.
+   Vanilla JS, keyboard-accessible, no dependencies, respects
+   prefers-reduced-motion for the count-up animation.
+   ============================================================ */
+
+/* --- Accordion: click a header to expand/collapse a panel ---
+   Markup contract:
+     <button class="acc-trigger" data-acc-target="ID" aria-expanded="false" aria-controls="ID">…</button>
+     <div class="acc-panel" id="ID" hidden>…</div>
+   Bound via delegation so it works on dynamically-rendered content. */
+function bindAccordions(){
+  document.addEventListener("click", (e) => {
+    const trigger = e.target.closest(".acc-trigger");
+    if(!trigger) return;
+    const panel = document.getElementById(trigger.dataset.accTarget);
+    if(!panel) return;
+    const open = trigger.getAttribute("aria-expanded") === "true";
+    trigger.setAttribute("aria-expanded", String(!open));
+    panel.hidden = open;
+    const icon = trigger.querySelector(".acc-icon");
+    if(icon) icon.textContent = open ? "+" : "−";
+  });
+}
+
+/* --- Tabs: click a tab to switch which panel is visible ---
+   Markup contract (within a `[data-tabs]` container):
+     <button class="tab-trigger" data-tab-target="ID" aria-selected="false">…</button>
+     <div class="tab-panel" id="ID" hidden>…</div>
+   First tab in each group is active by default. */
+function bindTabs(){
+  document.querySelectorAll("[data-tabs]").forEach(group => {
+    if(group.dataset.tabsBound) return; // avoid double-binding on re-render
+    group.dataset.tabsBound = "true";
+    const triggers = Array.from(group.querySelectorAll(".tab-trigger"));
+    function activate(target){
+      triggers.forEach(t => {
+        const active = t.dataset.tabTarget === target;
+        t.setAttribute("aria-selected", String(active));
+        t.classList.toggle("active", active);
+        const panel = document.getElementById(t.dataset.tabTarget);
+        if(panel) panel.hidden = !active;
+      });
+    }
+    triggers.forEach(t => t.addEventListener("click", () => activate(t.dataset.tabTarget)));
+    if(triggers[0]) activate(triggers[0].dataset.tabTarget);
+  });
+}
+
+/* --- Count-up: animates a number into view once, on first scroll
+   into viewport. Respects prefers-reduced-motion (shows final value
+   immediately). Only touches elements with [data-count-to]. ---- */
+function bindCountUp(){
+  const els = document.querySelectorAll("[data-count-to]");
+  if(!els.length) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  els.forEach(el => {
+    const prefix = el.dataset.countPrefix || "";
+    const suffix = el.dataset.countSuffix || "";
+    const to = parseFloat(el.dataset.countTo);
+    if(isNaN(to)) return;
+    if(reduced){ el.textContent = `${prefix}${to}${suffix}`; return; }
+    let done = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting && !done){
+          done = true;
+          const duration = 900, start = performance.now();
+          function tick(now){
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = `${prefix}${Math.round(to * eased)}${suffix}`;
+            if(progress < 1) requestAnimationFrame(tick);
+            else el.textContent = `${prefix}${to}${suffix}`;
+          }
+          requestAnimationFrame(tick);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.4 });
+    observer.observe(el);
+  });
+}
+
+/* --- Scroll-active step: highlights the current step in a vertical
+   process/timeline as the user scrolls past it. Adds `.is-active`
+   to the step whose top is nearest the top third of the viewport. */
+function bindScrollActiveSteps(containerSelector, stepSelector){
+  const container = document.querySelector(containerSelector);
+  if(!container) return;
+  const steps = Array.from(container.querySelectorAll(stepSelector));
+  if(!steps.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      entry.target.classList.toggle("is-active", entry.isIntersecting);
+    });
+  }, { rootMargin: "-35% 0px -50% 0px", threshold: 0 });
+  steps.forEach(s => observer.observe(s));
 }

@@ -41,7 +41,7 @@
   <section class="section--tight" style="padding-top:0;">
     <div class="container">
       <div class="playbook-label">At a Glance</div>
-      <div class="trust-grid" id="recruiter-snapshot" style="margin-top:12px;"></div>
+      <div class="trust-grid" id="recruiter-snapshot" style="margin-top:12px;grid-template-columns:repeat(6,1fr);"></div>
     </div>
   </section>
 
@@ -57,13 +57,14 @@
       <!-- EXPERIENCE -->
       <div class="resume-section">
         <h3>Experience</h3>
-        <div class="timeline" id="resume-experience"></div>
+        <div id="resume-experience"></div>
       </div>
 
       <!-- CORE EXPERTISE -->
       <div class="resume-section">
         <h3>Core Expertise</h3>
-        <div class="lookat-grid" id="resume-expertise" style="grid-template-columns:repeat(4,1fr);"></div>
+        <div class="tab-bar" id="expertise-tab-bar" data-tabs></div>
+        <div id="resume-expertise"></div>
       </div>
 
       <!-- TOOLS -->
@@ -126,14 +127,9 @@
   document.getElementById("resume-location").textContent = PROFILE.location;
   document.getElementById("resume-linkedin-btn").href = PROFILE.linkedin;
 
-  renderTrustStrip("recruiter-snapshot");
-  renderTimeline("resume-experience", site.experience);
-
-  document.getElementById("resume-expertise").innerHTML = RESUME_CORE_EXPERTISE.map(g => `
-    <div class="lookat-card reveal">
-      <h3>${g.title}</h3>
-      <ul class="lookat-list">${g.items.map(i => `<li>${i}</li>`).join("")}</ul>
-    </div>`).join("");
+  renderResumeSnapshot("recruiter-snapshot");
+  renderExperienceAccordion("resume-experience", site.experience);
+  renderResumeExpertiseTabs("expertise-tab-bar", "resume-expertise");
 
   document.getElementById("resume-tools").innerHTML = RESUME_TOOLS.map(g => `
     <div class="lookat-card reveal">
@@ -141,12 +137,18 @@
       <ul class="lookat-list">${g.items.map(i => `<li>${i}</li>`).join("")}</ul>
     </div>`).join("");
 
-  document.getElementById("resume-impact").innerHTML = RESUME_SELECTED_IMPACT.map(m => `
-    <div class="pull-stat reveal" style="margin-bottom:16px;">
-      <div class="value">${m.value}</div>
-      <div class="label">${m.label}</div>
+  document.getElementById("resume-impact").innerHTML = RESUME_SELECTED_IMPACT.map(m => {
+    const numMatch = m.value.match(/^(\d+)(.*)$/); // splits "60%+" into 60 and "%+"
+    const countMarkup = numMatch
+      ? `<div class="count-stat" data-count-to="${numMatch[1]}" data-count-suffix="${numMatch[2]}">0${numMatch[2]}</div>`
+      : `<div class="count-stat">${m.value}</div>`;
+    return `
+    <div class="reveal" style="margin-bottom:28px;">
+      ${countMarkup}
+      <div class="label" style="margin-top:8px;color:var(--ink-soft);font-size:14px;max-width:480px;">${m.label}</div>
       <a href="project-detail.html?slug=${m.caseStudySlug}" class="more" style="margin-top:8px;display:inline-block;">See the case study →</a>
-    </div>`).join("");
+    </div>`;
+  }).join("");
 
   document.getElementById("resume-education").innerHTML = EDUCATION.map(e => `
     <div style="margin-bottom:14px;">
@@ -166,6 +168,9 @@
   });
 
   initScrollReveal();
+  bindAccordions();
+  bindTabs();
+  bindCountUp();
 })();
 </script>
 </body>

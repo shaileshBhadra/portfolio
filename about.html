@@ -82,8 +82,19 @@
     </div>
   </section>
 
-  <!-- WHAT I VALUE -->
+  <!-- HOW I THINK -->
   <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">How I Think</div>
+        <h2>The tools change. The way I solve problems doesn't.</h2>
+      </div>
+      <div class="process-flow" id="about-how-i-think"></div>
+    </div>
+  </section>
+
+  <!-- WHAT I VALUE -->
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">What I Value</div>
@@ -99,7 +110,7 @@
   </section>
 
   <!-- AI -->
-  <section class="section">
+  <section class="section section--alt">
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">AI</div>
@@ -109,28 +120,26 @@
   </section>
 
   <!-- WHAT YOU GET -->
-  <section class="section section--alt">
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">What You Get</div>
         <h2>A senior specialist who can move between strategy and implementation.</h2>
       </div>
-      <div class="lookat-grid" id="about-what-you-get"></div>
+      <div class="tab-bar" id="wyg-tab-bar" data-tabs></div>
+      <div id="about-what-you-get"></div>
     </div>
   </section>
 
   <!-- FOR AGENCIES -->
-  <section class="section">
+  <section class="section section--alt">
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">For Agencies</div>
         <h2>Need senior SEO capability for a complex account?</h2>
         <p style="max-width:640px;">I can support agencies where an account needs more than routine reporting and monthly recommendations.</p>
       </div>
-      <div class="playbook-label">Capabilities</div>
-      <div id="agency-capabilities" style="margin-bottom:20px;"></div>
-      <div class="playbook-label">Best-fit projects</div>
-      <div id="agency-fit"></div>
+      <div id="agency-rows"></div>
       <div style="margin-top:28px;">
         <p style="font-family:var(--font-display);font-size:19px;margin-bottom:16px;">Bring me the difficult account.</p>
         <a href="contact.html" class="btn btn--primary">Let's Talk →</a>
@@ -139,7 +148,7 @@
   </section>
 
   <!-- HIRING MANAGERS -->
-  <section class="section section--alt">
+  <section class="section">
     <div class="container">
       <div class="section-head">
         <div class="eyebrow">For Hiring Managers</div>
@@ -154,7 +163,7 @@
   </section>
 
   <!-- NEXT PROBLEM / FINAL CTA -->
-  <section class="section">
+  <section class="section section--alt">
     <div class="container">
       <div id="next-problem" style="max-width:640px;"></div>
       <div class="btn-row" style="margin-top:28px;">
@@ -198,11 +207,14 @@
   renderAboutWhatIBring("about-what-i-bring");
   renderAboutHowIWork("about-how-i-work");
   renderAboutAISection("about-ai");
-  renderAboutWhatYouGet("about-what-you-get");
-  renderAgencySection("agency-capabilities", "agency-fit");
+  renderAboutWhatYouGet("wyg-tab-bar", "about-what-you-get");
+  renderAgencySection("agency-rows");
   renderHiringManagerSection("hiring-problems", "hiring-get");
   renderAboutNextProblem("next-problem");
+  renderAboutHowIThink("about-how-i-think");
   initScrollReveal();
+  bindAccordions();
+  bindTabs();
 })();
 </script>
 </body>
