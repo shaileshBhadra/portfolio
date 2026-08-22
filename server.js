@@ -18,6 +18,11 @@ const crypto = require("crypto");
 const multer = require("multer");
 const store = require("./store");
 
+// Node 18+ has global fetch built in; fall back to node-fetch on older
+// runtimes so the contact form works regardless of Render's actual
+// Node version, rather than assuming one.
+const fetchImpl = typeof fetch !== "undefined" ? fetch : require("node-fetch");
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -246,31 +251,44 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ success: false, message: "That email address doesn't look valid." });
     }
 
-    const web3formsRes = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_ACCESS_KEY,
-        subject: inquiry_type ? `New consulting inquiry: ${inquiry_type}` : "New message from shaileshbhadra.com",
-        name,
-        email,
-        company: company || "(not provided)",
-        website: website || "(not provided)",
-        inquiry_type: inquiry_type || "(not specified)",
-        budget: budget || "(not provided)",
-        message,
-      }),
-    });
+    let web3formsRes;
+    try {
+      web3formsRes = await fetchImpl("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: inquiry_type ? `New consulting inquiry: ${inquiry_type}` : "New message from shaileshbhadra.com",
+          name,
+          email,
+          company: company || "(not provided)",
+          website: website || "(not provided)",
+          inquiry_type: inquiry_type || "(not specified)",
+          budget: budget || "(not provided)",
+          message,
+        }),
+      });
+    } catch (fetchErr) {
+      console.error("Could not reach Web3Forms:", fetchErr.message);
+      return res.status(502).json({ success: false, message: "Could not reach the email service. Please try again shortly." });
+    }
 
-    const result = await web3formsRes.json();
+    let result;
+    try {
+      result = await web3formsRes.json();
+    } catch (parseErr) {
+      console.error("Web3Forms returned a non-JSON response:", parseErr.message);
+      return res.status(502).json({ success: false, message: "The email service returned an unexpected response." });
+    }
+
     if (web3formsRes.ok && result.success) {
       return res.json({ success: true });
     }
     console.error("Web3Forms rejected the submission:", result);
-    return res.status(502).json({ success: false, message: "Message could not be sent right now." });
+    return res.status(502).json({ success: false, message: result?.message || "Message could not be sent right now." });
   } catch (err) {
     console.error("Contact form error:", err);
-    return res.status(500).json({ success: false, message: "Unexpected server error." });
+    return res.status(500).json({ success: false, message: `Unexpected server error: ${err.message}` });
   }
 });
 

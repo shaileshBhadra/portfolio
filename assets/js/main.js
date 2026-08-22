@@ -1115,7 +1115,8 @@ function initContactForm(){
         setStatus("success", "Thanks — your message is on its way. I'll reply within 1–2 business days.");
         trackEvent("contact_submission", { inquiry_type: payload.inquiry_type || "" });
       } else {
-        setStatus("error", "Something went wrong sending that. Try again, or email me directly below.");
+        const detail = result && result.message ? ` (${result.message})` : "";
+        setStatus("error", `Something went wrong sending that${detail}. Try again, or email me directly below.`);
       }
     } catch(err){
       setStatus("error", "Network error — please try again, or email me directly below.");
