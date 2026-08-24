@@ -49,6 +49,22 @@ app.use(express.json({ limit: "2mb" }));
 // raw file. Old *.html URLs 301-redirect to their clean equivalent
 // (preserves SEO value from anything already indexed/linked).
 // ============================================================
+// ============================================================
+// HEALTH CHECK — for an external uptime monitor (e.g. UptimeRobot,
+// cron-job.org) to ping every few minutes, keeping Render's free
+// tier from spinning down after inactivity. Deliberately lightweight:
+// no database round-trip, just confirms the Node process is alive
+// and responding. See UPTIME_SETUP.md for the 5-minute walkthrough.
+// ============================================================
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptimeSeconds: Math.round(process.uptime()),
+    timestamp: new Date().toISOString(),
+    usingMongo: store.isUsingMongo(),
+  });
+});
+
 const PAGE_ROUTES = {
   "/": "index.html",
   "/about": "about.html",
