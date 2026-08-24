@@ -218,7 +218,8 @@ function renderReadoutPanel(targetId, dynamicStatus){
   ];
   el.innerHTML = `
     <div class="photo-frame">
-      <div class="photo-frame-inner">[ADD PROFESSIONAL PHOTO]</div>
+      <div class="photo-frame-monogram">S<span class="accent-dot">.</span></div>
+      <div class="photo-frame-label">Photo coming soon</div>
     </div>
     <div class="readout-head"><span class="readout-dot"></span>Now</div>
     ${rows.map(r => `
@@ -441,7 +442,7 @@ function renderServiceCard(s){
   const iconName = (typeof SERVICE_ICON_NAMES !== "undefined" && SERVICE_ICON_NAMES[s.slug]) || "wrench";
   return `
     <div class="service-card2 reveal" data-category="${s.category}" id="${s.slug}">
-      <div class="service-card2-icon"><i data-lucide="${iconName}"></i></div>
+      <div class="service-card2-icon">${(typeof LUCIDE_SVGS !== "undefined" && LUCIDE_SVGS[iconName]) || ""}</div>
       <div class="eyebrow" style="margin-bottom:8px;">${s.category}</div>
       <h3>${s.name}</h3>
       <p class="service-card2-desc">${s.short}</p>
@@ -488,7 +489,6 @@ function renderServiceCatalogue(gridTargetId, filterTargetId){
     const list = active === "All" ? SERVICES : SERVICES.filter(s => s.category === active);
     gridEl.innerHTML = list.map(renderServiceCard).join("");
     bindCardEvents();
-    if(window.lucide) lucide.createIcons();
   }
 
   function drawFilters(){
@@ -621,7 +621,7 @@ function renderCapabilities(targetId){
     const iconName = (typeof CAPABILITY_ICON_NAMES !== "undefined" && CAPABILITY_ICON_NAMES[c.title]) || "wrench";
     return `
     <div class="lookat-card reveal">
-      <div class="service-card2-icon" style="margin-bottom:14px;"><i data-lucide="${iconName}"></i></div>
+      <div class="service-card2-icon" style="margin-bottom:14px;">${(typeof LUCIDE_SVGS !== "undefined" && LUCIDE_SVGS[iconName]) || ""}</div>
       <h3>${c.title}</h3>
       <ul class="lookat-list">${c.items.map(i => `<li>${i}</li>`).join("")}</ul>
     </div>`;
@@ -851,7 +851,7 @@ function renderAgencySection(rowsTargetId){
     <div class="acc-item reveal">
       <button class="acc-trigger" data-acc-target="agency-panel-${i}" aria-expanded="false" aria-controls="agency-panel-${i}">
         <span style="display:flex;align-items:center;gap:14px;">
-          <span class="service-card2-icon" style="width:36px;height:36px;margin-bottom:0;flex-shrink:0;"><i data-lucide="${r.icon}" style="width:18px;height:18px;"></i></span>
+          <span class="service-card2-icon" style="width:36px;height:36px;margin-bottom:0;flex-shrink:0;">${(typeof LUCIDE_SVGS !== "undefined" && LUCIDE_SVGS[r.icon]) || ""}</span>
           <strong>${r.title}</strong>
         </span>
         <span class="acc-icon">+</span>

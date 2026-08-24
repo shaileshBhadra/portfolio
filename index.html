@@ -16,8 +16,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/favicon/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="/assets/favicon/favicon-16x16.png" type="image/png" sizes="16x16">
+<link rel="apple-touch-icon" href="/assets/favicon/apple-touch-icon.png">
+<link rel="manifest" href="/assets/favicon/site.webmanifest">
 <link rel="stylesheet" href="assets/css/style.css">
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
 
@@ -47,7 +51,7 @@
   <!-- 02 PROOF BAR -->
   <section class="section--tight" style="padding-top:0;">
     <div class="container">
-      <div class="trust-grid" id="trust-strip" style="grid-template-columns:repeat(4,1fr);"></div>
+      <div class="trust-grid" id="trust-strip"></div>
     </div>
   </section>
 
@@ -181,7 +185,6 @@
   renderHomeProcessSteps("home-process");
   renderCaseStudyShowcase("case-showcase");
   renderCapabilities("capabilities-grid");
-  if(window.lucide) lucide.createIcons();
   renderWhoWorkWith("who-work-with");
   renderCtaBanner("cta-banner", {
     heading: "Let's Solve Something Difficult.",
