@@ -100,6 +100,14 @@ function renderHeader(activeHref){
   toggle.addEventListener("click", () => {
     const open = nav.classList.toggle("open");
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    document.body.style.overflow = open ? "hidden" : "";
+  });
+  document.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && nav.classList.contains("open")){
+      nav.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+      document.body.style.overflow = "";
+    }
   });
 
   // Work dropdown: click/tap to toggle (works on touch, not just hover), closes on outside click or Escape
@@ -893,7 +901,7 @@ function renderAISearchEra(targetId){
   el.innerHTML = `
     <p class="prose reveal" style="max-width:660px;">${d.intro}</p>
     <p class="prose reveal" style="max-width:660px;margin-top:12px;font-style:italic;">${d.positioning}</p>
-    <div class="causes-grid" style="margin-top:28px;grid-template-columns:repeat(4,1fr);">
+    <div class="causes-grid causes-grid--quad" style="margin-top:28px;">
       ${d.platforms.map(p => `
         <div class="cause-card reveal">
           <div class="eyebrow">${p.name}</div>
