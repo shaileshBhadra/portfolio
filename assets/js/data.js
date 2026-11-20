@@ -5,8 +5,8 @@
 
 const PROFILE = {
   name: "Shailesh Bhadra",
-  title: "Senior SEO, Performance Marketing & Analytics Specialist",
-  tagline: "SEO, Analytics & Digital Growth Consultant",
+  title: "Senior SEO & Digital Marketing Specialist",
+  tagline: "SEO, Paid Media & Digital Marketing Specialist",
   subheading:
     "I help businesses solve SEO, analytics and digital growth problems — from technical issues and search visibility to tracking, conversion and acquisition. 9+ years across technical SEO, funnel strategy, GA4 and server-side GTM, Looker Studio, Google Ads and Meta Ads, content and AEO/GEO.",
   email: "shaileshbhadra@gmail.com",
@@ -90,6 +90,7 @@ const SKILLS = [
       { name: "GA4", tier: "Free", use: "Advanced e-commerce tracking, funnels, and cross-domain measurement." },
       { name: "Google Tag Manager (client & server-side)", tier: "Free", use: "First-party tracking accuracy and data-privacy-compliant measurement." },
       { name: "Looker Studio", tier: "Free", use: "Performance dashboards for stakeholder reporting, blending GA4, Ads and Search Console data." },
+      { name: "Google Cloud APIs (GA4, Search Console, YouTube)", tier: "Free", use: "Custom reports pulled directly from the GA4, Search Console and YouTube APIs when standard connectors fall short." },
       { name: "Microsoft Clarity", tier: "Free", use: "Session recordings and heatmaps for CRO diagnosis." },
     ],
   },
@@ -105,8 +106,9 @@ const SKILLS = [
   {
     category: "Advertising",
     tools: [
-      { name: "Google Ads", tier: "Paid", use: "Search, Shopping and Performance Max campaign management and ROAS optimization." },
+      { name: "Google Ads", tier: "Paid", use: "Search, Display, Shopping and Performance Max campaign management and ROAS optimization." },
       { name: "Meta Ads Manager", tier: "Paid", use: "Facebook/Instagram campaign management, retargeting, and creative performance analysis." },
+      { name: "ShareChat Ads and AdRoll", tier: "Paid", use: "Regional-language reach and retargeting campaigns, run at Atlas Softweb and Proactii." },
       { name: "Meta Conversions API", tier: "Free", use: "Server-side event delivery to recover conversions lost to browser/iOS tracking restrictions and Meta's 2026 attribution changes." },
     ],
   },
@@ -437,9 +439,9 @@ const CAPABILITIES = [
   { title: "Technical SEO", items: ["Technical audits", "Crawling & indexation", "Site architecture", "Core Web Vitals", "Structured data", "Migration SEO"] },
   { title: "SEO Strategy", items: ["Search strategy", "Keyword research", "Competitor analysis", "Content opportunities", "SEO roadmaps", "Growth planning"] },
   { title: "Analytics & Measurement", items: ["GA4", "Google Tag Manager", "Google Search Console", "Conversion tracking", "Measurement QA", "Data validation"] },
-  { title: "Performance", items: ["Google Ads", "Meta Ads", "Landing-page analysis", "Conversion performance"] },
+  { title: "Paid Media", items: ["Google Search & Display Ads", "Meta Ads", "ShareChat & AdRoll", "Retargeting", "Landing-page analysis", "Conversion performance"] },
   { title: "eCommerce", items: ["eCommerce SEO", "Product visibility", "Google Merchant Center", "Product feeds", "Search performance", "eCommerce measurement"] },
-  { title: "Reporting & Growth", items: ["Performance analysis", "Dashboards", "Stakeholder reporting", "Opportunity analysis", "Prioritization"] },
+  { title: "Reporting & Growth", items: ["Looker Studio dashboards", "Google Cloud API reports", "TOFU, MOFU, BOFU funnels", "Stakeholder reporting", "Opportunity analysis", "Prioritization"] },
 ];
 
 const WHO_WORK_WITH = [
@@ -463,7 +465,7 @@ const SERVICES = [
     includes: ["Crawlability", "Indexation", "Canonicalisation", "Redirects", "Sitemaps", "Robots.txt", "JavaScript SEO", "Internal linking", "Structured data", "Core Web Vitals", "Migration support"],
     deliverable: "Prioritised technical roadmap with implementation guidance.",
     whoFor: "Sites with crawl, indexation or architecture problems capping otherwise-solid content.",
-    ctaLabel: "Discuss a Technical SEO Project",
+    ctaLabel: "See Related Work",
     caseStudySlug: "neat-everyday-organic-growth",
   },
   {
@@ -505,7 +507,7 @@ const SERVICES = [
     includes: ["Search intent", "Topic research", "Content gaps", "Content briefs", "Content optimisation", "Topic clusters", "Commercial content", "Expert-led content"],
     deliverable: "Prioritised content roadmap with briefs.",
     whoFor: "Sites publishing content that isn't ranking or converting.",
-    ctaLabel: "Discuss Content Strategy",
+    ctaLabel: "See Related Work",
     caseStudySlug: "kesariya-farm-growth",
   },
   {
@@ -547,7 +549,7 @@ const SERVICES = [
     includes: ["Category architecture", "Product pages", "Faceted navigation", "Indexation", "Internal linking", "Structured data", "Search Console analysis", "Commercial intent", "Conversion analysis"],
     deliverable: "Prioritised e-commerce SEO roadmap.",
     whoFor: "Online stores with index bloat, thin PDPs, or stalled category rankings.",
-    ctaLabel: "Discuss eCommerce SEO",
+    ctaLabel: "See Related Work",
     caseStudySlug: "kesariya-farm-growth",
   },
   {
@@ -561,13 +563,13 @@ const SERVICES = [
     includes: ["Account audit", "Campaign structure", "Search terms", "Conversion tracking", "Landing pages", "Performance analysis", "Budget allocation"],
     deliverable: "Account audit + prioritised fix list.",
     whoFor: "Accounts where reported ROAS and real business results have drifted apart.",
-    ctaLabel: "Discuss Paid Search",
+    ctaLabel: "See Related Work",
     caseStudySlug: "atlas-paid-media",
   },
   {
     slug: "seo-analytics-consulting",
-    name: "SEO & Analytics Consulting",
-    category: "Consulting",
+    name: "SEO & Analytics Strategy",
+    category: "Strategy",
     outcomes: ["Senior technical review on a recurring basis", "A second opinion before big decisions", "Faster unblocking on technical issues", "Strategy kept honest against the data"],
     short: "Senior SEO, analytics or technical expertise when your internal team needs support — without a full-time hire.",
     headline: "Senior expertise, without the overhead of a full-time hire.",
@@ -575,7 +577,7 @@ const SERVICES = [
     includes: ["Ongoing technical review", "Analytics oversight", "Roadmap sanity-checks", "Cross-functional support", "Ad-hoc troubleshooting"],
     deliverable: "Ongoing advisory support, scoped to your team's cadence.",
     whoFor: "Marketing teams and agencies that need a specialist, not a replacement team.",
-    ctaLabel: "Book a Consultation",
+    ctaLabel: "See Related Work",
     caseStudySlug: "rivulet-tracking-and-audits",
   },
   {
@@ -589,7 +591,7 @@ const SERVICES = [
     includes: ["TOFU, MOFU, BOFU mapping", "GA4 funnel exploration", "Conversion events", "Landing pages", "Looker Studio funnel reports", "A/B tests"],
     deliverable: "Funnel map with tracking plan and reporting dashboard.",
     whoFor: "eCommerce and lead-generation sites that get traffic but can't see where it drops off.",
-    ctaLabel: "Discuss Funnel Strategy",
+    ctaLabel: "See Related Work",
     caseStudySlug: "equest-cro-funnel",
   },
   {
@@ -603,7 +605,7 @@ const SERVICES = [
     includes: ["Google Business Profile", "Local landing pages", "Citations", "Reviews", "On-page SEO"],
     deliverable: "Local SEO setup and ongoing optimization plan.",
     whoFor: "Salons, home services and other businesses that serve a local area.",
-    ctaLabel: "Discuss Local SEO",
+    ctaLabel: "See Related Work",
     caseStudySlug: "atlas-paid-media",
   },
   {
@@ -617,7 +619,7 @@ const SERVICES = [
     includes: ["Meta Ads", "Audience segmentation", "Retargeting", "Creative testing", "Conversion tracking", "Reporting"],
     deliverable: "Campaign structure, tracking setup and reporting.",
     whoFor: "eCommerce and lead-generation brands running paid social and search together.",
-    ctaLabel: "Discuss Paid Media",
+    ctaLabel: "See Related Work",
     caseStudySlug: "kesariya-farm-growth",
   },
 ];
@@ -702,7 +704,7 @@ const INSIGHTS_ARTICLES = [
   { title: "GA4 + GTM: The Measurement Foundation Most Marketing Teams Underestimate", category: "Analytics", teaser: "Every channel decision downstream — SEO, paid, CRO — inherits whatever errors exist in the tracking layer. It's usually the least glamorous fix with the highest leverage." },
 ];
 
-const INQUIRY_TYPES = ["SEO Audit", "Technical SEO", "SEO Strategy", "Content Strategy", "Analytics / GA4 / GTM", "Conversion Tracking", "eCommerce SEO", "Google Ads", "Ongoing Consulting", "Not sure yet"];
+const INQUIRY_TYPES = ["Job Opportunity", "Interview / Call", "SEO / Technical SEO", "Paid Media", "Analytics / GA4 / GTM", "Funnel Strategy", "Content", "Other"];
 
 /* ============================================================
    APPROACH v2 — "how I think" page. Distinct from PLAYBOOK/
@@ -864,15 +866,15 @@ const ABOUT_WHAT_YOU_GET = [
 ];
 
 const ABOUT_NEXT_PROBLEM = {
-  eyebrow: "The Next Problem",
-  heading: "What are you trying to solve?",
+  eyebrow: "The Next Role",
+  heading: "What I can take ownership of",
   lines: [
-    "Organic growth that has stalled?",
-    "Data you can't trust?",
-    "An SEO roadmap that isn't getting implemented?",
-    "A team that needs senior SEO ownership?",
+    "Organic growth and technical SEO",
+    "Paid media on Google and Meta",
+    "Tracking, funnels and reporting",
+    "A small SEO and paid media team",
   ],
-  closing: "Let's talk.",
+  closing: "Open to full-time roles.",
 };
 
 const UNDERSTAND_EDITORIAL = {
@@ -988,3 +990,15 @@ const NAV_LINKS = [
   { label: "About", href: "/about" },
   { label: "Resume", href: "/resume" },
 ];
+
+
+/* Filter metadata for the Work page (case studies) */
+const PROJECT_META = {
+  "neat-everyday-organic-growth": { employer: "Neat Everyday", period: "Jan 2026 – Present", areas: ["SEO", "Paid Media", "Analytics", "Funnels", "Content"] },
+  "kesariya-farm-growth": { employer: "Proactii", period: "Jul 2020 – Jul 2021", areas: ["SEO", "Paid Media"] },
+  "equest-cro-funnel": { employer: "Equest Solutions", period: "Jan 2025 – Nov 2025", areas: ["Analytics", "Funnels", "Paid Media", "SEO"] },
+  "atlas-paid-media": { employer: "Atlas Softweb", period: "Oct 2021 – Feb 2023", areas: ["Paid Media", "SEO", "Content"] },
+  "manektech-lead-gen-funnels": { employer: "ManekTech", period: "May 2023 – Mar 2024", areas: ["SEO", "Funnels", "Analytics"] },
+  "rivulet-tracking-and-audits": { employer: "Rivulet", period: "Mar 2024 – Jan 2025", areas: ["Analytics", "SEO", "Paid Media"] },
+};
+const WORK_AREA_FILTERS = ["SEO", "Paid Media", "Analytics", "Funnels", "Content"];

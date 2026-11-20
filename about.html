@@ -71,6 +71,18 @@
   <section class="section section--alt">
     <div class="container">
       <div class="section-head">
+        <div class="eyebrow">Career path</div>
+        <h2>How my career moved</h2>
+        <p class="prose" style="margin-top:12px;max-width:760px;">Nine years, one direction: from on-page SEO to technical SEO, analytics and paid media. Each move added a skill I use today.</p>
+      </div>
+      <ol class="path-list" id="career-path"></ol>
+      <p class="prose" style="margin-top:24px;max-width:760px;">Each move above had a clear reason: a company closing, a team cut, a role that changed scope, or promised projects that didn't arrive. I'm looking for a role where I can stay and own the full channel.</p>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-head">
         <div class="eyebrow">What I Bring</div>
       </div>
       <div class="lookat-grid" id="about-what-i-bring"></div>
@@ -136,22 +148,6 @@
     </div>
   </section>
 
-  <!-- FOR AGENCIES -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">For Agencies</div>
-        <h2>Need senior SEO capability for a complex account?</h2>
-        <p style="max-width:640px;">I can support agencies where an account needs more than routine reporting and monthly recommendations.</p>
-      </div>
-      <div id="agency-rows"></div>
-      <div style="margin-top:28px;">
-        <p style="font-family:var(--font-display);font-size:19px;margin-bottom:16px;">Bring me the difficult account.</p>
-        <a href="/contact" class="btn btn--primary">Let's Talk →</a>
-      </div>
-    </div>
-  </section>
-
   <!-- HIRING MANAGERS -->
   <section class="section">
     <div class="container">
@@ -172,7 +168,7 @@
     <div class="container">
       <div id="next-problem" style="max-width:640px;"></div>
       <div class="btn-row" style="margin-top:28px;">
-        <a href="/contact" class="btn btn--primary">Start a Conversation →</a>
+        <a href="/contact" class="btn btn--primary">Contact →</a>
         <a href="/resume" class="btn btn--ghost">View Resume →</a>
       </div>
     </div>
@@ -208,6 +204,7 @@
   document.getElementById("story-eyebrow").textContent = ABOUT_STORY.eyebrow;
   document.getElementById("story-heading").textContent = ABOUT_STORY.heading;
   renderAboutStory("about-story");
+  renderCareerPath("career-path");
   renderAboutOpeningQuestions("about-questions");
   renderAboutWhatIBring("about-what-i-bring");
   renderAboutHowIWork("about-how-i-work");

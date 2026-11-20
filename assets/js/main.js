@@ -28,7 +28,7 @@ function injectProfessionalServiceSchema(){
   injectSchema({
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    "name": `${PROFILE.name} — SEO, Analytics & Digital Growth Consulting`,
+    "name": `${PROFILE.name} — SEO, Analytics & Digital Digital Marketing Specialist`,
     "founder": { "@type": "Person", "name": PROFILE.name },
     "areaServed": "Remote / Worldwide",
     "url": "https://shaileshbhadra.com/",
@@ -89,7 +89,7 @@ function renderHeader(activeHref){
       <a href="/" class="brand">Shailesh<span>.</span>Bhadra</a>
       <nav class="nav-links" id="nav-links">
         ${links}
-        <a href="/contact" class="nav-cta" data-track="primary_cta_click">Let's Talk</a>
+        <a href="/contact" class="nav-cta" data-track="primary_cta_click">Contact</a>
       </nav>
       <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -184,7 +184,7 @@ function renderAboutTeaser(targetId){
     <div class="avatar-mono avatar-mono--lg">${initials(PROFILE.name)}</div>
     <div>
       <blockquote>Find out why a business isn't converting or ranking the way it should, then fix the actual cause.</blockquote>
-      <div class="teaser-name">— how ${PROFILE.name.split(" ")[0]} approaches every engagement</div>
+      <div class="teaser-name">— how ${PROFILE.name.split(" ")[0]} approaches every account</div>
     </div>
     <a href="/about" class="btn btn--ghost btn--sm">Get to know me →</a>
   `;
@@ -196,7 +196,7 @@ function renderCtaBanner(targetId, opts){
   const o = Object.assign({
     heading: "Let's talk about what's actually going on.",
     body: PROFILE.location + " · " + PROFILE.email,
-    ctaLabel: "Start a conversation",
+    ctaLabel: "Get in touch",
     ctaHref: "/contact",
     extraButtons: [], // [{ label, href, variant: "ghost"|"primary" }]
   }, opts || {});
@@ -219,17 +219,18 @@ function renderReadoutPanel(targetId, dynamicStatus){
   const el = document.getElementById(targetId);
   if(!el) return;
   const rows = [
-    { k: "Status", v: dynamicStatus || "Open to new projects" },
+    { k: "Status", v: dynamicStatus || "Open to full-time roles" },
     { k: "Based in", v: PROFILE.location.split("—")[0].trim() },
     { k: "Experience", v: `${PROFILE.yearsExperience} years` },
-    { k: "Core focus", v: "SEO · Analytics · Growth" },
+    { k: "Core focus", v: "SEO · Paid Media · Analytics" },
   ];
   el.innerHTML = `
-    <div class="photo-frame">
-      <div class="photo-frame-monogram">S<span class="accent-dot">.</span></div>
-      <div class="photo-frame-label">Photo coming soon</div>
-    </div>
-    <div class="readout-head"><span class="readout-dot"></span>Now</div>
+    <div class="readout-head">Career</div>
+    <ol class="career-list">
+      ${EXPERIENCE.slice(0, 6).map(e => `
+        <li><span class="career-role">${e.role}<em>${e.company.replace(/ \(.*\)| Pvt Ltd/g, "")}</em></span><span class="career-dates">${e.dates.replace(/ 20(\d\d)/g, " ’$1")}</span></li>`).join("")}
+    </ol>
+    <div class="readout-head" style="margin-top:20px;">Now</div>
     ${rows.map(r => `
       <div class="readout-row">
         <span class="k">${r.k}</span>
@@ -284,12 +285,12 @@ async function loadSiteContent(){
     if(!res.ok) throw new Error("bad response");
     const data = await res.json();
     return {
-      status: data.status || "Open to new projects",
+      status: data.status || "Open to full-time roles",
       currentTitle: data.currentTitle || PROFILE.title,
       experience: (Array.isArray(data.experience) && data.experience.length) ? data.experience : EXPERIENCE,
     };
   } catch(e){
-    return { status: "Open to new projects", currentTitle: PROFILE.title, experience: EXPERIENCE };
+    return { status: "Open to full-time roles", currentTitle: PROFILE.title, experience: EXPERIENCE };
   }
 }
 
@@ -457,7 +458,7 @@ function renderServiceCard(s){
       <div class="playbook-label">Key Outcomes</div>
       <ul class="outcome-list">${(s.outcomes||[]).map(o => `<li>${o}</li>`).join("")}</ul>
       <div class="service-card2-actions">
-        <a href="/contact?service=${encodeURIComponent(s.name)}" class="btn btn--primary btn--sm service-card2-btn">${s.ctaLabel} →</a>
+        <a href="/work/${s.caseStudySlug}" class="btn btn--primary btn--sm service-card2-btn">${s.ctaLabel} →</a>
         <button class="details-toggle" data-toggle="${s.slug}" aria-expanded="false">View full details</button>
       </div>
       <div class="service-card2-details" id="details-${s.slug}" hidden>
@@ -1006,7 +1007,7 @@ function renderProjectDetail(targetId){
   if(descEl) descEl.setAttribute("content", p.summary || p.challenge || `Case study: ${p.name}`);
   const myRole = isCaseStudy
     ? `I owned the diagnosis and implementation described below — investigating the problem, prioritising the fix, and carrying it through to the outcome.`
-    : `${p.role} at ${p.company}, owning this engagement end to end — from the initial diagnosis through to implementation and measurement.`;
+    : `${p.role} at ${p.company}, owning this work end to end — from the initial diagnosis through to implementation and measurement.`;
   el.innerHTML = `
     <div class="container">
       <div class="detail-hero">
@@ -1290,14 +1291,68 @@ function bindScrollActiveSteps(containerSelector, stepSelector){
 }
 
 
-/* Client work grid — every site worked on, mapped to employer and services */
-function renderClientWork(targetId){
+/* Work explorer — tabs (Case Studies / Client Sites) with employer and area filters */
+function renderWorkExplorer(targetId){
+  const root = document.getElementById(targetId);
+  if(!root) return;
+  const EMP = ["Neat Everyday","Equest Solutions","Rivulet","ManekTech","Atlas Softweb","Proactii","Xira Infotech"];
+  const AREA_OF = svc => /Meta|Google|Display|Paid|ShareChat|AdRoll/i.test(svc) ? "Paid Media" : /Funnel/i.test(svc) ? "Funnels" : /Report/i.test(svc) ? "Analytics" : "SEO";
+  const state = { tab: "cases", emp: "All", area: "All" };
+  const cases = PROJECTS.map(p => Object.assign({}, p, PROJECT_META[p.slug] || {}));
+  const sites = CLIENT_WORK.map(c => Object.assign({}, c, { areas: Array.from(new Set(c.services.map(AREA_OF))) }));
+  const chips = (label, list, key) => `<div class="filter-group"><span class="filter-label">${label}</span>${["All", ...list].map(v =>
+    `<button class="filter-btn ${state[key]===v?'active':''}" data-key="${key}" data-val="${v}">${v}</button>`).join("")}</div>`;
+  function draw(){
+    const data = state.tab === "cases" ? cases : sites;
+    const emps = EMP.filter(e => data.some(d => d.employer === e));
+    const areaList = state.tab === "cases" ? WORK_AREA_FILTERS : ["SEO","Paid Media","Funnels","Analytics"].filter(a => sites.some(x => x.areas.includes(a)));
+    const list = data.filter(d => (state.emp==="All"||d.employer===state.emp) && (state.area==="All"||d.areas.includes(state.area)));
+    const body = state.tab === "cases"
+      ? list.map(p => `
+        <a class="project-card" href="/work/${p.slug}" data-track="case_study_click"><div class="project-body">
+          <div class="project-card-top"><div class="eyebrow">${p.employer} · ${p.period}</div></div>
+          <h3>${p.name}</h3>
+          <p class="summary">${p.summary}</p>
+          <div class="client-services" style="margin-top:12px;">${p.areas.map(a => `<span class="svc-pill">${a}</span>`).join("")}</div>
+          <div class="playbook-label" style="margin-top:14px;">Outcome</div>
+          <p style="font-size:13px;color:var(--ink-soft);">${p.result}</p>
+          <div class="more" style="margin-top:16px;">Read Case Study →</div>
+        </div></a>`).join("")
+      : list.map(c => `
+        <a class="client-card" href="${c.url}" target="_blank" rel="noopener noreferrer">
+          <div class="client-card-top"><h3>${c.name}</h3><span class="client-employer">${c.employer}</span></div>
+          <div class="client-meta">${[c.sector, c.market].filter(Boolean).join(" · ")}</div>
+          <div class="client-services">${c.services.map(x => `<span class="svc-pill">${x}</span>`).join("")}</div>
+        </a>`).join("");
+    root.innerHTML = `
+      <div class="work-tabs" role="tablist">
+        <button class="work-tab ${state.tab==='cases'?'active':''}" data-tab="cases">Case Studies <span>${cases.length}</span></button>
+        <button class="work-tab ${state.tab==='sites'?'active':''}" data-tab="sites">Client Sites <span>${sites.length}</span></button>
+      </div>
+      <div class="work-filters">${chips("Organization", emps, "emp")}${chips("Focus", areaList, "area")}</div>
+      <div class="${state.tab==='cases'?'project-grid':'client-grid'}">${body || '<p class="prose">No work matches these filters.</p>'}</div>`;
+    root.querySelectorAll(".work-tab").forEach(b => b.addEventListener("click", () => { state.tab = b.dataset.tab; state.emp = "All"; state.area = "All"; draw(); }));
+    root.querySelectorAll(".filter-btn").forEach(b => b.addEventListener("click", () => { state[b.dataset.key] = b.dataset.val; draw(); }));
+  }
+  draw();
+}
+
+
+/* Career path — what each role added, in order */
+const CAREER_PATH = [
+  { when: "2017 – 2018", where: "Cears Infotech", role: "SEO Executive", gained: "On-page and off-page SEO fundamentals: titles, metadata, backlinks", why: "The department was closed and the company shut down after 2–3 years." },
+  { when: "2018 – 2020", where: "Xira Infotech", role: "SEO Executive", gained: "Local SEO and Google Business Profile for US salons, plus brand SEO across health and B2B paints", why: "Projects were local only, with little exposure beyond local clients, so I moved to work on wider markets." },
+  { when: "2020 – 2021", where: "Proactii", role: "Sr. SEO Executive", gained: "First paid media: Google Ads and Meta Ads on the same account as SEO, taking Kesariya Farm from ₹50K to ₹5L monthly revenue", why: "I joined during COVID after an offer from an Ahmedabad company was withdrawn, as a stop-gap until the market normalized. I stayed a year and delivered strong results." },
+  { when: "2021 – 2023", where: "Atlas Softweb", role: "Sr. Digital Marketing Executive", gained: "Led a 3-person SEO, paid media and content team across education, eCommerce and service clients in India, the USA and Australia", why: "The company cut its team during a financial downturn, and I chose to leave voluntarily." },
+  { when: "2023 – 2024", where: "ManekTech", role: "Sr. SEO Executive", gained: "Lead-generation funnels (TOFU, MOFU, BOFU) and server-side GTM tracking for a Texas-based client and sister sites", why: "The role moved from lead generation to closing deals on sales calls, and I wanted to stay in SEO and analytics." },
+  { when: "2024 – 2025", where: "Rivulet", role: "Sr. SEO Analyst", gained: "Tracking and technical fixes across Shopify, WordPress, BigCommerce, React and Vue.js", why: "Management committed to a US team and US projects, but none came in the first 6 months. I waited another 2–3 months before deciding to move." },
+  { when: "2025", where: "Equest Solutions", role: "Sr. SEO Analyst", gained: "Funnels and GA4 conversion tracking from scratch, plus Meta and Google paid media for USA, UK and Australia clients", why: "I left to rest and recover from surgery, then returned to full-time work." },
+  { when: "2026 – Present", where: "Neat Everyday", role: "Deputy SEO Manager", gained: "Full ownership of one site: SEO, AEO, funnels, Looker Studio and Google Cloud API reporting, and a ₹10L/month ad budget", why: "I led SEO through October 2026. Since November, team restructuring has left my role undefined, and I now handle paid media analysis, analytics, website audits and reviews." },
+];
+function renderCareerPath(targetId){
   const el = document.getElementById(targetId);
-  if(!el || typeof CLIENT_WORK === "undefined") return;
-  el.innerHTML = CLIENT_WORK.map(c => `
-    <a class="client-card" href="${c.url}" target="_blank" rel="noopener noreferrer">
-      <div class="client-card-top"><h3>${c.name}</h3><span class="client-employer">${c.employer}</span></div>
-      <div class="client-meta">${[c.sector, c.market].filter(Boolean).join(" · ")}</div>
-      <div class="client-services">${c.services.map(x => `<span class="svc-pill">${x}</span>`).join("")}</div>
-    </a>`).join("");
+  if(!el) return;
+  el.innerHTML = CAREER_PATH.map(c => `
+    <li><span class="path-when">${c.when}</span>
+    <span class="path-body"><strong>${c.role}, ${c.where}</strong><span>${c.gained}</span>${c.why ? `<span class="path-why"><em>Why I moved:</em> ${c.why}</span>` : ""}</span></li>`).join("");
 }

@@ -42,16 +42,6 @@
     </div>
   </section>
 
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Engagement</div>
-        <h2>How we can work together.</h2>
-      </div>
-      <div class="grid-2" id="engagement-models"></div>
-    </div>
-  </section>
-
   <section class="section--tight">
     <div class="container">
       <div class="cta-banner" id="cta-banner"></div>
@@ -68,13 +58,12 @@
   renderFooter();
 
   renderServiceCatalogue("services-detail", "services-filter");
-  renderEngagementModels("engagement-models");
   injectServiceListSchema();
   renderCtaBanner("cta-banner", {
-    heading: "Not sure which service fits?",
-    body: "Tell me what you're trying to achieve and what's not working — I'll help you figure out where to start.",
-    ctaLabel: "Discuss a Service",
-    ctaHref: "/contact",
+    heading: "Want to see this in action?",
+    body: "Browse the case studies and client sites behind each skill area.",
+    ctaLabel: "View Work",
+    ctaHref: "/work",
   });
 
   initScrollReveal();
