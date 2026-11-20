@@ -551,7 +551,7 @@ function renderInsightsGrid(targetId, limit){
 function renderCaseStudyShowcase(targetId){
   const el = document.getElementById(targetId);
   if(!el) return;
-  const items = allWorkItems().filter(i => ["neat-everyday-organic-growth", "cs-tracking-audit-saas", "equest-cro-funnel"].includes(i.slug));
+  const items = allWorkItems().filter(i => ["neat-everyday-organic-growth", "kesariya-farm-growth", "equest-cro-funnel"].includes(i.slug));
   if(items.length < 3) return;
   const [a, b, c] = items;
   el.innerHTML = `
@@ -1287,4 +1287,17 @@ function bindScrollActiveSteps(containerSelector, stepSelector){
     });
   }, { rootMargin: "-35% 0px -50% 0px", threshold: 0 });
   steps.forEach(s => observer.observe(s));
+}
+
+
+/* Client work grid — every site worked on, mapped to employer and services */
+function renderClientWork(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof CLIENT_WORK === "undefined") return;
+  el.innerHTML = CLIENT_WORK.map(c => `
+    <a class="client-card" href="${c.url}" target="_blank" rel="noopener noreferrer">
+      <div class="client-card-top"><h3>${c.name}</h3><span class="client-employer">${c.employer}</span></div>
+      <div class="client-meta">${[c.sector, c.market].filter(Boolean).join(" · ")}</div>
+      <div class="client-services">${c.services.map(x => `<span class="svc-pill">${x}</span>`).join("")}</div>
+    </a>`).join("");
 }
