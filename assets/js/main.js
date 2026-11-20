@@ -1113,10 +1113,12 @@ function initContactForm(){
       const payload = Object.fromEntries(formData);
       const subject = payload.inquiry_type ? `Portfolio message: ${payload.inquiry_type}` : "Portfolio message";
       let sent = false;
+      const reasons = [];
 
       // 1. Send straight from the browser to Web3Forms (its free plan blocks server-side calls).
       try{
         const cfg = await fetch("/api/contact-config").then(r => r.ok ? r.json() : {}).catch(() => ({}));
+        if(!(cfg && cfg.key)) reasons.push("no email key set on the server");
         if(cfg && cfg.key){
           const r1 = await fetch("https://api.web3forms.com/submit", {
             method: "POST",
@@ -1129,8 +1131,9 @@ function initContactForm(){
           });
           const j1 = await r1.json().catch(() => null);
           sent = !!(r1.ok && j1 && j1.success);
+          if(!sent) reasons.push("Web3Forms: " + ((j1 && j1.message) ? j1.message : ("HTTP " + r1.status)));
         }
-      } catch(_e){ sent = false; }
+      } catch(_e){ sent = false; reasons.push("Web3Forms unreachable from this browser"); }
 
       // 2. Fall back to our own server route (works when SMTP is configured).
       if(!sent){
@@ -1141,6 +1144,7 @@ function initContactForm(){
         });
         const result = await res.json().catch(() => ({}));
         sent = !!(res.ok && result.success);
+        if(!sent) reasons.push("server: " + (result && result.message ? String(result.message).replace(/<[^>]*>/g," ").slice(0,90) : ("HTTP " + res.status)));
       }
 
       if(sent){
@@ -1149,7 +1153,12 @@ function initContactForm(){
         setStatus("success", "Thanks, your message is sent. I'll reply within 1 to 2 business days.");
         trackEvent("contact_submission", { inquiry_type: payload.inquiry_type || "" });
       } else {
-        setStatus("error", "I couldn't send that right now. Please try again, or email me directly using the address below.");
+        console.warn("Contact form failed:", reasons);
+        const mail = (typeof PROFILE !== "undefined" && PROFILE.email) ? PROFILE.email : "";
+        const body = encodeURIComponent(`${payload.message || ""}\n\n${payload.name || ""}\n${payload.email || ""}${payload.company ? "\n" + payload.company : ""}`);
+        const href = `mailto:${mail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        statusEl.className = "form-status form-status--error";
+        statusEl.innerHTML = `I couldn't send that from the form. <a href="${href}">Send it from your email app instead</a>, or write to ${mail}. <small style="display:block;margin-top:6px;opacity:.75">Reason: ${reasons.join("; ").replace(/[<>]/g,"") || "unknown"}</small>`;
       }
     } catch(err){
       setStatus("error", "Network error — please try again, or email me directly below.");
