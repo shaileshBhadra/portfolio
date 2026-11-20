@@ -1052,3 +1052,82 @@ const APPROACH_EXAMPLES = {
   measure: { text: "Looker Studio dashboards and Google Cloud API reports pulled from GA4, Search Console and YouTube.", slug: "neat-everyday-organic-growth", org: "Neat Everyday" },
   improve: { text: "A/B tests were checked against the rebuilt funnel data, which led to a 25% conversion lift in the first quarter.", slug: "equest-cro-funnel", org: "Equest Solutions" },
 };
+
+
+const APPROACH_FLOW = [
+  { key: "understand", title: "Understand", question: "What does the business need?",
+    what: "Learn the business model, customers, markets and goals before opening any tool.",
+    checks: ["Business model", "Revenue and conversion goals", "Target customers and markets", "Acquisition channels", "Current performance"],
+    output: "A clear definition of success: traffic, leads, revenue or efficiency" },
+  { key: "diagnose", title: "Diagnose", question: "What is limiting performance?",
+    what: "Audit SEO, tracking, acquisition and the store itself to find the real cause, not just the symptom.",
+    checks: ["Technical health, crawling, indexation", "GA4, GTM and conversion tracking", "Organic and paid traffic quality", "Landing pages and product visibility"],
+    output: "A short list of real problems, not the longest audit" },
+  { key: "prioritize", title: "Prioritize", question: "What should be fixed first?",
+    what: "Score each issue by impact, effort and confidence, then sort it into Now, Next or Later.",
+    checks: ["Impact: how much could it change the outcome", "Effort: how long will it take", "Confidence: how strong is the evidence"],
+    output: "A ranked list: Now, Next and Later" },
+  { key: "strategy", title: "Strategy", question: "What is the plan?",
+    what: "Turn the ranked findings into a roadmap the team can follow, with an owner and a success metric for each item.",
+    checks: ["Technical SEO and site structure", "Content opportunities by search demand", "Tracking improvements", "Conversion optimization", "Paid acquisition"],
+    output: "A roadmap: what to do, why it matters, how success is measured" },
+  { key: "execution", title: "Execute", question: "Who builds it?",
+    what: "Work with developers, content writers, designers and paid media specialists, and implement directly where needed.",
+    checks: ["Developers", "Content teams", "Designers", "Paid media", "Marketing and leadership"],
+    output: "Changes live on the site, not just recommendations" },
+  { key: "measure", title: "Measure", question: "What changed?",
+    what: "Compare results against the original goal, using the tracking set up in the earlier steps.",
+    checks: ["Visibility: rankings, impressions", "Acquisition: organic and paid traffic", "Engagement: landing-page behaviour", "Conversion: leads, purchases", "Business impact: revenue, pipeline"],
+    output: "A report tied to the original goal" },
+  { key: "improve", title: "Improve", question: "What comes next?",
+    what: "Learn why the result happened, then feed it back into the next round of priorities.",
+    checks: ["Measure against the goal", "Compare with what was expected", "Learn why it worked or didn't", "Prioritize again"],
+    output: "The next round of priorities, ready to start" },
+];
+
+
+const MORE_TABS = [
+  { key: "tools", label: "Tools I use", intro: "Each tool, and the specific job I use it for.",
+    groups: [
+      { title: "Search", rows: [
+        ["Google Search Console", "Queries, indexing, crawl errors, Core Web Vitals and sitemap checks"],
+        ["Screaming Frog", "Site crawls to find broken links, redirect chains, duplicate titles and missing tags"],
+        ["SEMrush and Ahrefs", "Keyword research, competitor gaps and backlink checks"],
+        ["Google Trends", "Seasonal demand and rising topics before planning content"] ] },
+      { title: "Analytics and reporting", rows: [
+        ["GA4", "Events, eCommerce funnels and conversion reports"],
+        ["Google Tag Manager", "Client-side and server-side tracking, custom events and ad conversion tags"],
+        ["Looker Studio", "Dashboards for traffic, funnels and paid performance"],
+        ["Google Cloud APIs", "Custom reports pulled from GA4, Search Console and YouTube"] ] },
+      { title: "Paid media", rows: [
+        ["Google Ads", "Search and Display campaigns, bidding and retargeting"],
+        ["Meta Ads", "Prospecting and retargeting campaigns with conversion tracking"],
+        ["ShareChat and AdRoll", "Regional-language reach and retargeting"] ] },
+      { title: "eCommerce", rows: [
+        ["Shopify", "Product and collection page SEO, plus theme and JavaScript changes"],
+        ["Google Merchant Center", "Product feeds and Shopping visibility"] ] },
+    ] },
+  { key: "deliver", label: "What I hand over", intro: "The documents and set-ups the team receives at each stage.",
+    cards: [
+      { title: "Audit", what: "A written review of the site, ranked by business impact so the most important fixes come first.", incl: ["Technical issues", "Search opportunities", "Measurement gaps"] },
+      { title: "Roadmap", what: "A plan listing each task, who owns it, what it depends on and how success is measured.", incl: ["Priorities", "Owners", "Dependencies", "Success metrics"] },
+      { title: "Measurement", what: "GA4 and GTM set up and tested, so each lead or sale is counted once and credited to the right channel.", incl: ["Tracking plan", "GA4 and GTM setup", "Conversion checks", "Dashboards"] },
+      { title: "Strategy", what: "A direction for content, technical work and growth, based on search demand and the business goal.", incl: ["Search opportunities", "Content direction", "Technical priorities", "Growth plan"] },
+      { title: "Implementation guidance", what: "Requirements that developers and writers can build from, with checks to confirm the work was done right.", incl: ["Developer requirements", "Content briefs", "Tracking requirements", "QA checklist"] },
+    ] },
+  { key: "ai", label: "AI search", intro: "People now get answers from Google AI Overviews, ChatGPT, Perplexity and Gemini as well as from search results.",
+    cards: [
+      { title: "What it means for SEO", what: "Pages still have to be found, understood and trusted. I treat AI search as an extension of search visibility, not a replacement for SEO basics.", incl: [] },
+      { title: "What I do about it", what: "I add structured data and clear brand and product information, write pages that answer questions directly, and show first-hand expertise. At Neat Everyday I am layering AEO and schema markup on the site.", incl: ["Schema markup", "Clear entity and brand details", "Direct answers on key pages", "First-hand expertise"] },
+      { title: "What I check", what: "Whether pages are cited in AI answers, and whether visits from AI tools show up in GA4.", incl: [] },
+    ] },
+  { key: "principles", label: "Working principles", intro: "Six rules I work by, each with where I applied it.",
+    principles: [
+      { t: "Business results before vanity metrics", w: "Traffic and rankings matter, but revenue, leads and cost per customer decide whether the work succeeded.", ex: "Kesariya Farm was judged on monthly revenue, which grew from ₹50K to ₹5L.", slug: "kesariya-farm-growth" },
+      { t: "Diagnose before prescribing", w: "Find the cause of a problem before recommending a fix.", ex: "At Rivulet I checked what each platform was actually recording before changing anything.", slug: "rivulet-tracking-and-audits" },
+      { t: "Prioritize over overwhelm", w: "A short, ranked plan beats a 200-item audit nobody finishes.", ex: "At Neat Everyday, tracking came first, then content and funnels.", slug: "neat-everyday-organic-growth" },
+      { t: "Measurement is part of the strategy", w: "If tracking is unreliable, every decision rests on guesses.", ex: "At Equest I built funnels and GA4 tracking before running any A/B test.", slug: "equest-cro-funnel" },
+      { t: "Recommendations need execution", w: "A good plan only helps once someone builds it, so I work with the people who implement it.", ex: "At Atlas I coordinated the content writer, designers and developers.", slug: "atlas-paid-media" },
+      { t: "AI speeds up the work, people make the decisions", w: "I use AI for research, analysis and drafting. Strategy, priorities and final decisions stay with me.", ex: "", slug: "" },
+    ] },
+];

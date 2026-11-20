@@ -1400,3 +1400,63 @@ function renderApproachExamples(){
     sec.querySelector(".container").appendChild(box);
   });
 }
+
+
+/* Approach: one step at a time, list on the left, detail on the right */
+function renderApproachFlow(id){
+  const el=document.getElementById(id); if(!el) return;
+  const N=APPROACH_FLOW.length;
+  let cur=Math.max(0,APPROACH_FLOW.findIndex(s=>"#step-"+s.key===location.hash));
+  function draw(){
+    const s=APPROACH_FLOW[cur], ex=APPROACH_EXAMPLES[s.key];
+    el.innerHTML=`
+      <div class="stepper-list" role="tablist" aria-label="Approach steps">
+        ${APPROACH_FLOW.map((t,i)=>`<button role="tab" aria-selected="${i===cur}" class="stepper-item ${i===cur?"active":""} ${i<cur?"done":""}" data-i="${i}"><span class="stepper-n">${i+1}</span><span><strong>${t.title}</strong><em>${t.question}</em></span></button>`).join("")}
+      </div>
+      <article class="stepper-panel" role="tabpanel">
+        <div class="stepper-top"><div class="flow-step">Step ${cur+1} of ${N}</div><div class="stepper-nav">  <button class="btn btn--ghost btn--sm" data-go="-1" ${cur===0?"disabled":""}>← Previous</button>  <button class="btn btn--primary btn--sm" data-go="1" ${cur===N-1?"disabled":""}>Next: ${cur<N-1?APPROACH_FLOW[cur+1].title:""} →</button></div></div>
+        <h3>${s.title}</h3>
+        <div class="flow-q">${s.question}</div>
+        <div class="flow-body">
+          <div><div class="flow-label">What I do</div><p>${s.what}</p></div>
+          <div><div class="flow-label">What I look at</div><ul>${s.checks.map(c=>`<li>${c}</li>`).join("")}</ul></div>
+        </div>
+        <div class="flow-out"><span>You get</span>${s.output}</div>
+        <a class="flow-example" href="/work/${ex.slug}"><span class="example-label">Example · ${ex.org}</span>${ex.text}<b>Read the case study →</b></a>
+      </article>`;
+    el.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;history.replaceState(null,"","#step-"+APPROACH_FLOW[cur].key);draw();}));
+    el.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>{cur=Math.min(N-1,Math.max(0,cur+(+b.dataset.go)));history.replaceState(null,"","#step-"+APPROACH_FLOW[cur].key);draw();}));
+  }
+  window.addEventListener("hashchange",()=>{const k=APPROACH_FLOW.findIndex(s=>"#step-"+s.key===location.hash);if(k>=0){cur=k;draw();}});
+  draw();
+}
+
+/* Home: compact horizontal flow */
+function renderHomeFlow(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=APPROACH_FLOW.map((s,i)=>`
+    <a class="hflow-step" href="/approach#step-${s.key}">
+      <span class="hflow-n">${i+1}</span>
+      <strong>${s.title}</strong>
+      <em>${s.question}</em>
+    </a>`).join("");
+}
+
+
+/* Approach: "More about how I work" tabs, one panel at a time */
+function renderMoreTabs(id){
+  const el=document.getElementById(id); if(!el) return;
+  let cur=0;
+  function body(t){
+    if(t.groups) return `<div class="more-groups">${t.groups.map(g=>`<div class="more-card"><h4>${g.title}</h4><dl>${g.rows.map(r=>`<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join("")}</dl></div>`).join("")}</div>`;
+    if(t.cards) return `<div class="more-cards">${t.cards.map(c=>`<div class="more-card"><h4>${c.title}</h4><p>${c.what}</p>${c.incl.length?`<ul>${c.incl.map(x=>`<li>${x}</li>`).join("")}</ul>`:""}</div>`).join("")}</div>`;
+    return `<div class="more-principles">${t.principles.map((p,i)=>`<div class="more-card"><div class="stepper-n">${i+1}</div><div><h4>${p.t}</h4><p>${p.w}</p>${p.ex?`<a class="more-ex" href="/work/${p.slug}">In practice: ${p.ex} →</a>`:""}</div></div>`).join("")}</div>`;
+  }
+  function draw(){
+    const t=MORE_TABS[cur];
+    el.innerHTML=`<div class="more-tabs" role="tablist">${MORE_TABS.map((x,i)=>`<button role="tab" aria-selected="${i===cur}" class="more-tab ${i===cur?"active":""}" data-i="${i}">${x.label}</button>`).join("")}</div>
+      <p class="more-intro">${t.intro}</p>${body(t)}`;
+    el.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;draw();}));
+  }
+  draw();
+}

@@ -25,170 +25,31 @@
 <main>
 
   <!-- HERO -->
-  <section class="section--tight">
+  <section class="section--tight" style="padding-top:36px;padding-bottom:0;">
     <div class="container">
       <div class="eyebrow">How I work</div>
-      <h1 style="font-size:clamp(30px,4.2vw,46px);margin-top:16px;max-width:760px;">How I run SEO and paid media work, step by step</h1>
-      <p class="prose" style="margin-top:16px;max-width:660px;font-size:16.5px;">This page explains the 7 steps I follow on every account. Each step ends with a real example from my own work and a link to the full case study.</p>
-      <div class="playbook-label" style="margin-top:28px;">Jump to a step</div>
-      <nav class="step-nav" aria-label="Approach steps">
-        <a href="#step-understand"><b>1</b> Understand</a>
-        <a href="#step-diagnose"><b>2</b> Diagnose</a>
-        <a href="#step-prioritize"><b>3</b> Prioritize</a>
-        <a href="#step-strategy"><b>4</b> Strategy</a>
-        <a href="#step-execution"><b>5</b> Execute</a>
-        <a href="#step-measure"><b>6</b> Measure</a>
-        <a href="#step-improve"><b>7</b> Improve</a>
-      </nav>
+      <h1 style="font-size:clamp(26px,3vw,34px);margin-top:10px;max-width:760px;">How I run SEO and paid media work, step by step</h1>
+      <p class="prose" style="margin-top:8px;max-width:760px;font-size:15.5px;">I follow the same 7 steps on every account. Pick a step on the left. The details change in place, so there is nothing to scroll through.</p>
     </div>
   </section>
 
-  <!-- THE PROBLEMS I SOLVE (interactive diagnostic cards) -->
-  <section class="section section--alt">
+  <!-- THE 7 STEPS -->
+  <section class="section section--alt" style="padding-top:32px;">
     <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Before the steps</div>
-        <h2>One symptom can have several causes</h2>
-        <p>A drop in rankings, low conversions or mismatched data each have more than one possible cause. Click a card to see what I check first.</p>
-      </div>
-      <div class="grid-3" id="diagnostic-cards" style="border:none;background:none;gap:24px;"></div>
+      <div class="stepper" id="approach-flow"></div>
     </div>
   </section>
 
-  <!-- 01 UNDERSTAND THE BUSINESS -->
-  <section class="section" style="padding-top:0;" id="step-understand">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 1 of 7 · Understand the business</div>
-        <h2>Learn what the business needs before touching anything</h2>
-      </div>
-      <div id="understand-business"></div>
-    </div>
-  </section>
-
-  <!-- 02 DIAGNOSE THE CURRENT STATE -->
-  <section class="section section--alt" id="step-diagnose">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 2 of 7 · Diagnose</div>
-        <h2>Find what is actually limiting performance</h2>
-      </div>
-      <div class="lookat-grid" id="diagnose-groups"></div>
-      <p class="funnel-footer" style="margin-top:28px;">The objective is not to produce the longest audit.<br>It is to identify the problems that matter.</p>
-    </div>
-  </section>
-
-  <!-- 03 PRIORITIZE -->
-  <section class="section" id="step-prioritize">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 3 of 7 · Prioritize</div>
-        <h2>Not every issue deserves the same amount of time</h2>
-      </div>
-      <div class="causes-grid" id="impact-effort-confidence"></div>
-      <div class="priority-formula">Potential Impact × Effort × Confidence</div>
-      <div class="priority-grid" id="prioritize-tiers"></div>
-      <p class="funnel-footer" style="margin-top:28px;">A focused roadmap is more valuable than a spreadsheet containing 200 equally important recommendations.</p>
-    </div>
-  </section>
-
-  <!-- 04 BUILD THE STRATEGY -->
-  <section class="section section--alt" id="step-strategy">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 4 of 7 · Build the strategy</div>
-        <h2>Turn the findings into a plan the team can follow</h2>
-        <p style="max-width:640px;">The plan links each finding to the business goal.</p>
-      </div>
-      <ul class="chip-list" id="strategy-items"></ul>
-      <div class="playbook-label" style="margin-top:28px;">From Findings to Roadmap</div>
-      <div class="priority-grid" id="strategy-roadmap-tiers" style="margin-top:16px;"></div>
-      <p class="funnel-footer" style="margin-top:28px;">The strategy should tell the team what to do, why it matters and how success will be measured.</p>
-    </div>
-  </section>
-
-  <!-- 05 EXECUTION -->
-  <section class="section" id="step-execution">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 5 of 7 · Execute</div>
-        <h2>A recommendation only helps once someone implements it</h2>
-      </div>
-      <div class="causes-grid causes-grid--split" id="execution-split" style="margin-bottom:24px;"></div>
-      <p class="prose reveal" style="max-width:660px;">I work with the teams responsible for execution — including developers, content teams, designers, paid media specialists and marketing stakeholders — to turn strategy into action.</p>
-      <p class="prose reveal" style="max-width:660px;margin-top:14px;">Where appropriate, I can work directly on implementation rather than stopping at the recommendation.</p>
-      <div id="execution-collaborators" style="margin-top:24px;"></div>
-    </div>
-  </section>
-
-  <!-- 06 MEASURE WHAT CHANGED -->
-  <section class="section section--alt" id="step-measure">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 6 of 7 · Measure</div>
-        <h2>Check what changed against the original goal</h2>
-      </div>
-      <div class="lookat-grid" id="measure-groups"></div>
-      <p class="funnel-footer" style="margin-top:28px;">The metric depends on the business.</p>
-    </div>
-  </section>
-
-  <!-- 07 IMPROVE -->
-  <section class="section" id="step-improve">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Step 7 of 7 · Improve</div>
-        <h2>Use the results to choose the next priority</h2>
-      </div>
-      <div class="process-flow" id="improve-steps"></div>
-      <p class="funnel-footer" style="margin-top:28px;">SEO is not audit → report → done.<br>Diagnose → Execute → Measure → Learn → Improve.</p>
-    </div>
-  </section>
-
-  <!-- AI SEARCH ERA -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Also on this page</div>
-        <h2>How AI search fits in</h2>
-      </div>
-      <div id="ai-search-era"></div>
-    </div>
-  </section>
-
-  <!-- TOOLS & SYSTEMS -->
+  <!-- MORE ABOUT HOW I WORK -->
   <section class="section">
     <div class="container">
       <div class="section-head">
-        <div class="eyebrow">Also on this page</div>
-        <h2>Tools I use, grouped by purpose</h2>
+        <div class="eyebrow">More detail</div>
+        <h2>Tools, deliverables, AI search and principles</h2>
+        <p>Pick a tab. Each one explains a part of how I work in plain terms.</p>
       </div>
-      <div class="tab-bar" id="tools-tab-bar" data-tabs></div>
-      <div id="tools-systems"></div>
-      <p class="funnel-footer" style="margin-top:24px;text-align:left;font-style:normal;">Tools change. The methodology doesn't.</p>
-    </div>
-  </section>
-
-  <!-- WHAT I DELIVER -->
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Also on this page</div>
-        <h2>What I hand over at each stage</h2>
-      </div>
-      <div id="what-i-deliver"></div>
-    </div>
-  </section>
-
-  <!-- WORKING PRINCIPLES -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Also on this page</div>
-        <h2>Principles I work by</h2>
-      </div>
-      <div class="principles-list" id="working-principles"></div>
-      <div style="margin-top:36px;">
+      <div id="more-tabs"></div>
+      <div style="margin-top:32px;">
         <a href="/work" class="btn btn--primary">See the case studies</a> <a href="/contact" class="btn btn--ghost">Contact</a>
       </div>
     </div>
@@ -204,27 +65,9 @@
   renderHeader("/approach");
   renderFooter();
 
-  renderDiagnosticCards("diagnostic-cards");
-  renderUnderstandBusiness("understand-business");
-  renderDiagnoseGroups("diagnose-groups");
-  renderImpactEffortConfidence("impact-effort-confidence");
-  renderPrioritizeTiers("prioritize-tiers");
-  document.getElementById("strategy-items").innerHTML = BUILD_STRATEGY_ITEMS.map(i => `<li>${i}</li>`).join("");
-  document.getElementById("strategy-roadmap-tiers").innerHTML = STRATEGY_ROADMAP_TIERS.map(t => `
-    <div class="priority-card priority-card--${t.label.toLowerCase()} reveal">
-      <div class="priority-status" style="border-top:none;padding-top:0;">${t.label}</div>
-      <p>${t.copy}</p>
-    </div>`).join("");
-  renderExecutionSplit("execution-split");
-  renderExecutionCollaborators("execution-collaborators");
-  renderMeasureGroups("measure-groups");
-  renderImproveSteps("improve-steps");
-  renderAISearchEra("ai-search-era");
-  renderToolsSystems("tools-systems", "tools-tab-bar");
-  renderWhatIDeliver("what-i-deliver");
-  renderWorkingPrinciples("working-principles");
+  renderApproachFlow("approach-flow");
+  renderMoreTabs("more-tabs");
 
-  renderApproachExamples();
   initScrollReveal();
   bindAccordions();
   bindTabs();
