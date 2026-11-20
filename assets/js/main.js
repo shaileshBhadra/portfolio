@@ -1419,9 +1419,11 @@ function renderApproachFlow(id){
         <div class="flow-q">${s.question}</div>
         <div class="flow-body">
           <div><div class="flow-label">What I do</div><p>${s.what}</p></div>
-          <div><div class="flow-label">What I look at</div><ul>${s.checks.map(c=>`<li>${c}</li>`).join("")}</ul></div>
+          <div><div class="flow-label">What I evaluate</div><ul>${s.checks.map(c=>`<li>${c}</li>`).join("")}</ul></div>
         </div>
-        <div class="flow-out"><span>You get</span>${s.output}</div>
+        ${s.key==="prioritize"?`<div class="formula"><b>Impact × Effort × Confidence</b><span>Now: do first</span><span>Next: plan</span><span>Later: when resources allow</span></div>`:""}
+        <div class="flow-out"><span>What I produce</span>${s.output}</div>
+        <div class="flow-why"><span>Why it matters</span>${s.why}</div>
         <a class="flow-example" href="/work/${ex.slug}"><span class="example-label">Example · ${ex.org}</span>${ex.text}<b>Read the case study →</b></a>
       </article>`;
     el.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;history.replaceState(null,"","#step-"+APPROACH_FLOW[cur].key);draw();}));
@@ -1459,4 +1461,57 @@ function renderMoreTabs(id){
     el.querySelectorAll("[data-i]").forEach(b=>b.addEventListener("click",()=>{cur=+b.dataset.i;draw();}));
   }
   draw();
+}
+
+
+function renderCoreCapabilities(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=CORE_CAPABILITIES.map(c=>`
+    <article class="cap-card reveal"><div class="cap-n">${c.n}</div><h3>${c.title}</h3><p>${c.copy}</p>
+    <a class="do-proof" href="/work/${c.slug}">${c.proof} →</a></article>`).join("");
+}
+function renderImpactCards(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=IMPACT_CARDS.map(c=>`
+    <a class="impact-card reveal" href="/work/${c.slug}"><div class="impact-value">${c.value}</div><div class="impact-label">${c.label}</div><div class="impact-sub">${c.sub}</div><span class="more">Read the case study →</span></a>`).join("");
+}
+function renderLeadership(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=LEADERSHIP_POINTS.map(p=>`<li>${p}</li>`).join("");
+}
+
+
+function renderAeo(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=`<div class="aeo-grid">${AEO_TOPICS.map(t=>`<article class="aeo-card"><h3>${t.t}</h3><p>${t.c}</p></article>`).join("")}</div>
+  <div class="complement"><div class="complement-head"><span>Traditional SEO</span><span></span><span>AI search</span></div>
+  ${AEO_COMPLEMENT.map(r=>`<div class="complement-row"><span>${r.trad}</span><i aria-hidden="true">→</i><span>${r.ai}</span></div>`).join("")}</div>
+  <p class="aeo-note"><strong>A note on results.</strong> AI search visibility is measured with the evidence available, and results vary by platform. I do not promise rankings or citations in AI tools.</p>`;
+}
+function renderAnalyticsPaid(id){
+  const el=document.getElementById(id); if(!el) return;
+  const col=(title,rows)=>`<div class="ap-col"><h3>${title}</h3><dl>${rows.map(r=>`<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join("")}</dl></div>`;
+  el.innerHTML=`<div class="ap-grid">${col("Analytics and tracking",ANALYTICS_PAID.analytics)}${col("Performance marketing",ANALYTICS_PAID.paid)}</div>
+  <div class="connect"><div class="connect-label">How I connect marketing activity to business outcomes</div><ol>${ANALYTICS_PAID.connect.map((c,i)=>`<li><b>${i+1}</b>${c}</li>`).join("")}</ol></div>`;
+}
+
+
+/* Platforms and channels strip */
+function renderPlatforms(targetId){
+  const el = document.getElementById(targetId);
+  if(!el || typeof PLATFORMS_WORKED === "undefined") return;
+  const col = (title, intro, items) => `
+    <div class="plat-col">
+      <h3>${title}</h3>
+      <p>${intro}</p>
+      <ul>${items.map(i => `<li><strong>${i.name}</strong><span>${i.note}</span></li>`).join("")}</ul>
+    </div>`;
+  el.innerHTML = `
+    <div class="eyebrow">Platforms and channels</div>
+    <h2 class="plat-h">Where I do the work</h2>
+    <p class="plat-lead">SEO and tracking work on the main eCommerce and CMS platforms, and paid campaigns on the main ad networks.</p>
+    <div class="plat-grid">
+      ${col("Sites and platforms", "Audits, fixes and tracking, done with each team's developers.", PLATFORMS_WORKED)}
+      ${col("Paid channels", "Campaigns and reporting, compared side by side.", CHANNELS_RUN)}
+    </div>`;
 }

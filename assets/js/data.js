@@ -570,13 +570,13 @@ const SERVICES = [
     slug: "seo-analytics-consulting",
     name: "SEO & Analytics Strategy",
     category: "Strategy",
-    outcomes: ["Senior technical review on a recurring basis", "A second opinion before big decisions", "Faster unblocking on technical issues", "Strategy kept honest against the data"],
-    short: "Senior SEO, analytics or technical expertise when your internal team needs support — without a full-time hire.",
-    headline: "Senior expertise, without the overhead of a full-time hire.",
-    copy: "For teams that already have marketing capacity but need a senior technical SEO/analytics perspective on a recurring basis — reviewing work, unblocking technical problems, and keeping strategy honest against the data.",
-    includes: ["Ongoing technical review", "Analytics oversight", "Roadmap sanity-checks", "Cross-functional support", "Ad-hoc troubleshooting"],
-    deliverable: "Ongoing advisory support, scoped to your team's cadence.",
-    whoFor: "Marketing teams and agencies that need a specialist, not a replacement team.",
+    outcomes: ["A clear channel plan tied to business goals", "Regular reviews of SEO, paid and tracking data", "Faster unblocking of technical issues", "Reports leadership can act on"],
+    short: "Owning SEO and analytics strategy for a team: planning, reviewing the data and unblocking the work.",
+    headline: "Own the strategy, then follow it through.",
+    copy: "In a team, I set the SEO and analytics plan, review results with the data, and unblock technical work with developers, writers and designers. Roadmaps are checked against the numbers so priorities change when the data does.",
+    includes: ["Channel planning", "Technical review", "Analytics oversight", "Roadmap reviews", "Cross-team coordination", "Leadership reporting"],
+    deliverable: "A working roadmap, regular performance reviews and clear reports.",
+    whoFor: "Teams that need someone to own SEO and analytics strategy and coordinate the people doing the work.",
     ctaLabel: "See Related Work",
     caseStudySlug: "rivulet-tracking-and-audits",
   },
@@ -662,6 +662,10 @@ const SERVICE_ICON_NAMES = {
   "funnel-strategy": "route",
   "local-seo": "search-code",
   "meta-ads": "mouse-pointer-click",
+  "linkedin-ads": "mouse-pointer-click",
+  "woocommerce-technical": "shopping-bag",
+  "magento-seo": "shopping-bag",
+  "aeo-geo": "search-code",
 };
 
 const CAPABILITY_ICON_NAMES = {
@@ -1055,34 +1059,34 @@ const APPROACH_EXAMPLES = {
 
 
 const APPROACH_FLOW = [
-  { key: "understand", title: "Understand", question: "What does the business need?",
+  { key: "understand", title: "Understand the business", question: "What does the business need?",
     what: "Learn the business model, customers, markets and goals before opening any tool.",
     checks: ["Business model", "Revenue and conversion goals", "Target customers and markets", "Acquisition channels", "Current performance"],
-    output: "A clear definition of success: traffic, leads, revenue or efficiency" },
-  { key: "diagnose", title: "Diagnose", question: "What is limiting performance?",
+    output: "Business model, audience, objectives, revenue model and target market, written down as a definition of success", why: "Every later decision is judged against the business goal, not against rankings alone.", },
+  { key: "diagnose", title: "Diagnose and audit", question: "What is limiting performance?",
     what: "Audit SEO, tracking, acquisition and the store itself to find the real cause, not just the symptom.",
-    checks: ["Technical health, crawling, indexation", "GA4, GTM and conversion tracking", "Organic and paid traffic quality", "Landing pages and product visibility"],
-    output: "A short list of real problems, not the longest audit" },
-  { key: "prioritize", title: "Prioritize", question: "What should be fixed first?",
+    checks: ["Technical SEO audit", "Keyword and competitor analysis", "GA4 conversion funnel analysis", "Google Ads account review", "Content gap analysis", "Tracking and attribution assessment"],
+    output: "A short list of real problems, with the evidence for each, not the longest audit", why: "Fixing the real cause saves budget that would otherwise go to symptoms.", },
+  { key: "prioritize", title: "Prioritize opportunities", question: "What should be fixed first?",
     what: "Score each issue by impact, effort and confidence, then sort it into Now, Next or Later.",
     checks: ["Impact: how much could it change the outcome", "Effort: how long will it take", "Confidence: how strong is the evidence"],
-    output: "A ranked list: Now, Next and Later" },
-  { key: "strategy", title: "Strategy", question: "What is the plan?",
+    output: "A ranked list based on impact, effort, resources and expected outcome: Now, Next and Later", why: "Limited time and budget go to the work most likely to change leads or revenue.", },
+  { key: "strategy", title: "Build the strategy", question: "What is the plan?",
     what: "Turn the ranked findings into a roadmap the team can follow, with an owner and a success metric for each item.",
     checks: ["Technical SEO and site structure", "Content opportunities by search demand", "Tracking improvements", "Conversion optimization", "Paid acquisition"],
-    output: "A roadmap: what to do, why it matters, how success is measured" },
-  { key: "execution", title: "Execute", question: "Who builds it?",
+    output: "An SEO roadmap, content strategy, paid media plan and measurement framework", why: "The team knows what to do, in what order and how success will be measured.", },
+  { key: "execution", title: "Execute and implement", question: "Who builds it?",
     what: "Work with developers, content writers, designers and paid media specialists, and implement directly where needed.",
     checks: ["Developers", "Content teams", "Designers", "Paid media", "Marketing and leadership"],
-    output: "Changes live on the site, not just recommendations" },
-  { key: "measure", title: "Measure", question: "What changed?",
+    output: "Technical fixes, content optimization and campaign changes live on the site, not just recommendations", why: "Plans become live changes, so results can actually appear.", },
+  { key: "measure", title: "Measure performance", question: "What changed?",
     what: "Compare results against the original goal, using the tracking set up in the earlier steps.",
-    checks: ["Visibility: rankings, impressions", "Acquisition: organic and paid traffic", "Engagement: landing-page behaviour", "Conversion: leads, purchases", "Business impact: revenue, pipeline"],
-    output: "A report tied to the original goal" },
-  { key: "improve", title: "Improve", question: "What comes next?",
+    checks: ["Organic traffic", "Qualified leads", "Conversions and revenue", "CPA and ROAS", "Rankings and impressions"],
+    output: "A report tied to the original goal", why: "Results are tied to leads, revenue and cost, not only traffic.", },
+  { key: "improve", title: "Optimize and scale", question: "What comes next?",
     what: "Learn why the result happened, then feed it back into the next round of priorities.",
-    checks: ["Measure against the goal", "Compare with what was expected", "Learn why it worked or didn't", "Prioritize again"],
-    output: "The next round of priorities, ready to start" },
+    checks: ["Experiments and A/B tests", "Performance reviews", "Opportunity identification", "Scaling what works"],
+    output: "The next round of priorities, ready to start", why: "Each cycle makes the next one more accurate, so what works can be scaled.", },
 ];
 
 
@@ -1130,4 +1134,227 @@ const MORE_TABS = [
       { t: "Recommendations need execution", w: "A good plan only helps once someone builds it, so I work with the people who implement it.", ex: "At Atlas I coordinated the content writer, designers and developers.", slug: "atlas-paid-media" },
       { t: "AI speeds up the work, people make the decisions", w: "I use AI for research, analysis and drafting. Strategy, priorities and final decisions stay with me.", ex: "", slug: "" },
     ] },
+];
+
+
+/* Approach page v4 content */
+const CORE_CAPABILITIES = [
+  { n: "01", title: "Technical SEO", copy: "Website audits, crawlability, indexation, Core Web Vitals, site architecture, schema markup, canonicalization, redirects, XML sitemaps and JavaScript SEO.", proof: "Rivulet: fixes across Shopify, WordPress, BigCommerce, React and Vue.js", slug: "rivulet-tracking-and-audits" },
+  { n: "02", title: "On-page, off-page and content SEO", copy: "Keyword research, search intent, content optimization, topical authority, internal linking, link building, local SEO, content gaps and conversion-focused landing pages.", proof: "Neat Everyday: 60%+ organic traffic", slug: "neat-everyday-organic-growth" },
+  { n: "03", title: "AEO, GEO and AI search", copy: "Optimizing for Google AI Overviews, ChatGPT, Gemini and Perplexity through entity optimization, structured content and brand mentions.", proof: "Neat Everyday: layering AEO and schema", slug: "neat-everyday-organic-growth" },
+  { n: "04", title: "Analytics, GA4 and GTM", copy: "GA4, GTM, event tracking, custom funnels, eCommerce measurement, conversion tracking, server-side tagging and Looker Studio dashboards.", proof: "Equest: funnels and GA4 tracking from scratch", slug: "equest-cro-funnel" },
+  { n: "05", title: "Performance marketing and paid acquisition", copy: "Google Ads, Meta Ads, LinkedIn Ads, AdRoll and ShareChat: campaign strategy, audience targeting, budget allocation, landing page optimization and CPA and ROAS analysis.", proof: "Atlas Softweb: 30% lower CPA", slug: "atlas-paid-media" },
+  { n: "06", title: "Digital marketing strategy and growth management", copy: "Channel planning, competitor analysis, marketing roadmaps, team coordination, execution management, reporting and continuous optimization.", proof: "Kesariya Farm: ₹50K to ₹5L monthly revenue", slug: "kesariya-farm-growth" },
+];
+const IMPACT_CARDS = [
+  { value: "60%+", label: "Organic traffic increase", sub: "Neat Everyday, since Jan 2026", slug: "neat-everyday-organic-growth" },
+  { value: "₹50K → ₹5L", label: "Monthly revenue in 7 months", sub: "Kesariya Farm, Proactii", slug: "kesariya-farm-growth" },
+  { value: "25%", label: "Conversion improvement", sub: "Equest Solutions, first quarter", slug: "equest-cro-funnel" },
+  { value: "30%", label: "Lower cost per acquisition", sub: "Atlas Softweb, within two quarters", slug: "atlas-paid-media" },
+];
+const LEADERSHIP_POINTS = [
+  "Manage priorities and execution timelines",
+  "Coordinate with developers, designers and content teams",
+  "Review campaign and channel performance",
+  "Find and remove bottlenecks in execution",
+  "Explain insights to stakeholders in plain terms",
+  "Tie marketing activity to business objectives",
+];
+
+MORE_TABS.splice(0, 3,
+  { key: "ai", label: "AI search (AEO/GEO)", intro: "Beyond traditional search: optimizing for the AI search ecosystem.",
+    cards: [
+      { title: "What is changing", what: "People now find information through Google AI Overviews, ChatGPT, Gemini and Perplexity as well as search results. Brands need to be easy for both search engines and AI tools to find, understand and trust.", incl: [] },
+      { title: "What I work on", what: "My approach improves brand discoverability, content relevance, entity understanding and information access across traditional and AI-driven search.", incl: ["AEO (Answer Engine Optimization)", "GEO (Generative Engine Optimization)", "Entity and brand authority", "Structured data and schema", "Question-based content", "Topical authority and site structure"] },
+      { title: "How I measure it", what: "AI search visibility is measured with the evidence available, such as AI-tool referral traffic in GA4 and spot checks of AI answers. Results vary by platform, so I report what I can verify and don't promise rankings in AI tools. At Neat Everyday I am layering AEO and schema markup on the site.", incl: [] },
+    ] },
+  { key: "tools", label: "Tools and systems", intro: "I choose tools for the business problem, not for popularity. The aim is to turn data into clear actions.",
+    groups: [
+      { title: "SEO research and search performance", rows: [
+        ["Ahrefs, Semrush", "Keyword research, competitor gaps and backlink checks"],
+        ["Screaming Frog", "Site crawls to find broken links, redirects, duplicate titles and missing tags"],
+        ["Google Search Console", "Queries, indexing, crawl errors, Core Web Vitals and sitemaps"],
+        ["Google Trends", "Seasonal demand and rising topics"] ] },
+      { title: "Analytics, tracking and reporting", rows: [
+        ["GA4", "Events, eCommerce funnels and conversion reports"],
+        ["Google Tag Manager, server-side GTM", "Tracking, custom events and ad conversion tags"],
+        ["Looker Studio", "Dashboards for traffic, funnels and paid performance"],
+        ["Google Cloud APIs", "Custom reports from GA4, Search Console and YouTube"] ] },
+      { title: "Paid marketing", rows: [
+        ["Google Ads", "Search and Display campaigns, bidding and retargeting"],
+        ["Meta Ads", "Prospecting and retargeting with conversion tracking"],
+        ["AdRoll, ShareChat", "Retargeting and regional-language reach"] ] },
+      { title: "CMS and eCommerce", rows: [
+        ["Shopify", "Product and collection page SEO, theme and JavaScript changes"],
+        ["WordPress, BigCommerce", "Technical SEO and tracking fixes"],
+        ["React and Vue.js sites", "Tracking and technical SEO on JavaScript frameworks"],
+        ["Google Merchant Center", "Product feeds and Shopping visibility"] ] },
+    ] },
+  { key: "deliver", label: "What I deliver", intro: "What a team can expect from me in each area.",
+    cards: [
+      { title: "SEO and organic growth", what: "Strategy and execution that raise organic traffic and conversions.", incl: ["SEO audits and strategic roadmaps", "Keyword research and content growth plans", "Technical and on-page optimization", "Organic traffic and conversion improvement"] },
+      { title: "AI search optimization", what: "Preparing the brand and its content for AI-driven search.", incl: ["AEO and GEO strategy", "AI search visibility checks", "Entity, brand and content optimization"] },
+      { title: "Analytics and reporting", what: "Tracking that the whole team can trust.", incl: ["GA4 and GTM implementation", "Conversion and eCommerce tracking", "Custom dashboards and reports"] },
+      { title: "Performance marketing", what: "Paid campaigns tied to cost and revenue targets.", incl: ["Paid acquisition strategy", "Google and Meta campaign management", "Budget and conversion optimization"] },
+      { title: "Growth and management", what: "Keeping the work organized and moving.", incl: ["Integrated digital marketing plans", "Team and cross-functional coordination", "Execution roadmaps and performance reviews"] },
+    ] }
+);
+
+MORE_TABS.shift();
+(function(){
+  const T = MORE_TABS[0];
+  T.groups[2].rows = [
+    ["Google Ads", "Search and Display campaigns, bidding and retargeting"],
+    ["Meta Ads", "Prospecting and retargeting with conversion tracking"],
+    ["LinkedIn Ads", "Lead generation campaigns for B2B audiences"],
+    ["AdRoll, ShareChat", "Retargeting and regional-language reach"] ];
+  T.groups[3].rows = [
+    ["Shopify", "Product and collection page SEO, theme and JavaScript changes"],
+    ["WordPress, WooCommerce", "Technical SEO, content and tracking"],
+    ["Magento, BigCommerce", "Technical SEO and tracking on eCommerce platforms"],
+    ["Google Merchant Center", "Product feeds and Shopping visibility"] ];
+  T.groups.push({ title: "AI search checks", rows: [
+    ["ChatGPT, Gemini, Perplexity", "Checking how a brand and its pages appear in AI answers"],
+    ["React and Vue.js sites", "Tracking and technical SEO on JavaScript frameworks"] ] });
+  const deliver = MORE_TABS[1];
+  deliver.cards[3].incl = ["Paid acquisition strategy", "Google, Meta and LinkedIn campaign management", "Budget and conversion optimization"];
+})();
+
+LEADERSHIP_POINTS.splice(0, LEADERSHIP_POINTS.length,
+  "Develop strategy and plan the projects",
+  "Manage priorities and execution timelines",
+  "Coordinate with developers, designers and content teams",
+  "Review campaign and channel performance",
+  "Find and remove bottlenecks in execution",
+  "Explain insights to stakeholders in plain terms",
+  "Tie marketing activity to business objectives",
+  "Keep improving through regular performance reviews");
+
+const AEO_TOPICS = [
+  { t: "Google AI Overviews", c: "Summaries shown above search results. Pages need clear, direct answers and trustworthy sources to be used." },
+  { t: "ChatGPT, Gemini and Perplexity", c: "AI tools that answer questions directly. They draw on well-structured, authoritative pages and brand mentions." },
+  { t: "Answer Engine Optimization (AEO)", c: "Writing pages that answer real questions in a clear format that search and AI tools can lift out." },
+  { t: "Generative Engine Optimization (GEO)", c: "Making a brand and its content easy for generative AI tools to understand and reference." },
+  { t: "Entity and brand authority", c: "Consistent brand, product and author information across the site and the web so the business is clearly identified." },
+  { t: "Structured data and schema", c: "Schema markup that labels products, FAQs, articles and organizations in a form machines can read." },
+  { t: "Topical authority", c: "Covering a subject in depth with connected pages, so the site is seen as a reliable source." },
+  { t: "Content structure and access", c: "Clear headings, short answers, crawlable text and fast pages, so information is easy to reach and read." },
+  { t: "AI search visibility monitoring", c: "Tracking AI-tool referral traffic in GA4 and checking AI answers for the brand. Evidence varies by platform." },
+];
+const AEO_COMPLEMENT = [
+  { trad: "Technical health and crawlability", ai: "Lets AI tools reach and read the content" },
+  { trad: "Helpful content that matches intent", ai: "Becomes the answers AI tools quote" },
+  { trad: "Links, mentions and brand signals", ai: "Builds the authority AI tools look for" },
+  { trad: "Schema and clean structure", ai: "Makes facts easy for machines to extract" },
+];
+const ANALYTICS_PAID = {
+  analytics: [
+    ["GA4 implementation and analysis", "Events, conversions and eCommerce reports set up and checked"],
+    ["Google Tag Manager and server-side tracking", "More accurate first-party data and cleaner ad conversion signals"],
+    ["Conversion and event tracking", "Every form, call, add-to-cart and purchase counted once"],
+    ["eCommerce measurement", "Product, cart and checkout steps tracked from view to sale"],
+    ["Custom funnels and reporting", "TOFU, MOFU and BOFU stages tracked, with Looker Studio dashboards"],
+  ],
+  paid: [
+    ["Google Ads, Meta Ads and LinkedIn Ads", "Campaign strategy, audience targeting and retargeting"],
+    ["Campaign performance analysis", "Cost per lead, cost per sale and return on ad spend by campaign"],
+    ["Budget allocation", "Money moved toward campaigns and audiences that convert"],
+    ["Conversion optimization", "Landing pages and A/B tests that raise the share of visitors who convert"],
+  ],
+  connect: ["Track every key action", "Credit it to the right channel", "Report cost and revenue together", "Move budget to what works"],
+};
+
+
+/* ---- Added: LinkedIn Ads, WooCommerce, Magento, AEO/GEO ----
+   Capability statements only. No results are claimed for these. */
+SERVICES.push(
+  {
+    slug: "linkedin-ads",
+    name: "LinkedIn Ads",
+    category: "Paid Media",
+    outcomes: ["B2B audiences reached by job title and industry", "Lead forms and landing pages tied to tracking", "Cost per lead reported next to other channels"],
+    short: "B2B lead generation campaigns on LinkedIn, planned and reported with Google and Meta.",
+    headline: "Reach business buyers where they work.",
+    copy: "Plan and run LinkedIn campaigns for B2B audiences, from targeting by role, industry and company size to lead forms, landing pages and conversion tracking. Results are reported next to Google and Meta so budget goes where leads actually come from.",
+    includes: ["Audience targeting", "Lead gen forms", "Landing pages", "Conversion tracking", "Retargeting", "Reporting"],
+    deliverable: "Campaign structure, tracking setup and a channel comparison report.",
+    whoFor: "B2B and lead-generation businesses that sell to a defined set of roles or industries.",
+    ctaLabel: "Discuss this",
+    caseStudySlug: "manektech-lead-gen-funnels",
+  },
+  {
+    slug: "woocommerce-technical",
+    name: "WooCommerce technical SEO and tracking",
+    category: "eCommerce",
+    outcomes: ["Product, category and filter URLs that index cleanly", "Purchase and cart events that match the store", "Faster product and checkout pages"],
+    short: "Technical fixes for WordPress and WooCommerce stores: indexation, structured data, speed and tracking.",
+    headline: "Fix what holds a WooCommerce store back.",
+    copy: "WooCommerce stores often carry duplicate product variants, filter and tag URLs, plugin bloat and broken purchase tracking. I audit the store, fix the technical causes with the developer, and check that GA4 and ad platform events match real orders.",
+    includes: ["Indexation and canonicals", "Product and category schema", "Filter and tag URL control", "Core Web Vitals", "GA4 eCommerce events", "GTM and Meta tracking", "Plugin conflict checks"],
+    deliverable: "Technical audit, a prioritized fix list and a verified tracking setup.",
+    whoFor: "WordPress stores with index bloat, slow pages or purchase data that does not match orders.",
+    ctaLabel: "Discuss this",
+    caseStudySlug: "rivulet-tracking-and-audits",
+  },
+  {
+    slug: "magento-seo",
+    name: "Magento SEO",
+    category: "eCommerce",
+    outcomes: ["Layered navigation under control", "Clean category and product indexation", "Structured data and tracking checked after release"],
+    short: "SEO work on Magento stores: architecture, layered navigation, canonicals, structured data and tracking.",
+    headline: "Make a large Magento catalog easier to crawl.",
+    copy: "Large Magento catalogs create many crawlable URLs through layered navigation, sorting and parameters. I find which ones deserve to rank, control the rest, and work with developers on canonicals, sitemaps, schema and tracking.",
+    includes: ["Layered navigation", "Canonicals and parameters", "Category architecture", "Product schema", "XML sitemaps", "Redirects", "Tracking checks"],
+    deliverable: "Prioritized SEO roadmap and release checklist for the development team.",
+    whoFor: "Magento stores with large catalogs, parameter URLs or stalled category rankings.",
+    ctaLabel: "Discuss this",
+    caseStudySlug: "rivulet-tracking-and-audits",
+  },
+  {
+    slug: "aeo-geo",
+    name: "AEO and GEO",
+    category: "Technical SEO",
+    outcomes: ["Pages that answer questions directly", "Brand and product facts that are consistent and checkable", "AI referral traffic visible in GA4"],
+    short: "Optimizing content and structured data so AI tools and search engines can understand and quote a site.",
+    headline: "Be easy to understand for people and for AI search.",
+    copy: "Answer engine and generative engine optimization builds on solid SEO. I structure pages around real questions, add schema, keep brand facts consistent, check that AI crawlers can reach the site, and spot-check how ChatGPT, Gemini and Perplexity describe the brand. No tool can promise citations, so I measure and adjust.",
+    includes: ["Question-led content", "FAQ and entity content", "Schema markup", "Brand consistency", "Crawler access checks", "AI referral tracking in GA4", "AI answer spot checks"],
+    deliverable: "AEO and GEO checklist per page type, schema templates and a monitoring routine.",
+    whoFor: "Brands that want to appear accurately in AI answers as well as in classic search results.",
+    ctaLabel: "Discuss this",
+    caseStudySlug: "neat-everyday-organic-growth",
+  }
+);
+
+(function(){
+  const adv = SKILLS.find(s => s.category === "Advertising");
+  adv.tools.splice(2, 0, { name: "LinkedIn Ads (Campaign Manager)", tier: "Paid", use: "B2B lead generation: targeting by role and industry, lead gen forms, and cost per lead compared with other channels." });
+  const eco = SKILLS.find(s => s.category === "E-commerce");
+  eco.tools.splice(1, 0,
+    { name: "WooCommerce", tier: "Free & Paid", use: "Technical SEO, product and category schema, speed fixes and GA4 eCommerce tracking on WordPress stores." },
+    { name: "Magento", tier: "Free & Paid", use: "SEO on large catalogs: layered navigation, canonicals, sitemaps, structured data and tracking checks." },
+    { name: "BigCommerce", tier: "Paid", use: "Technical SEO and tracking fixes on BigCommerce stores." });
+  const cms = SKILLS.find(s => s.category === "Development").tools.find(t => t.name.startsWith("CMS Platforms"));
+  if (cms) { cms.name = "CMS and eCommerce platforms"; cms.use = "Audits, fixes and tracking on WordPress, WooCommerce, Shopify, Magento, BigCommerce, React and Vue.js sites, working with each team's developers."; }
+  RESUME_CORE_EXPERTISE.find(g => g.title === "Performance").items = ["Google Ads", "Meta Ads", "LinkedIn Ads", "Landing Page Analysis", "Conversion Optimization"];
+  const ec = RESUME_CORE_EXPERTISE.find(g => g.title === "eCommerce");
+  ec.items = ["Shopify", "WooCommerce", "Magento", "Merchant Center", "Product SEO", "eCommerce Measurement"];
+  RESUME_CORE_EXPERTISE.find(g => g.title === "SEO").items.push("AEO and GEO");
+  RESUME_TOOLS.find(g => g.title === "Paid").items = ["Google Ads", "Meta Ads", "LinkedIn Ads"];
+  RESUME_TOOLS.find(g => g.title === "eCommerce").items = ["Shopify", "WooCommerce", "Magento", "Google Merchant Center", "GA4 eCommerce"];
+})();
+
+/* Platforms strip used on Work and Services pages */
+const PLATFORMS_WORKED = [
+  { name: "Shopify", note: "Theme, JavaScript, product SEO and tracking" },
+  { name: "WordPress and WooCommerce", note: "Technical SEO, speed and eCommerce tracking" },
+  { name: "Magento", note: "Layered navigation, canonicals and structured data" },
+  { name: "BigCommerce", note: "Technical fixes and tracking" },
+  { name: "React and Vue.js", note: "Rendering, metadata and event tracking" },
+];
+const CHANNELS_RUN = [
+  { name: "Google Ads", note: "Search and Display" },
+  { name: "Meta Ads", note: "Prospecting and retargeting" },
+  { name: "LinkedIn Ads", note: "B2B lead generation" },
+  { name: "AdRoll and ShareChat", note: "Retargeting and regional reach" },
 ];
