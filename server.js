@@ -1,7 +1,7 @@
 /* ============================================================
    Minimal Express server for shaileshbhadra.com
    - Serves the static portfolio files
-   - Proxies /api/contact to Web3Forms, keeping the access key
+   - Optional /api/contact route that sends through Gmail SMTP (the browser form uses FormSubmit)
      ONLY in the server environment (never sent to the browser)
    - Serves a small admin panel (/admin) for updating the resume
      PDF and career/experience data without a code deploy.
@@ -26,11 +26,10 @@ const fetchImpl = typeof fetch !== "undefined" ? fetch : require("node-fetch");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const WEB3FORMS_ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD; // set this in Render → Environment
 
 // --- Email transport: SMTP is primary (reliable, not behind Cloudflare),
-// Web3Forms is an automatic fallback if SMTP isn't configured. See
+// The browser sends through FormSubmit; this route is optional. See
 // SMTP_SETUP.md for how to generate a Gmail App Password.
 const nodemailer = require("nodemailer");
 const SMTP_USER = process.env.SMTP_USER;
@@ -252,11 +251,6 @@ function rateLimited(ip) {
 }
 
 // --- Contact form endpoint --------------------------------------------------
-// Public key for Web3Forms (designed to be public); the browser sends the form directly.
-app.get("/api/contact-config", (req, res) => {
-  res.json({ key: WEB3FORMS_ACCESS_KEY || null });
-});
-
 app.post("/api/contact", async (req, res) => {
   try {
     const ip = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket.remoteAddress;
@@ -307,50 +301,8 @@ app.post("/api/contact", async (req, res) => {
       }
     }
 
-    // --- Fallback: Web3Forms (only used if SMTP isn't configured) ---
-    if (!WEB3FORMS_ACCESS_KEY) {
-      console.error("Neither SMTP (SMTP_USER/SMTP_PASS) nor WEB3FORMS_ACCESS_KEY is configured.");
-      return res.status(500).json({ success: false, message: "Email sending isn't configured yet." });
-    }
-
-    let web3formsRes;
-    try {
-      web3formsRes = await fetchImpl("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: emailSubject,
-          name,
-          email,
-          company: company || "(not provided)",
-          inquiry_type: inquiry_type || "(not specified)",
-          role_or_team: budget || "(not provided)",
-          message,
-        }),
-      });
-    } catch (fetchErr) {
-      console.error("Could not reach Web3Forms:", fetchErr.message);
-      return res.status(502).json({ success: false, message: "Could not reach the email service. Please try again shortly." });
-    }
-
-    const rawBody = await web3formsRes.text();
-    let result;
-    try {
-      result = JSON.parse(rawBody);
-    } catch (parseErr) {
-      console.error(`Web3Forms returned a non-JSON response. Status: ${web3formsRes.status}. Body: ${rawBody.slice(0, 500)}`);
-      return res.status(502).json({
-        success: false,
-        message: `Email service returned HTTP ${web3formsRes.status}: ${rawBody.slice(0, 200) || "(empty body)"}`,
-      });
-    }
-
-    if (web3formsRes.ok && result.success) {
-      return res.json({ success: true });
-    }
-    console.error("Web3Forms rejected the submission:", result);
-    return res.status(502).json({ success: false, message: result?.message || "Message could not be sent right now." });
+    console.error("SMTP_USER and SMTP_PASS are not configured; the form sends from the browser instead.");
+    return res.status(500).json({ success: false, message: "Server email is not configured." });
   } catch (err) {
     console.error("Contact form error:", err);
     return res.status(500).json({ success: false, message: `Unexpected server error: ${err.message}` });

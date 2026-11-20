@@ -1035,7 +1035,7 @@ function renderProjectDetail(targetId){
 }
 
 /* ---------- Contact form ----------
-   Submits directly via Web3Forms (https://web3forms.com) — no mail client
+   Submits from the browser through FormSubmit (https://formsubmit.co) — no mail client
    is opened, no backend to host. Set the access_key hidden input in
    contact.html to your own free key before going live. */
 function initContactForm(){
@@ -1115,36 +1115,35 @@ function initContactForm(){
       let sent = false;
       const reasons = [];
 
-      // 1. Send straight from the browser to Web3Forms (its free plan blocks server-side calls).
-      try{
-        const cfg = await fetch("/api/contact-config").then(r => r.ok ? r.json() : {}).catch(() => ({}));
-        if(!(cfg && cfg.key)) reasons.push("no email key set on the server");
-        if(cfg && cfg.key){
-          const r1 = await fetch("https://api.web3forms.com/submit", {
+      // 1. FormSubmit: free, no account or key, accepts any fields. Every form field is sent as-is.
+      if(typeof PROFILE !== "undefined" && PROFILE.email){
+        try{
+          const extra = { _subject: subject, _replyto: payload.email, _template: "table", _captcha: "false" };
+          const fields = {};
+          Object.keys(payload).forEach(k => { if(k !== "botcheck" && payload[k] !== "") fields[k] = payload[k]; });
+          const r1 = await fetch("https://formsubmit.co/ajax/" + encodeURIComponent(PROFILE.email), {
             method: "POST",
             headers: { "Content-Type": "application/json", "Accept": "application/json" },
-            body: JSON.stringify({
-              access_key: cfg.key, subject, from_name: payload.name, name: payload.name, email: payload.email,
-              company: payload.company || "(not provided)", inquiry_type: payload.inquiry_type || "(not specified)",
-              role_or_team: payload.budget || "(not provided)", message: payload.message,
-            }),
+            body: JSON.stringify(Object.assign({}, fields, extra)),
           });
           const j1 = await r1.json().catch(() => null);
-          sent = !!(r1.ok && j1 && j1.success);
-          if(!sent) reasons.push("Web3Forms: " + ((j1 && j1.message) ? j1.message : ("HTTP " + r1.status)));
-        }
-      } catch(_e){ sent = false; reasons.push("Web3Forms unreachable from this browser"); }
+          sent = !!(r1.ok && j1 && (j1.success === true || j1.success === "true"));
+          if(!sent) reasons.push("FormSubmit: " + ((j1 && j1.message) ? String(j1.message).replace(/<[^>]*>/g," ").slice(0,120) : ("HTTP " + r1.status)));
+        } catch(_e){ reasons.push("FormSubmit unreachable from this browser"); }
+      }
 
-      // 2. Fall back to our own server route (works when SMTP is configured).
+      // 2. Fall back to our own server route (works only when Gmail SMTP is configured on the server).
       if(!sent){
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json", "Accept": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const result = await res.json().catch(() => ({}));
-        sent = !!(res.ok && result.success);
-        if(!sent) reasons.push("server: " + (result && result.message ? String(result.message).replace(/<[^>]*>/g," ").slice(0,90) : ("HTTP " + res.status)));
+        try{
+          const res = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify(payload),
+          });
+          const result = await res.json().catch(() => ({}));
+          sent = !!(res.ok && result.success);
+          if(!sent) reasons.push("server: " + (result && result.message ? String(result.message).replace(/<[^>]*>/g," ").slice(0,90) : ("HTTP " + res.status)));
+        } catch(_e){ reasons.push("server unreachable"); }
       }
 
       if(sent){

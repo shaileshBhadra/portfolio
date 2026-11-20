@@ -39,8 +39,7 @@
       </div>
       <div>
         <form id="contact-form" novalidate>
-          <!-- Sends from the browser to Web3Forms (the server blocks server-side calls),
-               with /api/contact as a fallback. -->
+          <!-- Sends from the browser through FormSubmit, with /api/contact as an optional fallback. -->
           <!-- Honeypot spam trap: hidden from real visitors, bots tend to fill every field -->
           <input type="checkbox" name="botcheck" id="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
