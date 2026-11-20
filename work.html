@@ -23,13 +23,22 @@
     <div class="container">
       <div class="eyebrow">Work</div>
       <h1 style="font-size:clamp(30px,4vw,44px);margin-top:16px;max-width:760px;">Work That Shows How I Think</h1>
-      <p class="prose" style="margin-top:16px;">Selected examples of SEO, analytics and digital growth problems I've worked through.</p>
+      <p class="prose" style="margin-top:16px;">Case studies and client sites across SEO, paid media, funnel creation, content and analytics.</p>
     </div>
   </section>
 
   <section class="section" style="padding-top:0;">
     <div class="container">
       <div class="project-grid" id="project-grid"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="eyebrow">Client Work</div>
+      <h2 style="margin-top:14px;max-width:760px;">Sites I've Worked On</h2>
+      <p class="prose" style="margin-top:12px;">A selection of live client websites across 5 employers, with the services I delivered on each. I've worked on 50+ sites in total; these are the ones still live.</p>
+      <div class="client-grid" id="client-grid" style="margin-top:28px;"></div>
     </div>
   </section>
 
@@ -48,6 +57,7 @@
   renderHeader("/work");
   renderFooter();
   renderProjectCards("project-grid");
+  renderClientWork("client-grid");
   renderCtaBanner("cta-banner", { heading: "Have a similar problem?", body: "Happy to look at what's actually happening before proposing anything.", ctaLabel: "Discuss a Similar Problem", ctaHref: "/contact" });
   initScrollReveal();
 </script>
