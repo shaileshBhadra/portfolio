@@ -1297,7 +1297,7 @@ function renderWorkExplorer(targetId){
   if(!root) return;
   const EMP = ["Neat Everyday","Equest Solutions","Rivulet","ManekTech","Atlas Softweb","Proactii","Xira Infotech"];
   const AREA_OF = svc => /Meta|Google|Display|Paid|ShareChat|AdRoll/i.test(svc) ? "Paid Media" : /Funnel/i.test(svc) ? "Funnels" : /Report/i.test(svc) ? "Analytics" : "SEO";
-  const state = { tab: "cases", emp: "All", area: "All" };
+  const state = { tab: new URLSearchParams(location.search).get("tab") === "sites" ? "sites" : "cases", emp: "All", area: "All" };
   const cases = PROJECTS.map(p => Object.assign({}, p, PROJECT_META[p.slug] || {}));
   const sites = CLIENT_WORK.map(c => Object.assign({}, c, { areas: Array.from(new Set(c.services.map(AREA_OF))) }));
   const chips = (label, list, key) => `<div class="filter-group"><span class="filter-label">${label}</span>${["All", ...list].map(v =>
@@ -1355,4 +1355,48 @@ function renderCareerPath(targetId){
   el.innerHTML = CAREER_PATH.map(c => `
     <li><span class="path-when">${c.when}</span>
     <span class="path-body"><strong>${c.role}, ${c.where}</strong><span>${c.gained}</span>${c.why ? `<span class="path-why"><em>Why I moved:</em> ${c.why}</span>` : ""}</span></li>`).join("");
+}
+
+
+/* ---------- Home: start here, what I do, problems solved, roles ---------- */
+function renderStartHere(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=START_HERE.map(s=>`<a class="start-card" href="${s.href}"><span class="start-n">${s.n}</span><span><strong>${s.title}</strong><em>${s.copy}</em></span></a>`).join("");
+}
+function renderWhatIDo(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=WHAT_I_DO.map(c=>`
+    <article class="do-card reveal">
+      <h3>${c.title}</h3>
+      <p>${c.copy}</p>
+      <ul class="do-chips">${c.chips.map(x=>`<li>${x}</li>`).join("")}</ul>
+      <div class="do-used"><span>Used at</span>${c.used}</div>
+      <a class="do-proof" href="/work/${c.slug}">${c.proof} →</a>
+    </article>`).join("");
+}
+function renderProblemsSolved(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=PROBLEMS_SOLVED.map(p=>`
+    <a class="solved-card reveal" href="/work/${p.slug}">
+      <div class="solved-org">${p.org}</div>
+      <div class="solved-row"><span>Problem</span><p>${p.problem}</p></div>
+      <div class="solved-row"><span>What I did</span><p>${p.did}</p></div>
+      <div class="solved-row solved-result"><span>Result</span><p>${p.result}</p></div>
+      <div class="more">Read the case study →</div>
+    </a>`).join("");
+}
+function renderRolesSought(id){
+  const el=document.getElementById(id); if(!el) return;
+  el.innerHTML=ROLES_SOUGHT.map(r=>`<div class="lookat-card reveal"><h3>${r.title}</h3><p style="font-size:14px;color:var(--ink-soft);margin-top:10px;line-height:1.6;">${r.copy}</p></div>`).join("");
+}
+
+/* ---------- Approach: step navigation and real examples ---------- */
+function renderApproachExamples(){
+  Object.keys(APPROACH_EXAMPLES).forEach(key=>{
+    const sec=document.getElementById("step-"+key); if(!sec) return;
+    const e=APPROACH_EXAMPLES[key];
+    const box=document.createElement("aside"); box.className="example-callout";
+    box.innerHTML=`<div class="example-label">Example from my work · ${e.org}</div><p>${e.text}</p><a class="more" href="/work/${e.slug}">Read the case study →</a>`;
+    sec.querySelector(".container").appendChild(box);
+  });
 }

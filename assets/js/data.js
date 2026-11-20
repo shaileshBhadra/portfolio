@@ -1002,3 +1002,53 @@ const PROJECT_META = {
   "rivulet-tracking-and-audits": { employer: "Rivulet", period: "Mar 2024 – Jan 2025", areas: ["Analytics", "SEO", "Paid Media"] },
 };
 const WORK_AREA_FILTERS = ["SEO", "Paid Media", "Analytics", "Funnels", "Content"];
+
+
+/* Home page: what I do, problems solved, roles sought, approach examples */
+const START_HERE = [
+  { n: "1", title: "What I do", copy: "SEO, paid media, analytics, funnels and content", href: "#what-i-do" },
+  { n: "2", title: "Case studies", copy: "6 projects with real results", href: "/work" },
+  { n: "3", title: "Sites I worked on", copy: "19 live sites, by organization", href: "/work?tab=sites" },
+  { n: "4", title: "Career path", copy: "8 roles, with the reason for each move", href: "/about#career-path" },
+];
+
+const WHAT_I_DO = [
+  { title: "SEO", copy: "Technical SEO, content and links, local SEO, and AI search (AEO/GEO) for eCommerce, education, B2B and service sites.",
+    chips: ["Technical audits", "Core Web Vitals", "Schema", "Local SEO", "AEO/GEO"], used: "All 8 organizations", slug: "neat-everyday-organic-growth", proof: "60%+ organic traffic at Neat Everyday" },
+  { title: "Paid media", copy: "Google Search and Display Ads, Meta Ads, ShareChat and AdRoll retargeting, run alongside SEO on the same account.",
+    chips: ["Google Ads", "Meta Ads", "Retargeting", "ShareChat", "AdRoll"], used: "Neat Everyday, Equest, Atlas, Proactii", slug: "atlas-paid-media", proof: "30% lower CPA at Atlas Softweb" },
+  { title: "Analytics and reporting", copy: "GA4 and server-side GTM setup, custom events, Looker Studio dashboards and reports built from Google Cloud APIs.",
+    chips: ["GA4", "Server-side GTM", "Looker Studio", "Google Cloud APIs", "Custom events"], used: "Neat Everyday, Equest, ManekTech, Rivulet", slug: "rivulet-tracking-and-audits", proof: "Tracking fixed on 5 platforms at Rivulet" },
+  { title: "Funnels and conversion", copy: "TOFU, MOFU and BOFU funnels mapped to content, landing pages and conversion tracking, then tested with A/B tests.",
+    chips: ["TOFU, MOFU, BOFU", "GA4 funnels", "CRO", "A/B tests"], used: "Neat Everyday, Equest, ManekTech", slug: "equest-cro-funnel", proof: "25% conversion lift at Equest" },
+  { title: "Content", copy: "Search-intent research, briefs and content strategy, working with writers and designers on pages that rank and convert.",
+    chips: ["Intent research", "Content briefs", "Topic clusters", "Team coordination"], used: "Neat Everyday, Atlas Softweb", slug: "atlas-paid-media", proof: "Led a 3-person SEO, paid and content team" },
+  { title: "Team leadership", copy: "Led and mentored teams of 2 to 3, set reporting standards and SOPs, and took part in hiring.",
+    chips: ["Mentoring", "SOPs", "Reporting", "Hiring"], used: "Atlas Softweb, ManekTech, Equest", slug: "manektech-lead-gen-funnels", proof: "3-person teams at Atlas and ManekTech" },
+];
+
+const PROBLEMS_SOLVED = [
+  { problem: "Revenue was low for a niche brand", did: "Ran SEO, Google Ads and Meta Ads together on one account", result: "₹50K to ₹5L monthly revenue in 7 months", org: "Proactii · Kesariya Farm", slug: "kesariya-farm-growth" },
+  { problem: "Organic traffic needed to grow", did: "Fixed tracking first, then technical SEO, content, links and schema", result: "60%+ organic traffic increase", org: "Neat Everyday", slug: "neat-everyday-organic-growth" },
+  { problem: "Stores had no conversion measurement", did: "Built TOFU, MOFU and BOFU funnels and GA4 tracking, then A/B tests", result: "25% conversion lift in the first quarter", org: "Equest Solutions", slug: "equest-cro-funnel" },
+  { problem: "Ad cost per customer was too high", did: "Segmented audiences and reworked bid strategy", result: "30% lower CPA within two quarters", org: "Atlas Softweb", slug: "atlas-paid-media" },
+  { problem: "Leads could not be tracked by stage", did: "Mapped content and pages to funnel stages with GA4 and GTM", result: "End-to-end lead tracking across the client's sites", org: "ManekTech", slug: "manektech-lead-gen-funnels" },
+  { problem: "Tracking was broken across platforms", did: "Fixed GTM, custom events, Meta and Google Ads tracking", result: "Working tracking on Shopify, WordPress, BigCommerce, React and Vue.js", org: "Rivulet", slug: "rivulet-tracking-and-audits" },
+];
+
+const ROLES_SOUGHT = [
+  { title: "SEO Manager / SEO Team Lead", copy: "Hands-on technical SEO, content and AEO strategy, plus experience leading and mentoring teams of 2 to 3." },
+  { title: "Digital Marketing Manager", copy: "SEO and paid media run together, with funnel planning and reporting that connects both to revenue." },
+  { title: "Performance Marketing Lead", copy: "Google and Meta Ads, up to ₹10L/month in budget at Neat Everyday, with tracking I build and verify myself." },
+  { title: "SEO and Analytics Specialist", copy: "GA4, server-side GTM, Looker Studio and Google Cloud API reporting for eCommerce and lead-generation sites." },
+];
+
+const APPROACH_EXAMPLES = {
+  understand: { text: "A pan-India B2C milk brand needed both search demand and paid reach, so SEO, Google Ads and Meta Ads were planned together.", slug: "kesariya-farm-growth", org: "Kesariya Farm" },
+  diagnose: { text: "On five platforms, I checked what GTM, Meta and Google Ads were actually recording before trusting any report.", slug: "rivulet-tracking-and-audits", org: "Rivulet" },
+  prioritize: { text: "Tracking came first, then content and funnels, so every later decision was judged on real data.", slug: "neat-everyday-organic-growth", org: "Neat Everyday" },
+  strategy: { text: "Content and landing pages were mapped to TOFU, MOFU and BOFU stages for lead-generation sites.", slug: "manektech-lead-gen-funnels", org: "ManekTech" },
+  execution: { text: "I coordinated the content writer, designers and developers across SEO and paid campaigns.", slug: "atlas-paid-media", org: "Atlas Softweb" },
+  measure: { text: "Looker Studio dashboards and Google Cloud API reports pulled from GA4, Search Console and YouTube.", slug: "neat-everyday-organic-growth", org: "Neat Everyday" },
+  improve: { text: "A/B tests were checked against the rebuilt funnel data, which led to a 25% conversion lift in the first quarter.", slug: "equest-cro-funnel", org: "Equest Solutions" },
+};
