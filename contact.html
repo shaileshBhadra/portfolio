@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://shaileshbhadra.com/contact">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Contact | Shailesh Bhadra">
-<meta property="og:description" content="Tell me what you're trying to solve — SEO, analytics, tracking or growth.">
+<meta property="og:description" content="Get in touch about a full-time SEO Manager, SEO Team Lead or Digital Marketing Manager role.">
 <meta property="og:url" content="https://shaileshbhadra.com/contact">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -27,24 +27,20 @@
     <div class="container contact-grid">
       <div>
         <div class="eyebrow">Contact</div>
-        <h1 style="font-size:clamp(30px,4vw,42px);margin-top:16px;">Let's Solve Something Difficult.</h1>
+        <h1 style="font-size:clamp(30px,4vw,42px);margin-top:16px;">Let's talk about the role.</h1>
+        <p class="prose" style="margin-top:16px;max-width:520px;">I'm open to full-time SEO Manager, SEO Team Lead and Digital Marketing Manager roles. Send me the role, the team and what you need from the person who fills it.</p>
         <div style="margin-top:18px;">
-          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Hiring for a senior SEO or growth role?</p>
-          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Need someone to take ownership of a complex SEO account?</p>
-          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Trying to fix an analytics or tracking problem?</p>
-          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Looking for a specialist who can connect SEO, acquisition and measurement?</p>
+          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Hiring for a senior SEO or digital marketing role?</p>
+          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Want to set up an interview or a call?</p>
+          <p class="dont-do-line reveal" style="font-size:15.5px;padding:12px 0;">Need a work sample or references?</p>
         </div>
-        <p class="prose" style="margin-top:16px;">I'd like to hear about it.</p>
-
-        <div class="playbook-label" style="margin-top:28px;">What are you working on?</div>
-        <p class="prose" style="margin-top:10px;">You don't need to have the problem perfectly defined.</p>
-        <p class="prose" style="margin-top:10px;">Tell me: what isn't working? What have you already tried? What would success look like?</p>
+        <p class="prose" style="margin-top:16px;">I usually reply within 1 to 2 business days.</p>
         <div class="contact-list" id="contact-details"></div>
       </div>
       <div>
         <form id="contact-form" novalidate>
-          <!-- Submits to our own /api/contact endpoint (server.js), which holds
-               the Web3Forms key server-side as an environment variable. -->
+          <!-- Sends from the browser to Web3Forms (the server blocks server-side calls),
+               with /api/contact as a fallback. -->
           <!-- Honeypot spam trap: hidden from real visitors, bots tend to fill every field -->
           <input type="checkbox" name="botcheck" id="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -59,32 +55,28 @@
             <span class="field-error" id="err-email"></span>
           </div>
           <div class="field">
-            <label for="f-company">Company <span class="field-optional">(optional)</span></label>
+            <label for="f-company">Company or agency <span class="field-optional">(optional)</span></label>
             <input type="text" id="f-company" name="company" autocomplete="organization">
           </div>
           <div class="field">
-            <label for="f-website">Website <span class="field-optional">(optional)</span></label>
-            <input type="text" id="f-website" name="website" autocomplete="url" placeholder="yoursite.com">
-          </div>
-          <div class="field">
-            <label for="f-inquiry">What is this regarding?</label>
+            <label for="f-inquiry">What is this about?</label>
             <select id="f-inquiry" name="inquiry_type"></select>
           </div>
           <div class="field">
-            <label for="f-budget">Company / role <span class="field-optional">(optional)</span></label>
-            <input type="text" id="f-budget" name="budget" placeholder="e.g. SEO Team Lead at Acme">
+            <label for="f-budget">Role or team <span class="field-optional">(optional)</span></label>
+            <input type="text" id="f-budget" name="budget" placeholder="e.g. SEO Team Lead, growth team">
           </div>
           <div class="field">
             <div class="field-label-row">
               <label for="f-message">Message</label>
               <span class="char-count" id="char-count">0 / 1000</span>
             </div>
-            <textarea id="f-message" name="message" required maxlength="1000" placeholder="Share the role, team and how I can help."></textarea>
+            <textarea id="f-message" name="message" required maxlength="1000" placeholder="Tell me about the role, the team and the next step."></textarea>
             <span class="field-error" id="err-message"></span>
           </div>
 
           <button type="submit" class="btn btn--primary" id="contact-submit">
-            <span class="btn-label">Start the Conversation →</span>
+            <span class="btn-label">Send message →</span>
           </button>
 
           <div class="form-status" id="form-status" role="status" aria-live="polite"></div>

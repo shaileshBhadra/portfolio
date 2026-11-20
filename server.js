@@ -252,13 +252,13 @@ function rateLimited(ip) {
 }
 
 // --- Contact form endpoint --------------------------------------------------
+// Public key for Web3Forms (designed to be public); the browser sends the form directly.
+app.get("/api/contact-config", (req, res) => {
+  res.json({ key: WEB3FORMS_ACCESS_KEY || null });
+});
+
 app.post("/api/contact", async (req, res) => {
   try {
-    if (!WEB3FORMS_ACCESS_KEY) {
-      console.error("WEB3FORMS_ACCESS_KEY is not set in the environment.");
-      return res.status(500).json({ success: false, message: "Server isn't configured yet." });
-    }
-
     const ip = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.socket.remoteAddress;
     if (rateLimited(ip)) {
       return res.status(429).json({ success: false, message: "Too many submissions — please try again later." });
@@ -278,14 +278,13 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ success: false, message: "That email address doesn't look valid." });
     }
 
-    const emailSubject = inquiry_type ? `New consulting inquiry: ${inquiry_type}` : "New message from shaileshbhadra.com";
+    const emailSubject = inquiry_type ? `Portfolio message: ${inquiry_type}` : "New message from your portfolio";
     const emailBody = [
       `Name: ${name}`,
       `Email: ${email}`,
       `Company: ${company || "(not provided)"}`,
-      `Website: ${website || "(not provided)"}`,
       `Inquiry type: ${inquiry_type || "(not specified)"}`,
-      `Budget: ${budget || "(not provided)"}`,
+      `Role or team: ${budget || "(not provided)"}`,
       "",
       "Message:",
       message,
@@ -295,7 +294,7 @@ app.post("/api/contact", async (req, res) => {
     if (smtpTransport) {
       try {
         await smtpTransport.sendMail({
-          from: `"Portfolio Contact Form" <${SMTP_USER}>`,
+          from: `"Portfolio contact" <${SMTP_USER}>`,
           to: RECIPIENT_EMAIL,
           replyTo: email,
           subject: emailSubject,
@@ -325,9 +324,8 @@ app.post("/api/contact", async (req, res) => {
           name,
           email,
           company: company || "(not provided)",
-          website: website || "(not provided)",
           inquiry_type: inquiry_type || "(not specified)",
-          budget: budget || "(not provided)",
+          role_or_team: budget || "(not provided)",
           message,
         }),
       });

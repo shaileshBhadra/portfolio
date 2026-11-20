@@ -1111,21 +1111,45 @@ function initContactForm(){
     try{
       const formData = new FormData(form);
       const payload = Object.fromEntries(formData);
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      const result = await res.json();
+      const subject = payload.inquiry_type ? `Portfolio message: ${payload.inquiry_type}` : "Portfolio message";
+      let sent = false;
 
-      if(res.ok && result.success){
+      // 1. Send straight from the browser to Web3Forms (its free plan blocks server-side calls).
+      try{
+        const cfg = await fetch("/api/contact-config").then(r => r.ok ? r.json() : {}).catch(() => ({}));
+        if(cfg && cfg.key){
+          const r1 = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              access_key: cfg.key, subject, from_name: payload.name, name: payload.name, email: payload.email,
+              company: payload.company || "(not provided)", inquiry_type: payload.inquiry_type || "(not specified)",
+              role_or_team: payload.budget || "(not provided)", message: payload.message,
+            }),
+          });
+          const j1 = await r1.json().catch(() => null);
+          sent = !!(r1.ok && j1 && j1.success);
+        }
+      } catch(_e){ sent = false; }
+
+      // 2. Fall back to our own server route (works when SMTP is configured).
+      if(!sent){
+        const res = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const result = await res.json().catch(() => ({}));
+        sent = !!(res.ok && result.success);
+      }
+
+      if(sent){
         form.reset();
         if(charCount) charCount.textContent = "0 / 1000";
-        setStatus("success", "Thanks — your message is on its way. I'll reply within 1–2 business days.");
+        setStatus("success", "Thanks, your message is sent. I'll reply within 1 to 2 business days.");
         trackEvent("contact_submission", { inquiry_type: payload.inquiry_type || "" });
       } else {
-        const detail = result && result.message ? ` (${result.message})` : "";
-        setStatus("error", `Something went wrong sending that${detail}. Try again, or email me directly below.`);
+        setStatus("error", "I couldn't send that right now. Please try again, or email me directly using the address below.");
       }
     } catch(err){
       setStatus("error", "Network error — please try again, or email me directly below.");

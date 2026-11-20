@@ -708,7 +708,7 @@ const INSIGHTS_ARTICLES = [
   { title: "GA4 + GTM: The Measurement Foundation Most Marketing Teams Underestimate", category: "Analytics", teaser: "Every channel decision downstream — SEO, paid, CRO — inherits whatever errors exist in the tracking layer. It's usually the least glamorous fix with the highest leverage." },
 ];
 
-const INQUIRY_TYPES = ["Job Opportunity", "Interview / Call", "SEO / Technical SEO", "Paid Media", "Analytics / GA4 / GTM", "Funnel Strategy", "Content", "Other"];
+const INQUIRY_TYPES = ["Job opportunity", "Interview or call", "SEO Manager role", "SEO Team Lead role", "Digital Marketing Manager role", "Other"];
 
 /* ============================================================
    APPROACH v2 — "how I think" page. Distinct from PLAYBOOK/
