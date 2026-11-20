@@ -1006,7 +1006,7 @@ function renderProjectDetail(targetId){
   const descEl = document.querySelector('meta[name="description"]');
   if(descEl) descEl.setAttribute("content", p.summary || p.challenge || `Case study: ${p.name}`);
   const myRole = isCaseStudy
-    ? `I owned the diagnosis and implementation described below — investigating the problem, prioritising the fix, and carrying it through to the outcome.`
+    ? `I owned the diagnosis and implementation described below — investigating the problem, prioritizing the fix, and carrying it through to the outcome.`
     : `${p.role} at ${p.company}, owning this work end to end — from the initial diagnosis through to implementation and measurement.`;
   el.innerHTML = `
     <div class="container">
@@ -1372,14 +1372,14 @@ function renderWorkExplorer(targetId){
 
 /* Career path — what each role added, in order */
 const CAREER_PATH = [
-  { when: "2017 – 2018", where: "Cears Infotech", role: "SEO Executive", gained: "On-page and off-page SEO fundamentals: titles, metadata, backlinks", why: "The department was closed and the company shut down after 2–3 years." },
-  { when: "2018 – 2020", where: "Xira Infotech", role: "SEO Executive", gained: "Local SEO and Google Business Profile for US salons, plus brand SEO across health and B2B paints", why: "Projects were local only, with little exposure beyond local clients, so I moved to work on wider markets." },
-  { when: "2020 – 2021", where: "Proactii", role: "Sr. SEO Executive", gained: "First paid media: Google Ads and Meta Ads on the same account as SEO, taking Kesariya Farm from ₹50K to ₹5L monthly revenue", why: "I joined during COVID after an offer from an Ahmedabad company was withdrawn, as a stop-gap until the market normalized. I stayed a year and delivered strong results." },
-  { when: "2021 – 2023", where: "Atlas Softweb", role: "Sr. Digital Marketing Executive", gained: "Led a 3-person SEO, paid media and content team across education, eCommerce and service clients in India, the USA and Australia", why: "The company cut its team during a financial downturn, and I chose to leave voluntarily." },
-  { when: "2023 – 2024", where: "ManekTech", role: "Sr. SEO Executive", gained: "Lead-generation funnels (TOFU, MOFU, BOFU) and server-side GTM tracking for a Texas-based client and sister sites", why: "The role moved from lead generation to closing deals on sales calls, and I wanted to stay in SEO and analytics." },
-  { when: "2024 – 2025", where: "Rivulet", role: "Sr. SEO Analyst", gained: "Tracking and technical fixes across Shopify, WordPress, BigCommerce, React and Vue.js", why: "Management committed to a US team and US projects, but none came in the first 6 months. I waited another 2–3 months before deciding to move." },
-  { when: "2025", where: "Equest Solutions", role: "Sr. SEO Analyst", gained: "Funnels and GA4 conversion tracking from scratch, plus Meta and Google paid media for USA, UK and Australia clients", why: "I left to rest and recover from surgery, then returned to full-time work." },
-  { when: "2026 – Present", where: "Neat Everyday", role: "Deputy SEO Manager", gained: "Full ownership of one site: SEO, AEO, funnels, Looker Studio and Google Cloud API reporting, and a ₹10L/month ad budget", why: "I led SEO through October 2026. Since November, team restructuring has left my role undefined, and I now handle paid media analysis, analytics, website audits and reviews." },
+  { when: "2017 – 2018", where: "Cears Infotech", role: "SEO Executive", gained: "On-page and off-page SEO fundamentals: titles, metadata, backlinks", why: "The company closed its SEO department, so I moved to a role where SEO was a core function." },
+  { when: "2018 – 2020", where: "Xira Infotech", role: "SEO Executive", gained: "Local SEO and Google Business Profile for US salons, plus brand SEO across health and B2B paints", why: "I wanted wider exposure than local clients, so I moved to projects across more markets." },
+  { when: "2020 – 2021", where: "Proactii", role: "Sr. SEO Executive", gained: "First paid media: Google Ads and Meta Ads on the same account as SEO, taking Kesariya Farm from ₹50K to ₹5L monthly revenue", why: "I joined during COVID while the job market reset. I stayed a year and delivered strong results." },
+  { when: "2021 – 2023", where: "Atlas Softweb", role: "Sr. Digital Marketing Executive", gained: "Led a 3-person SEO, paid media and content team across education, eCommerce and service clients in India, the USA and Australia", why: "The company reduced its team during a slow period, and I chose to move on voluntarily." },
+  { when: "2023 – 2024", where: "ManekTech", role: "Sr. SEO Executive", gained: "Lead-generation funnels (TOFU, MOFU, BOFU) and server-side GTM tracking for a Texas-based client and sister sites", why: "The role shifted toward sales calls, and I wanted to keep growing in SEO and analytics." },
+  { when: "2024 – 2025", where: "Rivulet", role: "Sr. SEO Analyst", gained: "Tracking and technical fixes across Shopify, WordPress, BigCommerce, React and Vue.js", why: "I joined for US clients and wider projects. The work stayed focused on tracking, technical fixes and audits, so I moved for more scope and more to learn." },
+  { when: "2025", where: "Equest Solutions", role: "Sr. SEO Analyst", gained: "Funnels and GA4 conversion tracking from scratch, plus Meta and Google paid media for USA, UK and Australia clients", why: "I took a planned break to recover, then returned to full-time work." },
+  { when: "2026 – Present", where: "Neat Everyday", role: "Deputy SEO Manager", gained: "Full ownership of one site: SEO, AEO, funnels, Looker Studio and Google Cloud API reporting, and a ₹10L/month ad budget", why: "I led SEO through October 2026. Since November my work has focused on paid media analysis, analytics and website audits, and I am looking for a role with full SEO ownership." },
 ];
 function renderCareerPath(targetId){
   const el = document.getElementById(targetId);
@@ -1518,7 +1518,7 @@ function renderAeo(id){
   el.innerHTML=`<div class="aeo-grid">${AEO_TOPICS.map(t=>`<article class="aeo-card"><h3>${t.t}</h3><p>${t.c}</p></article>`).join("")}</div>
   <div class="complement"><div class="complement-head"><span>Traditional SEO</span><span></span><span>AI search</span></div>
   ${AEO_COMPLEMENT.map(r=>`<div class="complement-row"><span>${r.trad}</span><i aria-hidden="true">→</i><span>${r.ai}</span></div>`).join("")}</div>
-  <p class="aeo-note"><strong>A note on results.</strong> AI search visibility is measured with the evidence available, and results vary by platform. I do not promise rankings or citations in AI tools.</p>`;
+  <p class="aeo-note"><strong>What this improves.</strong> Clear answers, consistent brand facts, schema and open crawler access make your pages easier for AI tools to understand and more likely to be shown. I track AI referral traffic and answer mentions, then keep improving what works.</p>`;
 }
 function renderAnalyticsPaid(id){
   const el=document.getElementById(id); if(!el) return;

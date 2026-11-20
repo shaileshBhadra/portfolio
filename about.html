@@ -58,7 +58,7 @@
   <section class="section">
     <div class="container">
       <h2 class="ab-h2">Where I have worked</h2>
-      <p class="ab-sub">Eight roles, one direction: from on-page SEO to technical SEO, analytics, paid media and team leadership. Each line shows what I learned and why I moved on.</p>
+      <p class="ab-sub">Latest role first. Eight roles, one direction: from on-page SEO to technical SEO, analytics, paid media and team leadership. Each line shows what I did and why I moved on.</p>
       <ol class="path-list" id="career-path"></ol>
     </div>
   </section>
@@ -106,6 +106,7 @@
   document.getElementById("ab-metrics").innerHTML = METRICS.filter(m => !/Years/.test(m.label)).map(m =>
     `<div class="ab-card"><div class="ab-value">${m.value}</div><p>${m.label}</p></div>`).join("");
 
+  CAREER_PATH.reverse(); // latest role first
   renderCareerPath("career-path");
 
   const HOW = [
