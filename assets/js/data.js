@@ -149,6 +149,7 @@ const EXPERIENCE = [
       "Built GA4 eCommerce funnels, Looker Studio dashboards and custom reports through Google Cloud APIs (GA4, Search Console, YouTube).",
       "Implemented server-side GTM for more accurate first-party tracking.",
       "Managed a ₹10L/month Meta and Google Ads budget alongside organic.",
+      "Automate keyword research and routine SEO tasks with AI tools plus manual review, cutting turnaround time.",
       "Currently handling paid media analysis, analytics, website audits and performance reviews.",
     ],
     achievement: "60%+ increase in organic traffic since joining.",
@@ -160,6 +161,7 @@ const EXPERIENCE = [
     location: "Ahmedabad",
     dates: "Jan 2025 – Nov 2025",
     responsibilities: [
+      "Automated keyword research and routine SEO tasks with AI tools plus manual review, cutting turnaround time.",
       "Built TOFU, MOFU and BOFU funnels and GA4 conversion tracking from scratch for unmeasured stores.",
       "Ran landing page optimization and A/B tests against the rebuilt funnel data.",
       "Ran Meta and Google paid media for Meal Prep Sunday Service, with SEO and paid media for clients in the USA, UK and Australia.",
@@ -1359,3 +1361,40 @@ const CHANNELS_RUN = [
   { name: "LinkedIn Ads", note: "B2B lead generation" },
   { name: "AdRoll and ShareChat", note: "Retargeting and regional reach" },
 ];
+
+
+/* AI and automation: tasks I speed up with AI tools, and what I check by hand */
+const AUTOMATION = {
+  intro: "AI tools and automation handle the repetitive part of SEO and paid media work. I review every output before it is used, so work that used to take days or weeks moves faster and stays accurate.",
+  loop: [
+    ["Automate", "AI tools and reports take the repeat work"],
+    ["Review", "I check every output by hand"],
+    ["Improve", "I fix gaps and refine the process"],
+  ],
+  tools: "AI assistants (ChatGPT, Gemini, Perplexity), Looker Studio and Google Cloud API reports",
+  tabs: [
+    { key: "seo", label: "SEO tasks", rows: [
+      ["Keyword research and clustering", "Gathers keyword ideas, groups them by topic and intent, and maps them to pages", "Search intent, volume and business fit"],
+      ["On-page checks", "Scans titles, meta descriptions, headings, internal links, image alt text and schema across many pages", "Every fix before it goes live"],
+      ["Technical checks", "Finds broken links, redirects, canonical and indexation issues and speed problems, then ranks them by priority", "Each issue and the right fix, with the developer"],
+      ["Content creation", "Drafts briefs, outlines, FAQs and first drafts from the research", "Accuracy, brand voice and real expertise"],
+      ["Competitor and SERP analysis", "Summarizes what ranks, what the content covers and where the gaps are", "Which gaps are worth acting on"],
+      ["Off-page research", "Builds link prospect lists and drafts outreach", "Site quality and personal outreach"],
+      ["AEO and GEO checks", "Spot-checks how AI tools describe the brand and which questions pages answer", "What to change on the page"],
+    ]},
+    { key: "paid", label: "Paid media tasks", rows: [
+      ["Ad copy and variations", "Drafts headline, description and primary-text options for Google, Meta and LinkedIn", "Claims, tone and ad policy before launch"],
+      ["Audience and keyword research", "Suggests keywords, negative keywords and audience angles", "Fit with budget and funnel stage"],
+      ["Search term and placement review", "Flags wasted search terms and weak placements", "Which negatives and exclusions to apply"],
+      ["Performance analysis", "Summarizes campaign data and spots trends and outliers across channels", "Context, then budget decisions"],
+      ["Test planning", "Proposes A/B test ideas and tracks the results", "What to test and when to stop"],
+      ["Tracking checks", "Compares ad platform events with GA4 and real orders", "Events in GTM and each platform"],
+    ]},
+    { key: "data", label: "Data and reporting", rows: [
+      ["Data analysis", "Combines GA4, Search Console and ad data and highlights what changed", "Numbers against the source"],
+      ["Dashboards", "Looker Studio and Google Cloud API reports refresh on their own", "Definitions and data quality"],
+      ["Weekly summaries", "Drafts performance summaries for leadership", "Wording, insight and next steps"],
+      ["Process documents", "Drafts SOPs and checklists from how the team already works", "Accuracy before the team uses them"],
+    ]},
+  ],
+};

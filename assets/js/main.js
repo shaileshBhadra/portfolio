@@ -1547,3 +1547,26 @@ function renderPlatforms(targetId){
       ${col("Paid channels", "Campaigns and reporting, compared side by side.", CHANNELS_RUN)}
     </div>`;
 }
+
+
+/* AI and automation section */
+function renderAutomation(id){
+  const el = document.getElementById(id);
+  if(!el || typeof AUTOMATION === "undefined") return;
+  const A = AUTOMATION;
+  const panel = (t, i) => `
+    <div class="auto-panel" role="tabpanel" id="auto-${t.key}" ${i ? "hidden" : ""}>
+      <div class="auto-head"><span>Task</span><span>What AI and automation do</span><span>What I check</span></div>
+      ${t.rows.map(r => `<div class="auto-row"><strong>${r[0]}</strong><span data-l="What AI and automation do">${r[1]}</span><span data-l="What I check">${r[2]}</span></div>`).join("")}
+    </div>`;
+  el.innerHTML = `
+    <p class="auto-intro">${A.intro}</p>
+    <ol class="auto-loop">${A.loop.map((l, i) => `<li><b>${i + 1}</b><strong>${l[0]}</strong><span>${l[1]}</span></li>`).join("")}</ol>
+    <div class="auto-tabs" role="tablist">${A.tabs.map((t, i) => `<button type="button" role="tab" class="auto-tab${i ? "" : " is-active"}" data-k="${t.key}" aria-selected="${i ? "false" : "true"}">${t.label}</button>`).join("")}</div>
+    ${A.tabs.map(panel).join("")}
+    <p class="auto-tools"><strong>Tools:</strong> ${A.tools}</p>`;
+  el.querySelectorAll(".auto-tab").forEach(b => b.addEventListener("click", () => {
+    el.querySelectorAll(".auto-tab").forEach(x => { const on = x === b; x.classList.toggle("is-active", on); x.setAttribute("aria-selected", on ? "true" : "false"); });
+    el.querySelectorAll(".auto-panel").forEach(p => { p.hidden = p.id !== "auto-" + b.dataset.k; });
+  }));
+}
